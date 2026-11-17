@@ -1,10 +1,10 @@
 # HEX Research Platform：问题与方法统一研究平台
 
-0.2版融合地铁网络规划与小队作战两个已有项目，使用共同的问题、方法、会话、实验、可视化生命周期和HTTP接口。网页保持英文，开发说明使用中文。
+0.3 版提供地铁网络规划、小队作战与问题融合器，使用共同的问题、方法、会话、实验、可视化生命周期和 HTTP 接口。网页保持英文，开发说明使用中文。
 
 [打开在线平台](https://baichunhui-9803.github.io/hex-research-platform/) · [个人主页](https://baichunhui-9803.github.io/)
 
-在线版直接在浏览器中运行两个游戏、算法比较和回放，支持导入报告以及导出 JSON、CSV。HTTP API 通过本地 Node 服务提供。
+在线版直接在浏览器中运行三个问题、算法比较和回放，支持导入报告以及导出 JSON、CSV。HTTP API 通过本地 Node 服务提供。
 
 ## 启动
 
@@ -21,6 +21,7 @@ npm test
 npm run build:pages            # 生成 GitHub Pages 静态站点
 npm run benchmark               # 保留原4方法、132局兼容验证
 npm run benchmark:evolutionary  # 28方法适用组合、11场景、3种子 = 756局
+npm run verify:fusion          # 融合规则对照、20种共享方法与回放
 npm run analyze:evolutionary    # 逐场景差值、描述性汇总
 node scripts/benchmark.js 26     # 单种子整合验证
 python examples/python_client.py
@@ -28,10 +29,10 @@ python examples/python_client.py
 
 ## 怎么使用
 
-1. **Problems**：切换Metro Network／Squad Tactics，选择地图、种子与Episode settings；重置后应用。
+1. **Problems**：切换 Metro Network、Squad Tactics 或 Problem Fusion，选择地图、种子与 Episode settings 后应用。
 2. 可以手动运行、暂停和步进，也可以选择方法并点击Use selected method，再开始运行。
 3. 地铁：选线路和端点后续接；拖动停站替换；支持清空和撤销。战斗：点击／框选己方，右键敌人集火或地面移动，支持多选、攻击移动、原地防守、缩放和平移。
-4. **Methods**：查看28种方法，按目标、类别、家族、变体级联筛选。20种共享搜索方法可用于两问题；四个地铁策略仅适用于动态地铁，四个小队策略仅适用于小队问题。界面和API均拒绝不兼容组合。
+4. **Methods**：查看 28 种方法，按目标、类别、家族、变体级联筛选。20 种共享搜索方法可用于三个问题。四个地铁策略适用于动态地铁，四个小队策略适用于独立的小队问题。界面和 API 均检查兼容性。
 5. **Experiments**：选择场景、方法和种子，在同一条件下从头比较。后台Worker可以取消；完成后查看均值／标准差、逐局结果，下载JSON／CSV，点击Replay观看记录。
 6. 可以导出当前会话记录，并在Import report中载入记录或完整实验结果。回放为只读，Reset episode回到可操作环境。
 7. **API**：查看发现、控制和实验端点。HTTP和浏览器本地会话独立，但使用相同规则与适配层。
@@ -50,11 +51,15 @@ python examples/python_client.py
 
 各问题保留有意义的指标和单位，不把送达率与战斗胜率混成总排行榜。原问题约束与规则引擎保留；新平台的策略参数搜索属于新增适配功能。
 
+## 问题融合器
+
+在 **Problem Fusion** 中各选一张地图，并配置联动方向、权重及两边的原规则。场景自动组合生成 30 个地图配对，两个方向分别由地铁送达补给和小队压力停运实现。20 种共享优化方法在联合仿真中对候选方案做评价。[规则与操作](docs/fusion.md) · [验证汇总](experiments/fusion-validation/summary.md)
+
 ## 目录与扩展
 
 ```text
 core/          会话、协议匹配、实验、汇总与回放
-problems/      metro / skirmish问题适配与注册
+problems/      metro / skirmish / fusion 问题适配与注册
 methods/       共享优化器、专用策略及注册
 engines/       41个原引擎与画面文件固定快照、来源哈希
 web/           英文统一外壳、独立主题、实时Worker与画面插件

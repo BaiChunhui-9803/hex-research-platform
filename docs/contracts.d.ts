@@ -40,6 +40,8 @@ export interface VectorTask<S = Json> {
   dimension: number;
   encoding: string;
   objectiveSchema: Metric[];
+  /** Positive scales for distance and decomposition. Objective values stay in their original units. */
+  objectiveScales?: number[];
   initial(random: () => number): number[];
   decode(vector: number[]): S;
   evaluate(vector: number[]): Evaluation;
@@ -135,11 +137,13 @@ export interface Problem {
   timeUnit: string;
   stepSize: number;
   defaultScenario: string;
+  sourceProblems?: string[];
   scenarios: {
     id: string;
     name: string;
     description: string;
     dynamic?: boolean;
+    components?: Record<string, string>;
   }[];
   metrics: Metric[];
   capabilities(scenarioId: string): Capabilities;
@@ -159,7 +163,30 @@ export interface ProblemView {
 export type MountView = (options: {
   host: HTMLElement;
   controls: HTMLElement;
+  help?: HTMLElement;
   onAction(action: Json): Promise<object>;
   onPause(): void;
   notice(message: string, error?: boolean): void;
 }) => ProblemView;
+
+export interface FusionConfig {
+  scenarioId: string;
+  seed: number;
+  fusionRuleVersion: 1;
+  coupling: "both" | "supply" | "disruption" | "none";
+  metroWeight: number;
+  supportPerPassenger: number;
+  holdEvery: number;
+  prepMinutes: number;
+  metroHorizon: 60 | 120 | 180 | 240;
+  metroObjective: "service" | "balanced" | "effort";
+  metroEditBudget: number;
+  skirmishHorizon: number;
+  skirmishOpponent: string;
+  skirmishTeam: string;
+}
+export type FusionComponentAction = {
+  type: "component";
+  component: "metro" | "skirmish";
+  action: Json;
+};

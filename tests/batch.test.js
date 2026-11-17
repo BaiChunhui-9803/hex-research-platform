@@ -23,6 +23,28 @@ test("batch splitting retains every requested method and respects episode limits
     ),
   );
 });
+test("fusion map sets split across scenarios without omitting or duplicating episodes", () => {
+  const request = {
+    scenarioIds: Array.from({ length: 30 }, (_, i) => "f" + i),
+    seeds: Array.from({ length: 10 }, (_, i) => i),
+    methodIds: ["constructive", "nsga2", "moead"],
+  };
+  const batches = splitExperiment(request);
+  const seen = new Set();
+  let episodes = 0;
+  for (const { scenarioIds, methodIds, seeds } of batches) {
+    assert.ok(scenarioIds.length * methodIds.length * seeds.length <= 120);
+    for (const scenario of scenarioIds)
+      for (const seed of seeds)
+        for (const method of methodIds) {
+          const id = [scenario, seed, method].join(":");
+          assert.ok(!seen.has(id));
+          seen.add(id);
+          episodes++;
+        }
+  }
+  assert.equal(episodes, 30 * 10 * 3);
+});
 test("partial merged comparisons retain an explicit incomplete marker", () => {
   const request = {
     problemId: "metro",

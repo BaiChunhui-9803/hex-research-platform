@@ -1,7 +1,7 @@
 import { methodRegistry } from "../methods/index.js";
 import { problemRegistry, problemMetadata } from "../problems/index.js";
 import { compatibility } from "../core/registry.js";
-import { resultCSV } from "../core/experiment.js";
+import { resultCSV, validateExperiment } from "../core/experiment.js";
 import { applyTheme } from "./theme.js";
 import { mountMethodLibrary } from "./method-library.js";
 import {
@@ -209,15 +209,19 @@ async function reset(recording = null) {
     if (generation === epoch) notice(error.message, true);
   }
 }
-function settings() {
+function settings(values = {}) {
   const current = scenario();
   $("#settings").innerHTML = current.settings
     .filter(
       (s) => !s.feature || current.capabilities.features.includes(s.feature),
     )
     .map(
-      (s) =>
-        `<label>${esc(s.name)}${s.choices ? `<select data-setting="${s.key}">${s.choices.map((c) => `<option value="${esc(c.value)}" ${c.value === s.default ? "selected" : ""}>${esc(c.label)}</option>`).join("")}</select>` : `<input data-setting="${s.key}" type="number" min="${s.min}" max="${s.max}" value="${s.default}">`}</label>`,
+      (s) => {
+        const value = values[s.key] ?? s.default;
+        const selected = s.choices?.some((c) => String(c.value) === String(value))
+          ? value : s.default;
+        return `<label>${esc(s.name)}${s.choices ? `<select data-setting="${s.key}">${s.choices.map((c) => `<option value="${esc(c.value)}" ${String(c.value) === String(selected) ? "selected" : ""}>${esc(c.label)}</option>`).join("")}</select>` : `<input data-setting="${s.key}" type="number" min="${s.min}" max="${s.max}" value="${esc(value)}">`}</label>`;
+      },
     )
     .join("");
   $("#arena-title").textContent = current.name;
@@ -226,6 +230,20 @@ function settings() {
   methods();
   experimentSetup();
   methodLibrary?.setScope(problemId, current.id);
+}
+function fusionSelectors(p) {
+  const sourceIds = p.sourceProblems ?? [];
+  const fused = sourceIds.length > 0;
+  $("#scenario-field").hidden = fused;
+  $("#fusion-sources").hidden = !fused;
+  $("#reset").textContent = fused ? "Apply setup" : "Reset";
+  $("#fusion-sources").innerHTML = sourceIds.map((id) => {
+    const source = problems.find((entry) => entry.id === id);
+    const selected = scenario().components[id];
+    return `<label>${esc(source.name)}<select data-source-problem="${esc(id)}">
+      ${source.scenarios.map((item) => `<option value="${esc(item.id)}" ${item.id === selected ? "selected" : ""}>${esc(item.name)}</option>`).join("")}
+    </select></label>`;
+  }).join("");
 }
 async function selectProblem(id, configOverride) {
   problemId = id;
@@ -239,13 +257,9 @@ async function selectProblem(id, configOverride) {
     )
     .join("");
   $("#scenario").value = configOverride?.scenarioId ?? p.defaultScenario;
-  settings();
-  if (configOverride) {
-    $("#seed").value = configOverride.seed;
-    for (const n of $("#settings").querySelectorAll("[data-setting]"))
-      if (configOverride[n.dataset.setting] !== undefined)
-        n.value = configOverride[n.dataset.setting];
-  }
+  if (configOverride?.seed !== undefined) $("#seed").value = configOverride.seed;
+  fusionSelectors(p);
+  settings(configOverride);
 }
 function methods() {
   const previous = $("#method").value,
@@ -420,7 +434,7 @@ function experimentSize() {
 }
 async function runComparison() {
   if (experimentBusy) return;
-  const input = {
+  const input = validateExperiment({
     problemId,
     scenarioIds: [
       ...$("#experiment-scenarios").querySelectorAll("input:checked"),
@@ -432,9 +446,7 @@ async function runComparison() {
     evaluations: Number($("#budget").value),
     populationSize: Number($("#population-size").value),
     config: config(),
-  };
-  if (!input.methodIds.length || !input.scenarioIds.length)
-    throw new Error("Select at least one scenario and method");
+  }, problemRegistry, methodRegistry, { episodeLimit: Infinity });
   experimentBusy = true;
   $("#run-experiment").disabled = true;
   $("#cancel-experiment").disabled = false;
@@ -673,6 +685,16 @@ $("#scenario").addEventListener("change", () => {
   settings();
   reset();
 });
+$("#fusion-sources").addEventListener("change", () => {
+  const selected = [...$("#fusion-sources").querySelectorAll("select")];
+  const pair = problem().scenarios.find((item) =>
+    selected.every((field) => item.components[field.dataset.sourceProblem] === field.value),
+  );
+  const previous = config();
+  $("#scenario").value = pair.id;
+  settings(previous);
+  reset();
+});
 $("#method").addEventListener("change", methodDescription);
 $("#experiment-scenarios").addEventListener("change", experimentMethods);
 $("#experiment-methods").addEventListener("change", experimentSize);
@@ -693,20 +715,21 @@ window.addEventListener("keydown", (event) => {
 });
 try {
   $("#hosted-api-note").hidden = !browserOnly;
+  $("#problem-total").textContent = problems.length;
+  $("#scenario-total").textContent = problems.reduce((sum, p) => sum + p.scenarios.length, 0);
   $("#problem-cards").innerHTML = problems
     .map(
       (p) =>
-        `<button data-problem="${p.id}" class="problem-choice"><small>${esc(p.shortName)}</small><strong>${esc(p.name)}</strong><small>${p.scenarios.length} SCENARIOS</small></button>`,
+        `<button data-problem="${p.id}" class="problem-choice"><small>${esc(p.shortName)}</small><strong>${esc(p.name)}</strong><small>${p.scenarios.length} ${p.sourceProblems ? "MAP PAIRS" : "SCENARIOS"}</small></button>`,
     )
     .join("");
   library();
-  await selectProblem(
-    new URLSearchParams(location.search).get("problem") === "skirmish"
-      ? "skirmish"
-      : "metro",
-  );
+  const params = new URLSearchParams(location.search);
+  const requested = problems.find((item) => item.id === params.get("problem"));
+  const requestedScenario = requested?.scenarios.find((item) => item.id === params.get("scenario"));
+  await selectProblem(requested?.id ?? "metro", requestedScenario && { scenarioId: requestedScenario.id });
   await reset();
-  if (new URLSearchParams(location.search).has("problem")) openWorkspace();
+  if (requested) openWorkspace();
   fetch(projectURL("docs/evolutionary-baselines-20261115/catalogue.json"))
     .then((r) => (r.ok ? r.json() : null))
     .then((data) => {

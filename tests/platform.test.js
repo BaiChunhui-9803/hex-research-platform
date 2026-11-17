@@ -20,7 +20,7 @@ import { createHash } from "node:crypto";
 
 const shared = ["constructive", "random-search", "hill-climb", "annealing"];
 test("all shared optimizers run both domains and reproduce after JSON replay round-trip", () => {
-  for (const problem of problemRegistry.list())
+  for (const problem of ["metro", "skirmish"].map((id) => problemRegistry.get(id)))
     for (const id of shared) {
       const session = new PlatformSession(
         problem,

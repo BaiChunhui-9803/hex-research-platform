@@ -8,6 +8,7 @@ const evidence = "docs/evolutionary-baselines-20261115";
 const design = "docs/design-reference-library-20261115";
 const recorded = "experiments/2026-11-15-evolutionary-baselines";
 const integration = "experiments/integration-20261115";
+const fusionValidation = "experiments/fusion-validation";
 
 const existing = await lstat(dist).catch((error) => {
   if (error.code !== "ENOENT") throw error;
@@ -43,7 +44,7 @@ await writeFile(
 );
 await writeFile(path.join(dist, ".nojekyll"), "");
 
-for (const file of ["api.md", "extensions.md", "contracts.d.ts"]) {
+for (const file of ["api.md", "extensions.md", "fusion.md", "contracts.d.ts"]) {
   await copy(`docs/${file}`);
 }
 for (const file of [
@@ -84,6 +85,18 @@ for (const problemId of ["metro", "skirmish"]) {
     createdAt: report.createdAt,
   });
 }
+for (const file of ["summary.md", "rules.csv", "methods.csv", "methods.json", "verification.json"]) {
+  await copy(`${fusionValidation}/${file}`);
+}
+const fusionReportUrl = `${fusionValidation}/methods.json`;
+const fusionReport = JSON.parse(await readFile(path.join(root, fusionReportUrl), "utf8"));
+runs.push({
+  id: "fusion-validation",
+  url: fusionReportUrl,
+  problemId: "fusion",
+  episodes: fusionReport.results.length,
+  createdAt: fusionReport.createdAt,
+});
 await writeFile(
   path.join(dist, "experiments/published-runs.json"),
   JSON.stringify(runs, null, 2) + "\n",

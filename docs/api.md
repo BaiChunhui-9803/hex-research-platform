@@ -47,6 +47,31 @@ POST到`/api/sessions`，返回201和`id`。省略`methodId`为手动会话。
 
 支持move、attackMove、attack、hold。移动目标为`target:{q,r}`。一次最多100条命令，任一命令无效时整批不生效；只能控制配置中的己方。
 
+### 融合问题
+
+`GET /api/problems/fusion` 返回两种来源问题、30 个地图组合和各组合的能力。创建会话的示例为
+
+```json
+{
+  "problemId": "fusion",
+  "config": {
+    "scenarioId": "growth--triad", "seed": 26, "coupling": "both",
+    "metroHorizon": 180, "metroEditBudget": 45, "skirmishHorizon": 60,
+    "skirmishTeam": "violet", "metroWeight": 55
+  },
+  "methodId": "nsga2",
+  "evaluations": 16
+}
+```
+
+手动动作把原动作包在 `component` 外壳中。下面的例子针对控制蓝方的小队。
+
+```json
+{"action":{"type":"component","component":"skirmish","action":{"type":"commands","orders":[{"type":"hold","unitIds":["blue-1"]}]}}}
+```
+
+观察包含 `components.metro`、`components.skirmish` 和 `links`。结果中的原生指标分别以 `metro.`、`skirmish.` 开头。步长为一个融合周期，两个组件的本地时间在视图中独立报告。继续复用作业、CSV 和回放接口。更多配置和权重定义见 [融合规则](fusion.md)。
+
 ## 统一实验
 
 POST `/api/jobs`：

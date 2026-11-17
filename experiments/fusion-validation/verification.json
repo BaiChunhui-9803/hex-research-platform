@@ -1,0 +1,59 @@
+{
+  "ruleEpisodes": 240,
+  "methodEpisodes": 120,
+  "replayMatches": 360,
+  "mapPairs": 30,
+  "modes": [
+    "both",
+    "supply",
+    "disruption",
+    "none"
+  ],
+  "seeds": [
+    26,
+    27
+  ],
+  "methods": [
+    "constructive",
+    "random-search",
+    "hill-climb",
+    "annealing",
+    "multistart",
+    "tabu",
+    "ga",
+    "es-oneplusone",
+    "de-rand",
+    "de-best",
+    "jde",
+    "jade",
+    "shade",
+    "lshade",
+    "pso-inertia",
+    "pso-constriction",
+    "cmaes",
+    "nsga2",
+    "spea2",
+    "moead"
+  ],
+  "methodPairs": [
+    "lumen--contact",
+    "growth--triad",
+    "growth-rush--asymmetric"
+  ],
+  "ruleConfig": {
+    "metroHorizon": 60,
+    "skirmishHorizon": 60
+  },
+  "methodConfig": {
+    "metroHorizon": 180,
+    "skirmishHorizon": 60,
+    "coupling": "both"
+  },
+  "evaluationsPerPlanningDecision": 8,
+  "pairedCasesPerMode": 60,
+  "supplyChangesBattle": 45,
+  "disruptionChangesMetro": 45,
+  "twoWayActive": 42,
+  "disruptionFeedsBackToBattle": 14,
+  "supplyFeedsBackToRail": 10
+}

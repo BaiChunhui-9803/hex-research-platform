@@ -1,15 +1,24 @@
 import { summarize } from "../core/experiment.js";
 export function splitExperiment(request, limit = 120) {
-  const methodsPerBatch = Math.max(
-    1,
-    Math.floor(limit / (request.scenarioIds.length * request.seeds.length)),
-  );
+  const { scenarioIds, methodIds, seeds } = request;
+  if (!Number.isInteger(limit) || limit < 1 || !scenarioIds.length || !seeds.length || !methodIds.length)
+    throw new Error("An experiment needs scenarios, seeds, methods and a positive batch limit");
   const batches = [];
-  for (let i = 0; i < request.methodIds.length; i += methodsPerBatch)
-    batches.push({
-      ...request,
-      methodIds: request.methodIds.slice(i, i + methodsPerBatch),
-    });
+  for (let seedStart = 0; seedStart < seeds.length; seedStart += limit) {
+    const batchSeeds = seeds.slice(seedStart, seedStart + limit);
+    const scenariosPerBatch = Math.floor(limit / batchSeeds.length);
+    for (let s = 0; s < scenarioIds.length; s += scenariosPerBatch) {
+      const batchScenarios = scenarioIds.slice(s, s + scenariosPerBatch);
+      const methodsPerBatch = Math.floor(limit / (batchScenarios.length * batchSeeds.length));
+      for (let i = 0; i < methodIds.length; i += methodsPerBatch)
+        batches.push({
+          ...request,
+          scenarioIds: batchScenarios,
+          seeds: batchSeeds,
+          methodIds: methodIds.slice(i, i + methodsPerBatch),
+        });
+    }
+  }
   return batches;
 }
 export function mergeReports(reports, request) {

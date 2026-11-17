@@ -16,7 +16,7 @@ const seeds = process.argv[2]
   : [26, 27, 28];
 let count = 0;
 const summaries = [];
-for (const problem of problemRegistry.list()) {
+for (const problem of ["metro", "skirmish"].map((id) => problemRegistry.get(id))) {
   const report = runExperiment(
     {
       problemId: problem.id,

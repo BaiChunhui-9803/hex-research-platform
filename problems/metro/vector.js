@@ -1,9 +1,8 @@
 /** Route membership and ordering keys; no future station enters this encoding. */
-export function routeVectorTask(native, observation) {
+export function routeVectorTask(native, observation, start = native.initial(() => 0.5)) {
   const stations = observation.scenario.stations,
     limit = observation.scenario.resources.maxStopsPerLine;
-  const start = native.initial(() => 0.5),
-    lineIds = start.lines.map((l) => l.id);
+  const lineIds = start.lines.map((l) => l.id);
   const decode = (vector) => ({
     lines: lineIds.map((id, line) => ({
       id,

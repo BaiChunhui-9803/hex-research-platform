@@ -8,7 +8,7 @@ async function codeFiles(directory){const files=[];for(const entry of await read
 const hash=createHash('sha256');for(const group of ['core','methods','problems'])for(const file of (await codeFiles(new URL(group+'/',root))).sort((a,b)=>a.href.localeCompare(b.href))){hash.update(file.pathname);hash.update(await readFile(file));}
 const codeHash=hash.digest('hex'),seeds=[26,27,28],evaluations=Number(process.argv[2]??32);let total=0,replays=0;
 const reports=[];
-for(const problem of problemRegistry.list()){
+for(const problem of ['metro','skirmish'].map(id=>problemRegistry.get(id))){
   const cases=[];
   for(const scenario of problem.scenarios){
     const methodIds=methodRegistry.list().filter(m=>compatibility(m,problem.capabilities(scenario.id)).compatible).map(m=>m.id);

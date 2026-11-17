@@ -21,7 +21,30 @@ test("unified discovery, sessions, compatibility, jobs and cancellation", async 
     });
     return { status: res.status, data: await res.json() };
   }
-  assert.equal((await api("/api/problems")).data.length, 2);
+  assert.deepEqual(
+    (await api("/api/problems")).data.map((p) => p.id),
+    ["metro", "skirmish", "fusion"],
+  );
+  const joined = await api("/api/problems/fusion");
+  assert.deepEqual(joined.data.sourceProblems, ["metro", "skirmish"]);
+  assert.equal(joined.data.scenarios.length, 30);
+  const compatible = await api("/api/methods?problemId=fusion&scenarioId=growth--triad&compatible=true");
+  assert.equal(compatible.data.length, 20);
+  const assembled = await api("/api/sessions", {
+    problemId: "fusion", config: { scenarioId: "lumen--mixed", metroHorizon: 60, skirmishHorizon: 60 },
+    methodId: "nsga2", evaluations: 3,
+  });
+  assert.equal(assembled.status, 201);
+  const fusionId = assembled.data.id;
+  const fusionStep = await api(`/api/sessions/${fusionId}/step`, { steps: 1 });
+  assert.equal(fusionStep.data.searchDetail.objectiveSchema.length, 4);
+  assert.equal(fusionStep.data.observation.components.metro.time, 1);
+  assert.equal((await api(`/api/sessions/${fusionId}/actions`, {
+    action: { type: "component", component: "unknown" },
+  })).status, 400);
+  const fusedReplay = (await api(`/api/sessions/${fusionId}/replay`)).data;
+  assert.equal((await api("/api/replays/verify", fusedReplay)).data.matches, true);
+  assert.equal((await api(`/api/sessions/${fusionId}`, null, "DELETE")).status, 200);
   const methods = (
     await api("/api/methods?problemId=skirmish&scenarioId=contact")
   ).data;
@@ -77,6 +100,26 @@ test("unified discovery, sessions, compatibility, jobs and cancellation", async 
   assert.equal(result.report.results.length, 2);
   const csv = await fetch(root + "/api/jobs/" + job.data.id + "/csv");
   assert.match(await csv.text(), /delivered/);
+  const jointJob = await api("/api/jobs", {
+    problemId: "fusion",
+    scenarioIds: ["lumen--mixed", "growth--triad"],
+    methodIds: ["constructive"],
+    seeds: [26],
+    evaluations: 1,
+    config: { metroHorizon: 60, skirmishHorizon: 60, coupling: "both" },
+  });
+  assert.equal(jointJob.status, 202);
+  const jointPath = "/api/jobs/" + jointJob.data.id;
+  let jointResult;
+  for (let i = 0; i < 100; i++) {
+    jointResult = (await api(jointPath)).data;
+    if (jointResult.status !== "running") break;
+    await new Promise((resolve) => setTimeout(resolve, 25));
+  }
+  assert.equal(jointResult.status, "done");
+  assert.equal(jointResult.report.results.length, 2);
+  const jointCSV = await fetch(root + jointPath + "/csv");
+  assert.match(await jointCSV.text(), /"supportUsed".*"coupling"/);
   assert.equal((await fetch(root + "/web/index.html")).status, 200);
   assert.equal((await fetch(root + "/package.json")).status, 404);
   assert.equal((await fetch(root + "/core/%2e%2e%5cpackage.json")).status, 404);

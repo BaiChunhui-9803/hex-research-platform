@@ -2,7 +2,7 @@ import { PlatformSession, PLATFORM_VERSION } from "./session.js";
 import { compatibility } from "./registry.js";
 import { integer } from "./random.js";
 
-export function validateExperiment(input, problems, methods) {
+export function validateExperiment(input, problems, methods, { episodeLimit = 120 } = {}) {
   const problem = problems.get(input.problemId);
   const scenarioIds = input.scenarioIds ?? [
     input.scenarioId ?? problem.defaultScenario,
@@ -17,7 +17,7 @@ export function validateExperiment(input, problems, methods) {
   if (!Array.isArray(rawSeeds)) throw new Error("Seeds must be an array");
   const seeds = rawSeeds.map(Number);
   for (const [name, values, max] of [
-    ["scenarios", scenarioIds, 11],
+    ["scenarios", scenarioIds, problem.scenarios.length],
     ["methods", methodIds, methods.list().length],
     ["seeds", seeds, 10],
   ])
@@ -44,8 +44,8 @@ export function validateExperiment(input, problems, methods) {
         throw new Error(`${id}: ${check.reasons.join("; ")}`);
     }
   }
-  if (scenarioIds.length * methodIds.length * seeds.length > 120)
-    throw new Error("At most 120 episodes per experiment");
+  if (scenarioIds.length * methodIds.length * seeds.length > episodeLimit)
+    throw new Error(`At most ${episodeLimit} episodes per experiment`);
   return {
     problemId: problem.id,
     scenarioIds,
@@ -58,16 +58,9 @@ export function validateExperiment(input, problems, methods) {
 export function summarize(results, schema) {
   const groups = new Map();
   for (const result of results) {
-    const key = JSON.stringify([
-      result.problemId,
-      result.scenarioId,
-      result.methodId,
-      result.config.horizon,
-      result.config.opponent,
-      result.config.team,
-      result.config.objective,
-      result.config.editBudget,
-    ]);
+    const { seed, scenarioId, ...settings } = result.config;
+    const parameters = Object.keys(settings).sort().map((name) => [name, settings[name]]);
+    const key = JSON.stringify([result.problemId, result.scenarioId, result.methodId, parameters]);
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(result);
   }
@@ -158,6 +151,9 @@ export function runExperiment(input, problems, methods, hooks = {}) {
 }
 export function resultCSV(report) {
   const ids = report.metricSchema.map((m) => m.id);
+  const existing = new Set(["scenarioId", "seed", "horizon", "team", "opponent", "objective"]);
+  const settings = [...new Set(report.results.flatMap((result) => Object.keys(result.config)))]
+    .filter((key) => !existing.has(key));
   const rows = [
     [
       "problemId",
@@ -171,19 +167,21 @@ export function resultCSV(report) {
       "evaluations",
       "elapsedMs",
       ...ids,
+      ...settings,
     ],
     ...report.results.map((r) => [
       r.problemId,
       r.scenarioId,
       r.methodId,
       r.seed,
-      r.config.horizon,
+      r.config.horizon ?? "",
       r.config.team ?? "",
       r.config.opponent ?? "",
       r.config.objective ?? "",
       r.evaluations,
       r.elapsedMs,
       ...ids.map((k) => r.metrics[k] ?? ""),
+      ...settings.map((key) => r.config[key] ?? ""),
     ]),
   ];
   return (

@@ -1,11 +1,11 @@
 import { BattlefieldRenderer } from "../../engines/skirmish/web/renderer.js";
-export function mount({ host, controls, onAction, onPause, notice }) {
+export function mount({ host, controls, onAction, onPause, notice, help = document.querySelector("#interaction-help") }) {
   host.className = "arena skirmish-view";
   host.innerHTML =
     '<canvas tabindex="0" aria-label="Squad battlefield"></canvas>';
   controls.innerHTML =
     '<button data-order="select">Select all</button><button data-order="attackMove" class="active">Attack-move [A]</button><button data-order="move">Move [M]</button><button data-order="hold">Hold [H]</button><button data-order="fit">Fit</button><span id="selection-status">No units selected</span>';
-  document.querySelector("#interaction-help").textContent =
+  if (help) help.textContent =
     "Click or drag to select your units. Shift adds to selection. Right-click an enemy to focus fire or the ground to move. Scroll to zoom; middle-drag to pan.";
   const canvas = host.querySelector("canvas"),
     renderer = new BattlefieldRenderer(canvas),

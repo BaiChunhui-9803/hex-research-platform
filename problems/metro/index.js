@@ -28,6 +28,23 @@ import {
 import { integer } from "../../core/random.js";
 import { routeVectorTask } from "./vector.js";
 
+function forecastTransit(state, visible, seed) {
+  const simulated = structuredClone(state);
+  const lookahead = Math.min(30, state.horizon - state.time);
+  simulated.scenario = visible;
+  simulated.stations = Object.fromEntries(
+    Object.entries(simulated.stations).filter(([, station]) => station.active),
+  );
+  simulated.schedule = demandSchedule(
+    visible,
+    lookahead,
+    (seed ^ state.time ^ 0x6fe21d) >>> 0,
+  ).map((event) => ({ ...event, t: event.t + state.time }));
+  simulated.eventIndex = 0;
+  simulated.horizon = state.time + lookahead;
+  return simulated;
+}
+
 export const metro = {
   id: "metro",
   name: "Metro Network",
@@ -168,9 +185,9 @@ export const metro = {
       editBudget: integer(input.editBudget, 60, 0, 300, "Edit budget"),
     };
   },
-  create(config) {
-    const scenario = createScenario(config.scenarioId, config.seed);
-    let state = createState(
+  create(config, initialState = null) {
+    const scenario = initialState?.scenario ?? createScenario(config.scenarioId, config.seed);
+    let state = initialState ?? createState(
       scenario,
       greedyPlan({ scenario: scenarioAt(scenario, 0) }),
       {
@@ -214,20 +231,8 @@ export const metro = {
           !compilePlan(visible, plan).valid
         )
           return { valid: false, score: -Infinity };
-        const simulated = structuredClone(state);
-        const lookahead = Math.min(30, config.horizon - state.time);
-        simulated.scenario = visible;
-        simulated.stations = Object.fromEntries(
-          Object.entries(simulated.stations).filter(([, s]) => s.active),
-        );
-        simulated.schedule = demandSchedule(
-          visible,
-          lookahead,
-          (config.seed ^ state.time ^ 0x6fe21d) >>> 0,
-        ).map((e) => ({ ...e, t: e.t + state.time }));
-        simulated.eventIndex = 0;
-        simulated.horizon = state.time + lookahead;
-        simulated.finished = false;
+        const simulated = forecastTransit(state, visible, config.seed);
+        const lookahead = simulated.horizon - state.time;
         applyPlan(simulated, plan, {
           charge: state.time > 0,
           reason: "Forecast candidate",
@@ -269,6 +274,18 @@ export const metro = {
       tick: () => state.time,
       time: () => state.time,
       done: () => state.finished,
+      currentPlan: () => structuredClone(state.plan),
+      delivered: () => state.delivered,
+      fork({ forecast = false } = {}) {
+        const useForecast =
+          forecast && !state.finished && (scenario.dynamic || state.time > 0);
+        return metro.create(
+          config,
+          useForecast
+            ? forecastTransit(state, observeState(state).scenario, config.seed)
+            : structuredClone(state),
+        );
+      },
       clearSolution() {},
       opened: () => scenario.stations.some((s) => s.opensAt === state.time),
       decisionStamp: () => ({ tick: state.time, stations: count() }),
@@ -294,8 +311,16 @@ export const metro = {
         applyPlan(candidate, action.plan, { reason: "Platform decision" });
         state = candidate;
       },
-      advance() {
-        step(state, 1, { stopOnFailure: false });
+      advance({ holdTrains = false } = {}) {
+        const trains = state.trains;
+        // A hold freezes train movement and boarding, while the usual demand
+        // clock, station openings, queues and overload accounting advance.
+        if (holdTrains) state.trains = [];
+        try {
+          step(state, 1, { stopOnFailure: false });
+        } finally {
+          if (holdTrains) state.trains = trains;
+        }
       },
     };
   },

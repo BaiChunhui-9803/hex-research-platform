@@ -324,7 +324,7 @@ body[data-screen="workspace"] #home {
 }
 .problem-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
   padding: 0 15px;
 }
@@ -396,6 +396,23 @@ body[data-screen="workspace"] #home {
 }
 .workspace-toolbar label:first-of-type {
   min-width: 230px;
+}
+#scenario-field[hidden],
+.fusion-sources[hidden] {
+  display: none;
+}
+.fusion-sources {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  min-width: 0;
+}
+.fusion-sources label:first-of-type {
+  min-width: 0;
+}
+.fusion-sources select {
+  min-width: 0;
+  max-width: 100%;
 }
 .workspace-toolbar input {
   width: 105px;
@@ -511,6 +528,82 @@ body[data-screen="workspace"] #home {
   width: 100%;
   height: 100%;
   outline: 0;
+}
+.arena.fusion-view {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  height: auto;
+  min-height: 0;
+  background: var(--line);
+}
+.fusion-component {
+  min-width: 0;
+  background: white;
+}
+.fusion-component header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+}
+.fusion-component h3 {
+  margin: 0;
+  font-size: 13px;
+}
+.fusion-component .arena {
+  height: clamp(250px, 34vh, 440px);
+  min-height: 0;
+}
+.fusion-component .problem-controls {
+  flex-wrap: wrap;
+}
+.fusion-flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  gap: 13px;
+}
+.fusion-flow strong,
+.fusion-flow span {
+  display: block;
+  margin: 0;
+  font-size: 11px;
+}
+.fusion-flow strong {
+  color: var(--accent);
+}
+.pareto-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 346px;
+  overflow: auto;
+}
+.pareto-list li {
+  margin: 0 0 8px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.pareto-list dl {
+  margin: 5px 0 0;
+}
+.pareto-list dl div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  font-size: 10px;
+}
+.pareto-list dd {
+  margin: 0;
+  font-family: var(--font-data);
+}
+@media (max-width: 900px) {
+  .arena.fusion-view {
+    grid-template-columns: 1fr;
+  }
 }
 .interaction-help {
   font-size: 10px;

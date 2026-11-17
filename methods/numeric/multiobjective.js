@@ -148,11 +148,14 @@ export function nsga2(task, options, context) {
     variation: "SBX plus polynomial mutation",
   });
 }
-const distance = (a, b) =>
+const distance = (a, b, scales) =>
   Math.sqrt(
-    a.objectives.reduce((sum, x, j) => sum + (x - b.objectives[j]) ** 2, 0),
+    a.objectives.reduce(
+      (sum, x, j) => sum + ((x - b.objectives[j]) / (scales?.[j] ?? 1)) ** 2,
+      0,
+    ),
   );
-export function spea2Environmental(pop, size) {
+export function spea2Environmental(pop, size, scales) {
   pop = unique(pop);
   const strength = pop.map((a) => pop.filter((b) => dominates(a, b)).length),
     raw = pop.map((a) =>
@@ -163,7 +166,7 @@ export function spea2Environmental(pop, size) {
     const neighbors = pop
       .filter((p) => p !== point && p.valid && p.objectives)
       .map((p) =>
-        point.valid && point.objectives ? distance(point, p) : Infinity,
+        point.valid && point.objectives ? distance(point, p, scales) : Infinity,
       )
       .sort((a, b) => a - b);
     point.speaFitness =
@@ -184,7 +187,7 @@ export function spea2Environmental(pop, size) {
     const rows = archive.map((a) =>
       archive
         .filter((b) => a !== b)
-        .map((b) => distance(a, b))
+        .map((b) => distance(a, b, scales))
         .sort((a, b) => a - b),
     );
     let remove = 0;
@@ -208,7 +211,7 @@ export function spea2(task, options, context) {
   let pop = population(e, rng, n),
     archive = [];
   while (e.canContinue) {
-    archive = spea2Environmental([...archive, ...pop], n);
+    archive = spea2Environmental([...archive, ...pop], n, task.objectiveScales);
     const offspring = [];
     while (offspring.length < n && e.canContinue) {
       const rank = (a, b) => a.speaFitness - b.speaFitness,
@@ -267,7 +270,8 @@ export function moead(task, options, context) {
       : Math.max(
           ...w.map(
             (v, j) =>
-              Math.max(1e-6, v) * Math.abs(entry.objectives[j] - ideal[j]),
+              Math.max(1e-6, v) * Math.abs(entry.objectives[j] - ideal[j]) /
+              (task.objectiveScales?.[j] ?? 1),
           ),
         );
   while (e.canContinue && pop.length >= 2) {

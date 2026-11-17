@@ -1,11 +1,11 @@
 import { MapRenderer } from "../../engines/metro/web/renderer.js";
 import theme from "../../engines/metro/web/themes/midnight.js";
-export function mount({ host, controls, onAction, onPause, notice }) {
+export function mount({ host, controls, onAction, onPause, notice, help = document.querySelector("#interaction-help") }) {
   host.className = "arena metro-view";
   host.innerHTML = '<svg viewBox="0 0 1100 700" aria-label="Metro map"></svg>';
   controls.innerHTML =
     '<button data-line="A">Line A</button><button data-line="B">Line B</button><button data-line="C">Line C</button><button data-edit="clear">Clear line</button><button data-edit="undo">Undo</button><button data-edit="fit">Fit</button><span>Circle · Triangle · Square</span>';
-  document.querySelector("#interaction-help").textContent =
+  if (help) help.textContent =
     "Choose a line, select an endpoint, then another station. Drag a stop to replace it. Stations shared by lines allow transfers.";
   const svg = host.querySelector("svg"),
     renderer = new MapRenderer(svg),

@@ -1,7 +1,8 @@
 import { createRegistry } from "../core/registry.js";
 import { metro } from "./metro/index.js";
 import { skirmish } from "./skirmish/index.js";
-export const problemRegistry = createRegistry([metro, skirmish], "problem");
+import { fusion } from "./fusion/index.js";
+export const problemRegistry = createRegistry([metro, skirmish, fusion], "problem");
 export function problemMetadata(problem) {
   const {
     id,
@@ -14,6 +15,7 @@ export function problemMetadata(problem) {
     defaultScenario,
     metrics,
     scenarios,
+    sourceProblems,
   } = problem;
   return {
     id,
@@ -25,6 +27,7 @@ export function problemMetadata(problem) {
     stepSize,
     defaultScenario,
     metrics,
+    ...(sourceProblems ? { sourceProblems } : {}),
     scenarios: scenarios.map((s) => ({
       ...s,
       capabilities: problem.capabilities(s.id),

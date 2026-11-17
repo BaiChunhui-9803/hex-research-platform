@@ -225,18 +225,27 @@ export const skirmish = {
       opponent,
     };
   },
-  create(config) {
-    const scenario = createScenario(config.scenarioId, config.seed);
-    scenario.duration = config.horizon;
-    let state = createBattle(scenario, {
-      controllers: Object.fromEntries(
-        scenario.teams.map((t) => [
-          t.id,
-          t.id === config.team ? "human" : config.opponent,
-        ]),
-      ),
-    });
-    let solution = null;
+  create(config, saved = null) {
+    let state = saved?.state;
+    if (!state) {
+      const scenario = createScenario(config.scenarioId, config.seed);
+      scenario.duration = config.horizon;
+      state = createBattle(scenario, {
+        controllers: Object.fromEntries(
+          scenario.teams.map((t) => [
+            t.id,
+            t.id === config.team ? "human" : config.opponent,
+          ]),
+        ),
+      });
+    }
+    let solution = saved?.solution ?? null;
+    const ownMax = state.units
+      .filter((unit) => unit.team === config.team)
+      .reduce((sum, unit) => sum + unit.maxHp, 0);
+    const enemyMax = state.units
+      .filter((unit) => unit.team !== config.team)
+      .reduce((sum, unit) => sum + unit.maxHp, 0);
     return {
       observe: () => observe(state, config.team),
       metrics: () => measured(state, config.team),
@@ -244,6 +253,43 @@ export const skirmish = {
       tick: () => state.tick,
       time: () => state.time,
       done: () => state.phase === "finished",
+      health() {
+        let ownHp = 0;
+        let enemyHp = 0;
+        for (const unit of state.units) {
+          if (unit.team === config.team) ownHp += unit.hp;
+          else enemyHp += unit.hp;
+        }
+        return { ownHp, enemyHp, ownMax, enemyMax, winner: state.winner };
+      },
+      maxTicks: () => state.maxTicks,
+      currentController: () => structuredClone(solution),
+      fork({ forecast = false } = {}) {
+        const copy = structuredClone(state);
+        if (forecast) {
+          copy.record = false;
+          copy.commandLog = [];
+          copy.events = [];
+        }
+        return skirmish.create(config, {
+          state: copy,
+          solution: structuredClone(solution),
+        });
+      },
+      restoreHealth(points) {
+        if (state.phase === "finished" || points <= 0) return 0;
+        const wounded = state.units
+          .filter((u) => u.team === config.team && u.hp > 0 && u.hp < u.maxHp)
+          .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp || a.id.localeCompare(b.id));
+        let remaining = points;
+        for (const unit of wounded) {
+          const increase = Math.min(remaining, unit.maxHp - unit.hp);
+          unit.hp += increase;
+          remaining -= increase;
+          if (remaining <= 0) break;
+        }
+        return points - remaining;
+      },
       clearSolution() {
         solution = null;
       },
@@ -254,9 +300,6 @@ export const skirmish = {
           : state.tick % 5 === 0 && last?.tick !== state.tick,
       createSearchTask() {
         const initialState = structuredClone(state);
-        const enemyMax = initialState.units
-          .filter((u) => u.team !== config.team)
-          .reduce((sum, u) => sum + u.maxHp, 0);
         return {
           protocol: "optimization/v1",
           temperature: 90,
@@ -308,8 +351,10 @@ export const skirmish = {
           },
         };
       },
-      createVectorTask() {
-        return controllerVectorTask(this.createSearchTask(), BOUNDS);
+      createVectorTask(_maxChange, { useCurrent = false } = {}) {
+        const task = this.createSearchTask();
+        if (useCurrent && solution) task.initial = () => structuredClone(solution);
+        return controllerVectorTask(task, BOUNDS);
       },
       acceptSolution(candidate) {
         if (!valid(candidate)) throw new Error("Invalid controller parameters");
