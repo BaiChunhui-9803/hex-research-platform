@@ -1,0 +1,3 @@
+* text=auto eol=lf
+/engines/metro/** -text !eol
+/engines/skirmish/** -text !eol

@@ -1,0 +1,97 @@
+{
+  "stats": {
+    "journalArticles": 130,
+    "tevcJournalArticles": 112,
+    "stratifiedSample": 100,
+    "sampleYears": [
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "sampleWithReferences": 86,
+    "sampleWithoutReferences": 14,
+    "supplementarySources": 8,
+    "implementedMethods": 28
+  },
+  "frequency": [
+    {
+      "family": "NSGA-II",
+      "papers": 32,
+      "denominator": 86,
+      "share": 0.37209302325581395,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "MOEA/D",
+      "papers": 21,
+      "denominator": 86,
+      "share": 0.2441860465116279,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "NSGA-III",
+      "papers": 10,
+      "denominator": 86,
+      "share": 0.11627906976744186,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "Differential evolution",
+      "papers": 9,
+      "denominator": 86,
+      "share": 0.10465116279069768,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "CMA-ES",
+      "papers": 9,
+      "denominator": 86,
+      "share": 0.10465116279069768,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "SPEA2",
+      "papers": 9,
+      "denominator": 86,
+      "share": 0.10465116279069768,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "Particle swarm",
+      "papers": 7,
+      "denominator": 86,
+      "share": 0.08139534883720931,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "SHADE / L-SHADE",
+      "papers": 3,
+      "denominator": 86,
+      "share": 0.03488372093023256,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "JADE",
+      "papers": 2,
+      "denominator": 86,
+      "share": 0.023255813953488372,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "jSO",
+      "papers": 1,
+      "denominator": 86,
+      "share": 0.011627906976744186,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    },
+    {
+      "family": "Real-coded GA",
+      "papers": 0,
+      "denominator": 86,
+      "share": 0.0,
+      "interpretation": "可解析参考文献中识别到代表文献或名称；不是基准采用率"
+    }
+  ]
+}

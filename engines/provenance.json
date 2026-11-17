@@ -1,0 +1,212 @@
+{
+  "snapshotDate": "2026-11-15",
+  "note": "Original projects preserved. Engine snapshots retain existing simulation rules. Platform adapters live outside engines.",
+  "files": [
+    {
+      "file": "engines/metro/algorithms/adaptive-template.js",
+      "source": "../hex-metro-lab/algorithms/adaptive-template.js",
+      "sha256": "a85bf902e2769e8d3191422de2ffac2d98193317a98664054d2d979dcfc82901"
+    },
+    {
+      "file": "engines/metro/algorithms/adaptive.js",
+      "source": "../hex-metro-lab/algorithms/adaptive.js",
+      "sha256": "736202fb8857228651e8d161e0071b963fc475938e7c5e0c20741f71bf2060ca"
+    },
+    {
+      "file": "engines/metro/algorithms/annealing.js",
+      "source": "../hex-metro-lab/algorithms/annealing.js",
+      "sha256": "2284ce1c8251bd0f3856ff33937e928ed89f2326d7230508a60f19f8c6464ff7"
+    },
+    {
+      "file": "engines/metro/algorithms/greedy.js",
+      "source": "../hex-metro-lab/algorithms/greedy.js",
+      "sha256": "1ccaca3fb77b53ddb261d395749f849d6fb248edd06b896d71bc1a4552db7444"
+    },
+    {
+      "file": "engines/metro/algorithms/local-search.js",
+      "source": "../hex-metro-lab/algorithms/local-search.js",
+      "sha256": "0ba0227c4e30f6878873f67347b61392f705aba8685a3c094f099474a8000da6"
+    },
+    {
+      "file": "engines/metro/algorithms/operators.js",
+      "source": "../hex-metro-lab/algorithms/operators.js",
+      "sha256": "0ef3b74afc9c52f028d15012bc22dd12c3574a9e9140a8320cb6ab62f816f5b2"
+    },
+    {
+      "file": "engines/metro/algorithms/random.js",
+      "source": "../hex-metro-lab/algorithms/random.js",
+      "sha256": "ad9aa3a86b84493c8c3ef96c3974a9ebd1433605c4d4b399909d99a180d06f6d"
+    },
+    {
+      "file": "engines/metro/algorithms/registry.js",
+      "source": "../hex-metro-lab/algorithms/registry.js",
+      "sha256": "fa08bd45147387b6dcf277670a49197df47e2a0d42ecb7ca74c021b63fbb779f"
+    },
+    {
+      "file": "engines/metro/algorithms/template.js",
+      "source": "../hex-metro-lab/algorithms/template.js",
+      "sha256": "966d5577d707efbd952ac0e5bb2e9e43be617993b5c049ae6ebb7b74e1c444b3"
+    },
+    {
+      "file": "engines/metro/shared/contracts.d.ts",
+      "source": "../hex-metro-lab/shared/contracts.d.ts",
+      "sha256": "38c90d85b35c3ab037f7d6d7c3e718db4a3d78ccb7b2348d87c04849432ec1d9"
+    },
+    {
+      "file": "engines/metro/shared/edit-cost.js",
+      "source": "../hex-metro-lab/shared/edit-cost.js",
+      "sha256": "44a9fa3864ee0591d732639314f3894f1b1c8b310eee8ac140cdb8c5800b4870"
+    },
+    {
+      "file": "engines/metro/shared/hex.js",
+      "source": "../hex-metro-lab/shared/hex.js",
+      "sha256": "26f43ddf0cee846ac0498552c1bf7234bb410f22aa425f1568e570523b17c3e7"
+    },
+    {
+      "file": "engines/metro/shared/map-rules.js",
+      "source": "../hex-metro-lab/shared/map-rules.js",
+      "sha256": "381d7e1b4891028ac9e1fa3f9f4ac763b94027222921781c4479124d36896e7f"
+    },
+    {
+      "file": "engines/metro/shared/network.js",
+      "source": "../hex-metro-lab/shared/network.js",
+      "sha256": "2c032e140c90bfd15b406b25b1af6a6f4f123cb52220e50bca5112cb845af572"
+    },
+    {
+      "file": "engines/metro/shared/problem.js",
+      "source": "../hex-metro-lab/shared/problem.js",
+      "sha256": "0075dcdc184e105e59f1117512fc78094c6e9247c2bdc5076849cdf95469f7ae"
+    },
+    {
+      "file": "engines/metro/shared/rng.js",
+      "source": "../hex-metro-lab/shared/rng.js",
+      "sha256": "eeb9694d47f47bbe13fa1d9bbee7bea7f4d487232fa3a50720e32643560b9caa"
+    },
+    {
+      "file": "engines/metro/shared/scenarios.js",
+      "source": "../hex-metro-lab/shared/scenarios.js",
+      "sha256": "a538c849c635d0075ed2584434be877d8e8c42875d97de5614ae521403e99a57"
+    },
+    {
+      "file": "engines/metro/shared/simulation.js",
+      "source": "../hex-metro-lab/shared/simulation.js",
+      "sha256": "556b30170870e72dbb6e3b50dda2f332118821f32ccdd6b645c17c7d116e4ff1"
+    },
+    {
+      "file": "engines/metro/web/icons.js",
+      "source": "../hex-metro-lab/web/icons.js",
+      "sha256": "0b19e89dab3994c8f83fee6af277b550fa1978092e35ab521bf2f4b4547f2da1"
+    },
+    {
+      "file": "engines/metro/web/renderer.js",
+      "source": "../hex-metro-lab/web/renderer.js",
+      "sha256": "483ad8968964ee725ca8ede66d22d96670af03ed571e115926aaa07ad03f3110"
+    },
+    {
+      "file": "engines/metro/web/themes/midnight.js",
+      "source": "../hex-metro-lab/web/themes/midnight.js",
+      "sha256": "c4314d63eb8169be5c1769b7e55f7939a659e0299ca4ced53adf88cb220d5baf"
+    },
+    {
+      "file": "engines/metro/shared/catalogs/names.en.js",
+      "source": "../hex-metro-lab/shared/catalogs/names.en.js",
+      "sha256": "82a2ecb094f3bc98eb1ad91d0cd621141449e7c9dd814fd1ee495cfd55a2f259"
+    },
+    {
+      "file": "engines/skirmish/policies/focus.js",
+      "source": "../hex-skirmish-lab/policies/focus.js",
+      "sha256": "1b671af9115e1acd4c9339517fecdca56751a58799a73e10fe6f6eda8df4e40d"
+    },
+    {
+      "file": "engines/skirmish/policies/helpers.js",
+      "source": "../hex-skirmish-lab/policies/helpers.js",
+      "sha256": "4d21da5b49457cd827da509aeb762d8b202ddc0a7bb77d0b482ed65a56472058"
+    },
+    {
+      "file": "engines/skirmish/policies/kite.js",
+      "source": "../hex-skirmish-lab/policies/kite.js",
+      "sha256": "b7bed99eaf4f80ec44d0c2f6e19095952214eb62712aa157307bc4930eef9d71"
+    },
+    {
+      "file": "engines/skirmish/policies/random.js",
+      "source": "../hex-skirmish-lab/policies/random.js",
+      "sha256": "0af8228dce4395d1ae1e1a8409c9ac850faa724621f6b8f4d1a19ef51a5e36ca"
+    },
+    {
+      "file": "engines/skirmish/policies/registry.js",
+      "source": "../hex-skirmish-lab/policies/registry.js",
+      "sha256": "79c45aad6d56ff7e360a746729748e7819ee55f5c2191e072ed5dc31b6af14dd"
+    },
+    {
+      "file": "engines/skirmish/policies/rush.js",
+      "source": "../hex-skirmish-lab/policies/rush.js",
+      "sha256": "44513f69a1be10f87c31dec0026d7363501100105f0da779bb980eb23559ec67"
+    },
+    {
+      "file": "engines/skirmish/policies/template.js",
+      "source": "../hex-skirmish-lab/policies/template.js",
+      "sha256": "57326187e010ed65f5922166d526358c381fcb9d0ce9e458f407514b11b8096e"
+    },
+    {
+      "file": "engines/skirmish/shared/battle.js",
+      "source": "../hex-skirmish-lab/shared/battle.js",
+      "sha256": "db82efc7975a980171df0c744b9a49c7fb5bbf9845dbcb2542c1a9c9189b8875"
+    },
+    {
+      "file": "engines/skirmish/shared/contracts.d.ts",
+      "source": "../hex-skirmish-lab/shared/contracts.d.ts",
+      "sha256": "5f79fa14cd8947250a29db690171fcfd0aeaf7b712d31a402be626acbf429da2"
+    },
+    {
+      "file": "engines/skirmish/shared/hex.js",
+      "source": "../hex-skirmish-lab/shared/hex.js",
+      "sha256": "75a78f01a34de00a5cf6c6968f0b7ad328f5fc0a8120a89244392dc298e54b9f"
+    },
+    {
+      "file": "engines/skirmish/shared/match.js",
+      "source": "../hex-skirmish-lab/shared/match.js",
+      "sha256": "fc9b037a8cc880c630bb285b88f302ac9806932cf10c39caec713fcc971f656f"
+    },
+    {
+      "file": "engines/skirmish/shared/observation.js",
+      "source": "../hex-skirmish-lab/shared/observation.js",
+      "sha256": "0bf965ee44319efdedb6523326f6fe054457a63c23c861ea222bb35d1353b61d"
+    },
+    {
+      "file": "engines/skirmish/shared/pathfinding.js",
+      "source": "../hex-skirmish-lab/shared/pathfinding.js",
+      "sha256": "38d07b800eebb7f3283e4e839f66f2bb36b5c992a0bd5ce68022de2cf75ce882"
+    },
+    {
+      "file": "engines/skirmish/shared/rng.js",
+      "source": "../hex-skirmish-lab/shared/rng.js",
+      "sha256": "33b9364de9b30bb994cbb52568513a11820a16b9e0b65db46e2eb869784e3edb"
+    },
+    {
+      "file": "engines/skirmish/shared/scenarios.js",
+      "source": "../hex-skirmish-lab/shared/scenarios.js",
+      "sha256": "fb9135324d715952a995152e95a19d1b3649d2de87c33c7365354155c82bff9c"
+    },
+    {
+      "file": "engines/skirmish/shared/terrain.js",
+      "source": "../hex-skirmish-lab/shared/terrain.js",
+      "sha256": "f17a7beb5b86ed73589d78a8b16876bc71eed876f8e27ed4396092a65c45d566"
+    },
+    {
+      "file": "engines/skirmish/shared/units.js",
+      "source": "../hex-skirmish-lab/shared/units.js",
+      "sha256": "c3445571ec6316f6d75bbdd88b854e197a15f6c00c528d1cfc43f23db512d01d"
+    },
+    {
+      "file": "engines/skirmish/web/renderer.js",
+      "source": "../hex-skirmish-lab/web/renderer.js",
+      "sha256": "6982d7d57fc7497dd7d36e0f2dcbef2f814d9ff2962e07084aad989ed888319e"
+    },
+    {
+      "file": "engines/skirmish/web/theme.js",
+      "source": "../hex-skirmish-lab/web/theme.js",
+      "sha256": "c5aed5119653fc9b81a3e825bbaf66f4a589d001f193c0899f49c9605039248f"
+    }
+  ],
+  "sourcePathBase": "Project root"
+}

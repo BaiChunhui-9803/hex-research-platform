@@ -1,0 +1,764 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>演化基准与130篇期刊证据</title><link rel="stylesheet" href="evidence.css"></head><body><header><a href="index.html">← 文献库</a><a href="/">HEX平台</a><a href="journal-references.csv">期刊CSV</a></header><article><div class="toc">
+<ul>
+<li><a href="#_1">演化优化基准、文献证据与平台接入</a><ul>
+<li><a href="#1">1. 文献依据与“常用基准”的证据边界</a></li>
+<li><a href="#2">2. 为什么建议采用这些基准家族</a></li>
+<li><a href="#3-28">3. 当前28种方法及分类</a></li>
+<li><a href="#4">4. 问题和算法怎样继续保持分离</a><ul>
+<li><a href="#41">4.1 原生候选协议</a></li>
+<li><a href="#42">4.2 归一化向量协议</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 多目标结果怎样进入可玩的环境</a></li>
+<li><a href="#6">6. 实现与论文实验参数的区别</a></li>
+<li><a href="#7">7. 主平台界面已经落实的改动</a></li>
+<li><a href="#8">8. 实验验证及可支持的结论</a></li>
+<li><a href="#9">9. 后续研究如何选算法</a></li>
+<li><a href="#_2">引文覆盖统计</a></li>
+<li><a href="#_3">全部期刊文献</a></li>
+<li><a href="#130">独立补充资料（不计入130篇期刊）</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="_1">演化优化基准、文献证据与平台接入</h1>
+<p>核验截止：2026年11月15日。面向HEX的问题／方法平台，重点参考IEEE TEVC期刊、CEC历届方法与组织者资料。</p>
+<p>本轮完成了两项相互关联的工作：<strong>将推荐的清爽游戏式设计落实到主平台；将方法库扩展到28种，并提供目标、类别、家族、变体和问题适用性的分层筛选。</strong> 文献库核验130篇独立期刊论文，其中112篇来自IEEE TEVC；另列8项会议、技术报告或官方资料，不计入130篇。</p>
+<h2 id="1">1. 文献依据与“常用基准”的证据边界</h2>
+<p>文献库由两部分组成：</p>
+<ol>
+<li><strong>100篇分年TEVC样本</strong>：2022—2026检索年份，每年完整Crossref结果池中按固定SHA-256排序取20篇，跨年DOI去重。算法名称不参与抽样。另排除编辑性内容、期刊／学会信息页、投稿须知与无作者的行政记录，数据库的journal-article标签本身不作为研究论文充分条件。</li>
+<li><strong>30篇原始方法、综述与比较规范论文</strong>：覆盖DE、PSO、CMA-ES、NSGA-II、MOEA/D、参数控制、约束与基准方法论等。</li>
+</ol>
+<p>所有主体记录均核到期刊类型、题名、作者、DOI和出处；本轮没有声称130篇全部精读全文。逐项注明题录／引文编码，或关键摘要、方法段落与作者官方说明选读。分层检索年与线上／正式卷期年份可能不同，表中保留来源与年份口径。</p>
+<p><strong>引用频次、实际比较实验采用率和算法性能是三件不同的事。</strong> 本次100篇样本中，86篇有可解析的参考文献条目，14篇没有足够引文元数据。统计识别代表DOI与明确方法名，不把缺失记为“没使用”，也不把引用自动认定为基准采用。</p>
+<p>因此，本文不写“某算法被全领域大多数研究采用”这一无法由当前数据证明的结论。方法选择结合三条证据：<strong>原始定义与机制覆盖、期刊综述和比较研究、CEC组织者及作者的公开资料</strong>。分年等额样本也不是全刊实际发文比例估计。</p>
+<h2 id="2">2. 为什么建议采用这些基准家族</h2>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>建议方法</th>
+<th>用途与理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础参照</td>
+<td>构造基线、随机搜索、爬山、模拟退火</td>
+<td>判断复杂方法相对简单构造和局部改进的增益</td>
+</tr>
+<tr>
+<td>机制覆盖的单目标组合</td>
+<td>Real-coded GA、DE/rand/1/bin、PSO、CMA-ES</td>
+<td>覆盖重组选择、差分变异、群体协同、分布／协方差适应</td>
+</tr>
+<tr>
+<td>现代DE对照</td>
+<td>jDE、JADE、SHADE、L-SHADE</td>
+<td>分别覆盖个体参数自适应、成功均值、成功历史和种群缩减</td>
+</tr>
+<tr>
+<td>多目标组合</td>
+<td>NSGA-II、SPEA2、MOEA/D</td>
+<td>分别覆盖非支配排序、强度与密度、目标分解</td>
+</tr>
+<tr>
+<td>在线领域策略</td>
+<td>4种地铁策略、4种小队策略</td>
+<td>保留问题原有的在线启发式参照；不伪装成CEC通用优化器</td>
+</tr>
+</tbody>
+</table>
+<p>最低限度的单目标比较，建议从<strong>随机搜索＋GA＋DE＋PSO＋CMA-ES</strong>开始，而不是只在同一家族的多个小变体之间比较。研究DE自适应机制时，再引入jDE／JADE／SHADE／L-SHADE。研究送达与轨道／改线代价，或生存与打击之间的取舍时，使用多目标组合。</p>
+<p>CEC补充资料明确包含SHADE（2013）、L-SHADE（2014）和jSO（2017）等。作者材料还区分SHADE版本、L-SHADE与修正过的归档代码。这说明“同一家族、同一简称”仍需要记录版本、参数和边界处理。<a href="https://ryojitanabe.github.io/publication">作者公开版本</a></p>
+<p>jSO、SaDE、CoDE、CLPSO、NSGA-III等已纳入文献依据或后续候选；当前没有把未实现的方法放进可运行名单。NSGA-III特别面向多／众目标情境，当前两个问题各采用两个明确目标，先接入三种互补的多目标核心方法。</p>
+<h2 id="3-28">3. 当前28种方法及分类</h2>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>类别／家族</th>
+<th>已实现方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单目标</td>
+<td>基础与轨迹搜索</td>
+<td>Constructive、Random search、Hill climbing、Simulated annealing、Multistart、Tabu</td>
+</tr>
+<tr>
+<td>单目标</td>
+<td>遗传与演化策略</td>
+<td>Real-coded GA、(1+1)-ES、CMA-ES</td>
+</tr>
+<tr>
+<td>单目标</td>
+<td>差分演化</td>
+<td>DE/rand/1/bin、DE/best/1/bin、jDE、JADE、SHADE、L-SHADE</td>
+</tr>
+<tr>
+<td>单目标</td>
+<td>粒子群</td>
+<td>Inertia PSO、Constriction PSO</td>
+</tr>
+<tr>
+<td>多目标</td>
+<td>帕累托排序与强度</td>
+<td>NSGA-II、SPEA2</td>
+</tr>
+<tr>
+<td>多目标</td>
+<td>分解</td>
+<td>MOEA/D</td>
+</tr>
+<tr>
+<td>在线控制</td>
+<td>地铁专用</td>
+<td>Keep initial network、Greedy extensions、Rebuild and search、Budgeted local repair</td>
+</tr>
+<tr>
+<td>在线控制</td>
+<td>小队专用</td>
+<td>Attack-move、Focus fire、Kite &amp; focus、Random orders</td>
+</tr>
+</tbody>
+</table>
+<p>总计：<strong>17种单目标方法、3种多目标方法、8种领域控制策略</strong>。其中20种搜索方法通过共享协议在两类问题上运行。</p>
+<p>主平台的筛选层次为：</p>
+<blockquote>
+<p>目标类型 → 类别 → 家族 → 变体，同时选择问题范围、关键词和是否只显示兼容方法。</p>
+</blockquote>
+<p>例如：Single-objective → Evolutionary → Differential evolution → Success history，将定位SHADE；选择Success history + reduction则定位L-SHADE。Multiobjective可进一步区分Pareto ranking与Decomposition。筛选和兼容逻辑同时在浏览器与HTTP API提供。</p>
+<h2 id="4">4. 问题和算法怎样继续保持分离</h2>
+<h3 id="41">4.1 原生候选协议</h3>
+<p><code>optimization/v1</code>保留原来的<code>initial/sample/mutate/evaluate</code>接口。构造、随机、局部、退火、多起点和禁忌方法操作不透明候选解，由问题负责合法性与邻域。</p>
+<h3 id="42">4.2 归一化向量协议</h3>
+<p><code>vector-optimization/v1</code>新增维度、归一化初始向量、解码、评价和目标定义。GA、DE、PSO、CMA-ES和三种多目标方法使用该接口。问题必须声明<code>unit-box-encoding</code>；多目标方法还要求<code>pareto-objectives</code>。没有这些能力的新问题会被明确标为不兼容。</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>向量编码</th>
+<th>评价与信息范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>地铁</td>
+<td>每条线、每个当前可见站点的成员／排序随机键；值低于阈值的站点按键排序，截取到线路停站上限</td>
+<td>静态为固定已知需求下的离线评价；动态只在当前开放站点上使用独立30分钟需求预测</td>
+</tr>
+<tr>
+<td>小队</td>
+<td>4个实数控制参数＋2个阈值化开关，共6维</td>
+<td>固定对手的确定性完整仿真；搜索的是控制参数，部署后再在线产生单位命令</td>
+</tr>
+</tbody>
+</table>
+<p>地铁随机键具有离散解码、截断和约束；小队开关也不连续。因此这里是<strong>经典方法在HEX编码上的有界适配</strong>，不是把游戏直接宣称为CEC标准连续函数。编码差异、无效候选比例和真实模型评价代价都应纳入后续研究。</p>
+<h2 id="5">5. 多目标结果怎样进入可玩的环境</h2>
+<p>多目标方法保留非支配候选归档，不以单一分数替代其搜索机制。为了让一局游戏继续执行，平台在该归档中按当前部署得分选择一项，并记录这一规则。</p>
+<table>
+<thead>
+<tr>
+<th>问题情境</th>
+<th>最小化目标1</th>
+<th>最小化目标2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静态地铁</td>
+<td>负的送达人数</td>
+<td>轨道使用量</td>
+</tr>
+<tr>
+<td>动态地铁</td>
+<td>负的预测新增送达人数</td>
+<td>当前决策改线代价</td>
+</tr>
+<tr>
+<td>小队</td>
+<td>己方生命损失比例</td>
+<td>敌方剩余生命比例</td>
+</tr>
+</tbody>
+</table>
+<p>界面展示的是“已评价候选中的非支配归档”，相同目标点合并；它不是全局真实帕累托前沿。动态地铁的归档对应最近一次局部规划，不能与整局累计指标混为一层。</p>
+<p>当前SPEA2采用强度、邻域密度与距离截断；NSGA-II采用非支配排序与拥挤距离；MOEA/D采用Tchebycheff分解与邻域更新。三个机制分别实现，而不是给相同的标量搜索换名字。</p>
+<h2 id="6">6. 实现与论文实验参数的区别</h2>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>当前实现说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GA</td>
+<td>实数SBX、多项式变异、二元锦标赛和精英保留</td>
+</tr>
+<tr>
+<td>jDE</td>
+<td>个体携带F／CR并根据成功选择保留</td>
+</tr>
+<tr>
+<td>JADE</td>
+<td>current-to-pbest、外部归档、成功F的Lehmer均值与CR算术均值</td>
+</tr>
+<tr>
+<td>SHADE</td>
+<td>对应2013核心，CR加权算术历史，历史长度100</td>
+</tr>
+<tr>
+<td>L-SHADE</td>
+<td>成功历史、CR加权Lehmer更新、线性种群缩减；历史长度6</td>
+</tr>
+<tr>
+<td>PSO</td>
+<td>全局最好拓扑；分别实现递减惯性和收缩系数变体</td>
+</tr>
+<tr>
+<td>CMA-ES</td>
+<td>正权重完整协方差与累计步长适应；未包含主动负权重或重启变体</td>
+</tr>
+<tr>
+<td>边界</td>
+<td>统一归一化空间；DE采用父代－边界中点修复，其余注明裁剪处理</td>
+</tr>
+</tbody>
+</table>
+<p>默认种群会适应交互预算，初始化也占用评价预算。这里不声称是官方CEC竞赛提交，也不把交互默认参数当作论文中的完整实验设置。正式论文比较需要重新确定评价预算、种群、维度、边界、终止条件、重复次数和统计方案。</p>
+<p>界面与API保留这些参数及实现说明；JSON结果中保存维度、编码、实现设置、归档与部署规则。回放执行记录的方案和命令，不重新求解。</p>
+<h2 id="7">7. 主平台界面已经落实的改动</h2>
+<ul>
+<li><strong>Problems首页</strong>：CoG式深色展示入口，Noto Serif JP用于展示标题；正文为Inter，数据与短标签为JetBrains Mono。</li>
+<li><strong>实际工作区</strong>：浅色、紧凑工具条、画面优先；方法说明、实现与文献按需展开。</li>
+<li><strong>Methods</strong>：目标、类别、家族、变体的级联筛选，兼容性和来源可查。</li>
+<li><strong>Experiments</strong>：基础／经典／自适应DE／帕累托预设，按类别分组勾选，超过单作业规模后顺序分批运行。</li>
+<li><strong>数据检查</strong>：保留逐局结果、均值与样本标准差、模型归档及回放，不合并不同问题的排行榜。</li>
+</ul>
+<p>字体资源本地保存并带OFL许可。主题色与线路、阵营及警报等语义色分离；原地铁、小队引擎和原项目保留。</p>
+<h2 id="8">8. 实验验证及可支持的结论</h2>
+<p>本轮实际运行<strong>756局</strong>：地铁324局、小队432局，覆盖全部11个场景、适用的28种方法、种子26／27／28。每次规划候选预算32；动态地铁有多次规划，领域策略则按迭代预算运行。756局均核验记录回放的最终指标。</p>
+<p>这验证了算法接口、跨问题适配、场景覆盖、数据保存与回放流程。结果还显示最高观察均值随场景变化；但3个种子、轻预算、编码适配和大量比较，不能支持全局最优、普遍优越或人的训练难度结论。</p>
+<p><a href="../../experiments/2026-11-15-evolutionary-baselines/summary.zh-CN.md">逐场景汇总与原始数据</a>另外给出相对构造基线的差值。基线为零或负数时不强算相对百分比；耗时仅作为本机参考，不作为正式速度优越证据。</p>
+<h2 id="9">9. 后续研究如何选算法</h2>
+<ol>
+<li>先明确单目标还是多目标，区分离线规划与在线控制。</li>
+<li>用基础参照判断问题和评分是否合理。</li>
+<li>选GA、DE、PSO、CMA-ES等互补机制，保持预算与任务条件一致。</li>
+<li>针对某家族机制，再加入自适应或历史变体，避免只选择有利比较对象。</li>
+<li>多目标研究评价解集及偏好选择，不只比较最后部署的一局分数。</li>
+<li>增加种子、测试地图与对手覆盖，记录失败、无效候选、模型调用与超时。</li>
+</ol>
+<p>当前文献与代码是可追踪的起点。要作“某方法被大多数研究作为基准”的发表级声明，还需逐篇编码比较表、明确样本范围并评估缺失，不能直接使用本次引文覆盖替代。</p>
+<hr />
+<p>以下列出引文统计、130篇期刊题录与逐篇证据范围，以及8项独立补充资料。</p>
+<h2 id="_2">引文覆盖统计</h2>
+<p>分母为100篇分年样本中有可解析参考条目的86篇。数字为论文级去重覆盖，同一论文可属于多个家族；不能相加成为总采用率。</p>
+<table>
+<thead>
+<tr>
+<th>家族／方法</th>
+<th>识别篇数</th>
+<th>分母</th>
+<th>覆盖比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NSGA-II</td>
+<td>32</td>
+<td>86</td>
+<td>37.2%</td>
+</tr>
+<tr>
+<td>MOEA/D</td>
+<td>21</td>
+<td>86</td>
+<td>24.4%</td>
+</tr>
+<tr>
+<td>NSGA-III</td>
+<td>10</td>
+<td>86</td>
+<td>11.6%</td>
+</tr>
+<tr>
+<td>Differential evolution</td>
+<td>9</td>
+<td>86</td>
+<td>10.5%</td>
+</tr>
+<tr>
+<td>CMA-ES</td>
+<td>9</td>
+<td>86</td>
+<td>10.5%</td>
+</tr>
+<tr>
+<td>SPEA2</td>
+<td>9</td>
+<td>86</td>
+<td>10.5%</td>
+</tr>
+<tr>
+<td>Particle swarm</td>
+<td>7</td>
+<td>86</td>
+<td>8.1%</td>
+</tr>
+<tr>
+<td>SHADE / L-SHADE</td>
+<td>3</td>
+<td>86</td>
+<td>3.5%</td>
+</tr>
+<tr>
+<td>JADE</td>
+<td>2</td>
+<td>86</td>
+<td>2.3%</td>
+</tr>
+<tr>
+<td>jSO</td>
+<td>1</td>
+<td>86</td>
+<td>1.2%</td>
+</tr>
+<tr>
+<td>Real-coded GA</td>
+<td>0</td>
+<td>86</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
+<p>实数GA代表文献在此识别口径下为0，不表示GA没有被使用。缺失题名、对算子的引用、书籍引用及不同表述均可能影响识别；算法选择同时依据原始方法和综述。</p>
+<h2 id="_3">全部期刊文献</h2>
+<p>以下130篇均有唯一DOI。会议、报告和官方资料在下一节独立列出。</p>
+<ul>
+<li>
+<p><strong>J001</strong> Ali Ahrari, Saber Elsayed, Ruhul Sarker, Daryl Essam, Carlos A. Coello Coello. Static and Dynamic Multimodal Optimization by Improved Covariance Matrix Self-Adaptation Evolution Strategy With Repelling Subpopulations. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(3): 527-541. <a href="https://doi.org/10.1109/tevc.2021.3117116">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J002</strong> Diederick Vermetten, Bas van Stein, Fabio Caraffini, Leandro L. Minku, Anna V. Kononova. BIAS: A Toolbox for Benchmarking Structural Bias in the Continuous Domain. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(6): 1380-1393. <a href="https://doi.org/10.1109/tevc.2022.3189848">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J003</strong> Xiangning Xie, Yuqiao Liu, Yanan Sun, Gary G. Yen, Bing Xue, Mengjie Zhang. BenchENAS: A Benchmarking Platform for Evolutionary Neural Architecture Search. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(6): 1473-1485. <a href="https://doi.org/10.1109/tevc.2022.3147526">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J004</strong> Chunlin He, Yong Zhang, Dunwei Gong, Xianfang Song, Xiaoyan Sun. A Multitask Bee Colony Band Selection Algorithm With Variable-Size Clustering for Hyperspectral Images. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(6): 1566-1580. <a href="https://doi.org/10.1109/tevc.2022.3159253">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J005</strong> Guanghui Zhang, Bo Liu, Ling Wang, Dengxiu Yu, Keyi Xing. Distributed Co-Evolutionary Memetic Algorithm for Distributed Hybrid Differentiation Flowshop Scheduling Problem. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(5): 1043-1057. <a href="https://doi.org/10.1109/tevc.2022.3150771">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J006</strong> Shaolin Wang, Yi Mei, Mengjie Zhang, Xin Yao. Genetic Programming With Niching for Uncertain Capacitated Arc Routing Problem. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(1): 73-87. <a href="https://doi.org/10.1109/tevc.2021.3095261">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J007</strong> Jon Mccormack, Camilo Cruz Gambardella. Growing and Evolving 3-D Prints. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(1): 88-99. <a href="https://doi.org/10.1109/tevc.2021.3095156">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J008</strong> Julia Moosbauer, Martin Binder, Lennart Schneider, Florian Pfisterer, Marc Becker, Michel Lang, Lars Kotthoff, Bernd Bischl. Automated Benchmark-Driven Design and Explanation of Hyperparameter Optimizers. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(6): 1336-1350. <a href="https://doi.org/10.1109/tevc.2022.3211336">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J009</strong> Hongke Zhao, Xinpeng Wu, Chuang Zhao, Lei Zhang, Haiping Ma, Fan Cheng. CoEA: A Cooperative–Competitive Evolutionary Algorithm for Bidirectional Recommendations. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(1): 28-42. <a href="https://doi.org/10.1109/tevc.2021.3091615">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J010</strong> Wenxing Lan, Ziyuan Ye, Peijun Ruan, Jialin Liu, Peng Yang, Xin Yao. Region-Focused Memetic Algorithms With Smart Initialization for Real-World Large-Scale Waste Collection Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(4): 704-718. <a href="https://doi.org/10.1109/tevc.2021.3123960">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J011</strong> Chao Li, Handing Wang, Jun Zhang, Wen Yao, Tingsong Jiang. An Approximated Gradient Sign Method Using Differential Evolution for Black-Box Adversarial Attack. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(5): 976-990. <a href="https://doi.org/10.1109/tevc.2022.3151373">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J012</strong> Zhengping Liang, Xiuju Xu, Ling Liu, Yaofeng Tu, Zexuan Zhu. Evolutionary Many-Task Optimization Based on Multisource Knowledge Transfer. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(2): 319-333. <a href="https://doi.org/10.1109/tevc.2021.3101697">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J013</strong> Ya-Hui Jia, Yi Mei, Mengjie Zhang. Confidence-Based Ant Colony Optimization for Capacitated Electric Vehicle Routing Problem With Comparison of Different Encoding Schemes. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(6): 1394-1408. <a href="https://doi.org/10.1109/tevc.2022.3144142">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J014</strong> Yuxiao Huang, Liang Feng, Alex Kai Qin, Meng Chen, Kay Chen Tan. Toward Large-Scale Evolutionary Multitasking: A GPU-Based Paradigm. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(3): 585-598. <a href="https://doi.org/10.1109/tevc.2021.3110506">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J015</strong> Jiawei Yuan, Hai-Lin Liu, Yew-Soon Ong, Zhaoshui He. Indicator-Based Evolutionary Algorithm for Solving Constrained Multiobjective Optimization Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(2): 379-391. <a href="https://doi.org/10.1109/tevc.2021.3089155">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J016</strong> Tingyang Wei, Shibin Wang, Jinghui Zhong, Dong Liu, Jun Zhang. A Review on Evolutionary Multitask Optimization: Trends and Challenges. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(5): 941-960. <a href="https://doi.org/10.1109/tevc.2021.3139437">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J017</strong> Mathew J. Walter, David J. Walker, Matthew J. Craven. Visualizing Population Dynamics to Examine Algorithm Performance. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(6): 1501-1510. <a href="https://doi.org/10.1109/tevc.2022.3157143">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J018</strong> Ke Shang, Hisao Ishibuchi, Weiyu Chen, Yang Nan, Weiduo Liao. Hypervolume-Optimal μ-Distributions on Line/Plane-Based Pareto Fronts in Three Dimensions. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(2): 349-363. <a href="https://doi.org/10.1109/tevc.2021.3093114">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J019</strong> Xiangyu Wang, Kai Zhang, Jian Wang, Yaochu Jin. An Enhanced Competitive Swarm Optimizer With Strongly Convex Sparse Operator for Large-Scale Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(5): 859-871. <a href="https://doi.org/10.1109/tevc.2021.3111209">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J020</strong> Jun Yi, Wei Zhang, Junren Bai, Wei Zhou, Lizhong Yao. Multifactorial Evolutionary Algorithm Based on Improved Dynamical Decomposition for Many-Objective Optimization Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2022, 26(2): 334-348. <a href="https://doi.org/10.1109/tevc.2021.3135691">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J021</strong> Ying Hou, Yilin Wu, Honggui Han. Multiobjective Differential Evolution Algorithm Balancing Multiple Stakeholders for Low-Carbon Order Scheduling in E-Waste Recycling. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(6): 1912-1925. <a href="https://doi.org/10.1109/tevc.2023.3237336">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J022</strong> Alexandru Agapie, Ovidiu Solomon, Luiza Bădin. Theory of (1+1) ES on SPHERE Revisited. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(4): 938-948. <a href="https://doi.org/10.1109/tevc.2022.3217524">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J023</strong> Zhi-Zhong Liu, Yunchuan Qin, Wu Song, Jinyuan Zhang, Kenli Li. Multiobjective-Based Constraint-Handling Technique for Evolutionary Constrained Multiobjective Optimization: A New Perspective. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(5): 1370-1384. <a href="https://doi.org/10.1109/tevc.2022.3194729">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J024</strong> Lixin Tang, Zuocheng Li, Jin-Kao Hao. Solving the Single-Row Facility Layout Problem by K-Medoids Memetic Permutation Group. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(2): 251-265. <a href="https://doi.org/10.1109/tevc.2022.3165987">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J025</strong> Hongyan Chen, Hai-Lin Liu, Fangqing Gu, Kay Chen Tan. A Multiobjective Multitask Optimization Algorithm Using Transfer Rank. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(2): 237-250. <a href="https://doi.org/10.1109/tevc.2022.3147568">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J026</strong> Fan Cheng, Junjie Cui, Qijun Wang, Lei Zhang. A Variable Granularity Search-Based Multiobjective Feature Selection Algorithm for High-Dimensional Data Classification. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(2): 266-280. <a href="https://doi.org/10.1109/tevc.2022.3160458">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J027</strong> Ke Li, Renzhi Chen. Batched Data-Driven Evolutionary Multiobjective Optimization Based on Manifold Interpolation. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(1): 126-140. <a href="https://doi.org/10.1109/tevc.2022.3162993">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J028</strong> Xiao-Fang Liu, Xin-Xin Xu, Zhi-Hui Zhan, Yongchun Fang, Jun Zhang. Interaction-Based Prediction for Dynamic Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(6): 1881-1895. <a href="https://doi.org/10.1109/tevc.2023.3234113">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J029</strong> Xiangjuan Yao, Qian Zhao, Dunwei Gong, Song Zhu. Solution of Large-Scale Many-Objective Optimization Problems Based on Dimension Reduction and Solving Knowledge-Guided Evolutionary Algorithm. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(3): 416-429. <a href="https://doi.org/10.1109/tevc.2021.3110780">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J030</strong> An Chen, Zhigang Ren, Wenhua Guo, Yongsheng Liang, Zuren Feng. An Efficient Adaptive Differential Grouping Algorithm for Large-Scale Black-Box Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(3): 475-489. <a href="https://doi.org/10.1109/tevc.2022.3170793">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J031</strong> Jinlong Zhou, Yinggui Zhang, Jinhua Zheng, Miqing Li. Domination-Based Selection and Shift-Based Density Estimation for Constrained Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(4): 993-1004. <a href="https://doi.org/10.1109/tevc.2022.3190401">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J032</strong> Hao-Gan Huang, Yue-Jiao Gong. Contrastive Learning: An Alternative Surrogate for Offline Data-Driven Evolutionary Computation. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(2): 370-384. <a href="https://doi.org/10.1109/tevc.2022.3170638">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J033</strong> Yong Zhang, Xin-Fang Ji, Xiao-Zhi Gao, Dun-Wei Gong, Xiao-Yan Sun. Objective-Constraint Mutual-Guided Surrogate-Based Particle Swarm Optimization for Expensive Constrained Multimodal Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(4): 908-922. <a href="https://doi.org/10.1109/tevc.2022.3182810">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J034</strong> Xinan Chen, Ruibin Bai, Rong Qu, Haibo Dong. Cooperative Double-Layer Genetic Programming Hyper-Heuristic for Online Container Terminal Truck Dispatching. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(5): 1220-1234. <a href="https://doi.org/10.1109/tevc.2022.3209985">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J035</strong> Adetunji David Ajimakin, V. Susheela Devi. The Competing Genes Evolutionary Algorithm: Avoiding Genetic Drift Through Competition, Local Search, and Majority Voting. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(6): 1678-1689. <a href="https://doi.org/10.1109/tevc.2022.3229038">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J036</strong> Trung B. Nguyen, Will N. Browne, Mengjie Zhang. ConCS: A Continual Classifier System for Continual Learning of Multiple Boolean Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(4): 1057-1071. <a href="https://doi.org/10.1109/tevc.2022.3210872">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J037</strong> Marcin Michal Komarnicki, Michal Witold Przewozniczek, Halina Kwasnicka, Krzysztof Walkowiak. Incremental Recursive Ranking Grouping for Large-Scale Global Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(5): 1498-1513. <a href="https://doi.org/10.1109/tevc.2022.3216968">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J038</strong> Lei Zhao, Rui Li, Jianda Han, Jianlei Zhang. A Distributed Model Predictive Control-Based Method for Multidifferent-Target Search in Unknown Environments. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(1): 111-125. <a href="https://doi.org/10.1109/tevc.2022.3161942">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J039</strong> Iwo Błądek, Krzysztof Krawiec. Counterexample-Driven Genetic Programming for Symbolic Regression With Formal Constraints. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(5): 1327-1339. <a href="https://doi.org/10.1109/tevc.2022.3205286">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J040</strong> Ke Shang, Weiyu Chen, Weiduo Liao, Hisao Ishibuchi. HV-Net: Hypervolume Approximation Based on DeepSets. <em>IEEE Transactions on Evolutionary Computation</em>, 2023, 27(4): 1154-1160. <a href="https://doi.org/10.1109/tevc.2022.3181306">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J041</strong> Tianyu Ren, Xiao-Jun Zeng. Reputation-Based Interaction Promotes Cooperation With Reinforcement Learning. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(4): 1177-1188. <a href="https://doi.org/10.1109/tevc.2023.3304911">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J042</strong> Lilla Beke, Lourdes Uribe, Adriana Lara, Carlos Artemio Coello Coello, Michal Weiszer, Edmund K. Burke, Jun Chen. Routing and Scheduling in Multigraphs With Time Constraints—A Memetic Approach for Airport Ground Movement. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(2): 474-488. <a href="https://doi.org/10.1109/tevc.2023.3262743">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J043</strong> Xianpeng Wang, Yao Wang, Lixin Tang, Qingfu Zhang. Multiobjective Ensemble Learning With Multiscale Data for Product Quality Prediction in Iron and Steel Industry. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(4): 1099-1113. <a href="https://doi.org/10.1109/tevc.2023.3290172">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J044</strong> Vicente P. Soloviev, Concha Bielza, Pedro Larrañaga. Semiparametric Estimation of Distribution Algorithms for Continuous Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(4): 1069-1083. <a href="https://doi.org/10.1109/tevc.2023.3290670">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J045</strong> Jing Liang, Zhuo Hu, Zong-Wei Li, Kangjia Qiao, Wei-Feng Guo. Multiobjective Optimization-Based Network Control Principles for Identifying Personalized Drug Targets With Cancer. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(5): 1322-1335. <a href="https://doi.org/10.1109/tevc.2023.3303958">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J046</strong> Chao Qian. Can Evolutionary Clustering Have Theoretical Guarantees?. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(5): 1220-1234. <a href="https://doi.org/10.1109/tevc.2023.3296645">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J047</strong> Juan Zou, Ruiqing Sun, Yuan Liu, Yaru Hu, Shengxiang Yang, Jinhua Zheng, Ke Li. A Multipopulation Evolutionary Algorithm Using New Cooperative Mechanism for Solving Multiobjective Problems With Multiconstraint. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(1): 267-280. <a href="https://doi.org/10.1109/tevc.2023.3260306">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J048</strong> Yuanchao Liu, Jianchang Liu, Jinliang Ding, Shangshang Yang, Yaochu Jin. A Surrogate-Assisted Differential Evolution With Knowledge Transfer for Expensive Incremental Optimization Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(4): 1039-1053. <a href="https://doi.org/10.1109/tevc.2023.3291697">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J049</strong> Qing Li, Xin Yuan, Sannyuya Liu, Lu Gao, Tianyu Wei, Xiaoxuan Shen, Jianwen Sun. A Genetic Causal Explainer for Deep Knowledge Tracing. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(4): 861-875. <a href="https://doi.org/10.1109/tevc.2023.3286666">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J050</strong> Yuhang Wang, Yuyan Han, Yuting Wang, Quan-Ke Pan, Ling Wang. Sustainable Scheduling of Distributed Flow Shop Group: A Collaborative Multi-Objective Evolutionary Algorithm Driven by Indicators. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(6): 1794-1808. <a href="https://doi.org/10.1109/tevc.2023.3339558">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J051</strong> Hengzhe Zhang, Aimin Zhou, Qi Chen, Bing Xue, Mengjie Zhang. SR-Forest: A Genetic Programming-Based Heterogeneous Ensemble Learning Method. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(5): 1484-1498. <a href="https://doi.org/10.1109/tevc.2023.3243172">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J052</strong> Kailai Gao, Cuie Yang, Jinliang Ding, Kay Chen Tan, Tianyou Chai. Distributed Knowledge Transfer for Evolutionary Multitask Multimodal Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(4): 1141-1155. <a href="https://doi.org/10.1109/tevc.2023.3291874">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J053</strong> Kunjie Yu, Dezheng Zhang, Jing Liang, Boyang Qu, Mengnan Liu, Ke Chen, Caitong Yue, Ling Wang. A Framework Based on Historical Evolution Learning for Dynamic Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(4): 1127-1140. <a href="https://doi.org/10.1109/tevc.2023.3290485">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J054</strong> Han Huang, Yueting Xu, Yi Xiang, Zhifeng Hao. Correlation-Based Dynamic Allocation Scheme of Fitness Evaluations for Constrained Evolutionary Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(5): 1250-1264. <a href="https://doi.org/10.1109/tevc.2023.3302897">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J055</strong> Meng Xu, Yi Mei, Fangfang Zhang, Mengjie Zhang. Genetic Programming for Dynamic Flexible Job Shop Scheduling: Evolution With Single Individuals and Ensembles. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(6): 1761-1775. <a href="https://doi.org/10.1109/tevc.2023.3334626">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J056</strong> Xuan Wu, Di Wang, Huanhuan Chen, Lele Yan, Yubin Xiao, Chunyan Miao, Hongwei Ge, Dong Xu, Yanchun Liang, Kangping Wang, Chunguo Wu, You Zhou. Neural Architecture Search for Text Classification With Limited Computing Resources Using Efficient Cartesian Genetic Programming. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(3): 638-652. <a href="https://doi.org/10.1109/tevc.2023.3346969">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J057</strong> Yaqing Hou, Mingyang Sun, Yifeng Zeng, Yew-Soon Ong, Yaochu Jin, Hongwei Ge, Qiang Zhang. A Multiagent Cooperative Learning System With Evolution of Social Roles. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(2): 531-543. <a href="https://doi.org/10.1109/tevc.2023.3268076">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J058</strong> Yan Wang, Liangli Zhen, Jianwei Zhang, Miqing Li, Lei Zhang, Zizhou Wang, Yangqin Feng, Yu Xue, Xiao Wang, Zheng Chen, Tao Luo, Rick Siow Mong Goh, Yong Liu. MedNAS: Multiscale Training-Free Neural Architecture Search for Medical Image Analysis. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(3): 668-681. <a href="https://doi.org/10.1109/tevc.2024.3352641">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J059</strong> Yao Zhou, Bing Hu, Xianglei Yuan, Kaide Huang, Zhang Yi, Gary G. Yen. Multiobjective Evolutionary Generative Adversarial Network Compression for Image Translation. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(3): 798-809. <a href="https://doi.org/10.1109/tevc.2023.3261135">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J060</strong> Ying Bi, Bing Xue, Mengjie Zhang. Genetic Programming-Based Evolutionary Deep Learning for Data-Efficient Image Classification. <em>IEEE Transactions on Evolutionary Computation</em>, 2024, 28(2): 307-322. <a href="https://doi.org/10.1109/tevc.2022.3214503">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J061</strong> Jian-Yu Li, Zhi-Hui Zhan, Yun Li, Jun Zhang. Multiple Tasks for Multiple Objectives: A New Multiobjective Optimization Method via Multitask Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(1): 172-186. <a href="https://doi.org/10.1109/tevc.2023.3294307">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J062</strong> Yulong Ye, Songbai Liu, Junwei Zhou, Qiuzhen Lin, Min Jiang, Kay Chen Tan. Learning-Based Directional Improvement Prediction for Dynamic Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 948-962. <a href="https://doi.org/10.1109/tevc.2024.3393151">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J063</strong> Kaiyu Wang, Shangce Gao, MengChu Zhou, Zhi-Hui Zhan, Jiujun Cheng. Fractional Order Differential Evolution. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(3): 822-835. <a href="https://doi.org/10.1109/tevc.2024.3382047">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J064</strong> F. O. de Franca, M. Virgolin, M. Kommenda, M. S. Majumder, M. Cranmer, G. Espada, L. Ingelse, A. Fonseca, M. Landajuela, B. Petersen, R. Glatt, N. Mundhenk, C. S. Lee, J. D. Hochhalter, D. L. Randall, P. Kamienny, H. Zhang, G. Dick, A. Simon, B. Burlacu, Jaan Kasak, Meera Machado, Casper Wilstrup, W. G. La Cava. SRBench++: Principled Benchmarking of Symbolic Regression With Domain-Expert Interpretation. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 1127-1137. <a href="https://doi.org/10.1109/tevc.2024.3423681">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J065</strong> Zhen Yang, Tangxu Yao, Yunliang Jiang, Jun Zhang, Xiongtao Zhang. Indexes-Based and Partial Restart-Based Constrained Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 990-1001. <a href="https://doi.org/10.1109/tevc.2024.3400610">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J066</strong> Xin-Rui Tao, Quan-Ke Pan, Liang Gao. An Iterated Greedy Algorithm With Reinforcement Learning for Distributed Hybrid Flowshop Problems With Job Merging. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(3): 589-600. <a href="https://doi.org/10.1109/tevc.2024.3443874">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J067</strong> Shuang Li, Ke Li, Wei Li, Ming Yang. Evolutionary Alternating Direction Method of Multipliers for Constrained Multiobjective Optimization With Unknown Constraints. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 1419-1433. <a href="https://doi.org/10.1109/tevc.2024.3425629">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J068</strong> Shenglian Tan, Yong Wang, Guangyong Sun, Tong Pang, Ke Tang. A Surrogate-Assisted Evolutionary Framework for Expensive Multitask Optimization Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(3): 779-793. <a href="https://doi.org/10.1109/tevc.2024.3370937">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J069</strong> Genghui Li, Zhenkun Wang, Weifeng Gao, Ling Wang. Decoupling Constraint: Task Clone-Based Multitasking Optimization for Constrained Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(2): 404-417. <a href="https://doi.org/10.1109/tevc.2024.3358854">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J070</strong> Lei Chen, Yiu-Ming Cheung, Hai-Lin Liu, Yutao Lai. MOTEA-II: A Collaborative Multiobjective Transformation-Based Evolutionary Algorithm for Bilevel Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(2): 474-489. <a href="https://doi.org/10.1109/tevc.2025.3538611">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J071</strong> Ke Shang, Guotong Wu, Lie Meng Pang, Hisao Ishibuchi. Targeted Pareto Optimization for Subset Selection With Monotone Objective Function and Cardinality Constraint. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 1386-1399. <a href="https://doi.org/10.1109/tevc.2024.3431928">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J072</strong> Xiao-Qi Guo, Feng-Feng Wei, Jun Zhang, Wei-Neng Chen. A Classifier-Ensemble-Based Surrogate-Assisted Evolutionary Algorithm for Distributed Data-Driven Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(3): 711-725. <a href="https://doi.org/10.1109/tevc.2024.3361000">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J073</strong> Zheng Cai, Yit Hong Choo, Tao Zhou, Vu Le, Wei Hong Lim, Chee Peng Lim. Learning-Based Surrogate-Assisted Modelling Strategy Selection for Expensive Constrained Multi-Objective Optimisation. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, (): 1-1. <a href="https://doi.org/10.1109/tevc.2025.3635778">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J074</strong> Dominik Sobania, Justyna Petke, Martin Briesch, Franz Rothlauf. A Comparison of Large Language Models and Genetic Programming for Program Synthesis. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 1434-1448. <a href="https://doi.org/10.1109/tevc.2024.3410873">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J075</strong> Yuji Zou, Jin-Kao Hao, Qinghua Wu. A Two-Individual Evolutionary Algorithm for Cumulative Capacitated Vehicle Routing With Single and Multiple Depots. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(2): 505-518. <a href="https://doi.org/10.1109/tevc.2024.3361910">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J076</strong> Yiya Diao, Changhe Li, Sanyou Zeng, Shengxiang Yang, Carlos A. Coello Coello. Nearest-Better Network for Fitness Landscape Analysis of Continuous Optimization Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(5): 2089-2103. <a href="https://doi.org/10.1109/tevc.2024.3478825">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J077</strong> Amir Omeradzic, Hans-Georg Beyer. Self-Adaptation of Multirecombinant Evolution Strategies on the Highly Multimodal Rastrigin Function. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 880-890. <a href="https://doi.org/10.1109/tevc.2024.3400857">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J078</strong> Zhicheng Wu, Bing Xue, Mengjie Zhang. Multitree Genetic Programming for Multimodal Learning in Multimodal Medical Image Classification. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, (): 1-1. <a href="https://doi.org/10.1109/tevc.2025.3619532">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J079</strong> Hao Li, Pu Xiong, Maoguo Gong, A. K. Qin, Yue Wu, Lining Xing. Fast Heterogeneous Multiproblem Surrogates for Transfer Evolutionary Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(5): 1663-1677. <a href="https://doi.org/10.1109/tevc.2024.3384478">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J080</strong> Thomas Guilmeau, Emilie Chouzenoux, Víctor Elvira. A Divergence-Based Condition to Ensure Quantile Improvement in Black-Box Global Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2025, 29(4): 1017-1028. <a href="https://doi.org/10.1109/tevc.2024.3452420">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J081</strong> Ruihao Zheng, Jingda Deng, Zhenkun Wang. Weak Pareto Boundary: A Critical Challenge for Evolutionary Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(5): 2215-2229. <a href="https://doi.org/10.1109/tevc.2025.3646963">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J082</strong> Fei Li, Xun Huang, Cuie Yang, Yuanchao Liu, Jinliang Ding. Cross-Phase Knowledge Transfer via Variable Space Alignment for Expensive Incremental Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3684126">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J083</strong> Balija Santoshkumar, Kalyanmoy Deb. Handling Objectives With Heterogeneous Evaluation Times in Surrogate-Assisted Evolutionary Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(2): 564-578. <a href="https://doi.org/10.1109/tevc.2025.3560922">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J084</strong> Zhi Liu, Wei Song, Carlos A. Coello Coello, Yaochu Jin, Shengxiang Yang, Shitong Wang. Environmental Knowledge-Driven Transfer Strategy With Collaborative Learning for Dynamic Constrained Multiobjective Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(5): 2152-2167. <a href="https://doi.org/10.1109/tevc.2025.3643205">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J085</strong> Changhua He, Lean Yu. A Multiobjective Genetic Algorithm-Based Unilateral Rule Extraction Model for Credit Risk Classification. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(3): 1054-1067. <a href="https://doi.org/10.1109/tevc.2025.3582941">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J086</strong> José Maria Simões, Nuno Lourenço, Penousal Machado. Sexual Selection in Genetic Programming: Advertising Good Genes. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3691878">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J087</strong> Che Xu, Leilei Liao, Shaoqiu Zheng, Xuefei Jia, Ying Tan, Peng Zhu. Class-Aware Evolutionary Fusion Search for Multi-Head Deep Ordinal Decision Making. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3750937">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J088</strong> Qinyu Wang, Ying Bi, Bing Xue, Mengjie Zhang. CNNGP: Multi-tree Genetic Programming Integrating Pre-trained CNN Features for Fine-Grained Image Classification. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3675672">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J089</strong> Jintao Li, Yongji Long, Weixuan Liu, Aojin Li, Yanhan Zeng, Shui Yu, Yun Li. Archive-Protected Survival Selection for Response Evolution in Large Language Model Post-Training. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3745406">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J090</strong> Keisuke Korogi, Ryoji Tanabe. Speeding Up Local Search for the Indicator-Based Subset Selection Problem by a Candidate List Strategy. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(1): 156-170. <a href="https://doi.org/10.1109/tevc.2025.3538902">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J091</strong> Constantinos Tsakonas, Konstantinos Chatzilygeroudis. Vector Quantized-Elites: Unsupervised and Problem-Agnostic Quality-Diversity Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(4): 1669-1683. <a href="https://doi.org/10.1109/tevc.2025.3631786">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J092</strong> Zesheng Zhang, Shoufei Han, Xiaojing Liu, Changhe Li, Kaixiang Yang, Qianlong Dang. Learning-Assisted Evolutionary Feature Selection via Age-Reinforced Reduction and Expansion for High-Dimensional Classification Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3730545">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J093</strong> Jin Zhou, Juan Zhang, Junkai Ji, Qiuzhen Lin, Zexuan Zhu, Jianqiang Li, Carlos A. Coello Coello. Feshdock: A Divide-and-Conquer Protein–Protein Complex Conformation Prediction Algorithm. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3668844">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J094</strong> Tianye Shu, Yang Nan, Longcan Chen, Lie Meng Pang, Hisao Ishibuchi. Simple but Difficult Multi-objective Distance Minimization Problems with Disconnected Global and Local Pareto Sets. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3749967">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J095</strong> Hiroki Shiraishi, Hisao Ishibuchi, Masaya Nakata. Kolmogorov-Arnold Classifier Systems as Universal Approximators. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3736664">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J096</strong> Kangjia Qiao, Gang Liu, Jing Liang, Yuanjian Wang, Lei Li, Kunjie Yu, Caitong Yue. A Level-Based Multi-Population Self-Adaptive Constrained Multiobjective Evolutionary Algorithm for Cascade Reservoir Scheduling. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3651698">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J097</strong> Hong Zhao, Xu-Hui Ning, Jian-Yu Li, Jing Liu. Evolutionary Multitask Framework With Bi-Knowledge Transfer for Multimodal Optimization Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(1): 393-407. <a href="https://doi.org/10.1109/tevc.2025.3551728">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J098</strong> Fuqing Zhao, Jiwei Lv, Ling Wang, Hongyan Sang, Houbin Song. A Knowledge-enhanced Framework with
+                    k
+                    -step DQN for No-Wait Flow-Shop Scheduling with Sequence-Dependent Setup Time. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3727219">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J099</strong> Jiliang Zhao, Wei Peng, Handing Wang, Weien Zhou, Yang Yang, Wen Yao. Cross-Task Collaborative Optimization Based on Knowledge Transfer for Soft Robot Design. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, 30(3): 898-910. <a href="https://doi.org/10.1109/tevc.2025.3573828">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J100</strong> Libin Lin, Wei Huang, Lijun Wei, Jiewu Leng, Weiming Xu, Qiang Liu, Tao Zou. Automatic Design of Differential Evolution Optimizers for Surrogate-Assisted Evolutionary Algorithms via Large Language Models. <em>IEEE Transactions on Evolutionary Computation</em>, 2026, (): 1-1. <a href="https://doi.org/10.1109/tevc.2026.3751216">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J101</strong> S. Kirkpatrick, C. D. Gelatt, M. P. Vecchi. Optimization by Simulated Annealing. <em>Science</em>, 1983, 220(4598): 671-680. <a href="https://doi.org/10.1126/science.220.4598.671">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J102</strong> Jakub Kudela. A critical problem in benchmarking and analysis of evolutionary computation methods. <em>Nature Machine Intelligence</em>, 2022, 4(12): 1238-1245. <a href="https://doi.org/10.1038/s42256-022-00579-0">DOI</a>。证据范围：出版摘要与方法论问题选读。</p>
+</li>
+<li>
+<p><strong>J103</strong> Antonio LaTorre, Daniel Molina, Eneko Osaba, Javier Poyatos, Javier Del Ser, Francisco Herrera. A prescription of methodological guidelines for comparing bio-inspired optimization algorithms. <em>Swarm and Evolutionary Computation</em>, 2021, 67(): 100973. <a href="https://doi.org/10.1016/j.swevo.2021.100973">DOI</a>。证据范围：出版摘要与基准比较建议选读。</p>
+</li>
+<li>
+<p><strong>J104</strong> Vahid Beiranvand, Warren Hare, Yves Lucet. Best practices for comparing optimization algorithms. <em>Optimization and Engineering</em>, 2017, 18(4): 815-848. <a href="https://doi.org/10.1007/s11081-017-9366-1">DOI</a>。证据范围：出版摘要与比较方法选读。</p>
+</li>
+<li>
+<p><strong>J105</strong> J.J. Liang, A.K. Qin, P.N. Suganthan, S. Baskar. Comprehensive learning particle swarm optimizer for global optimization of multimodal functions. <em>IEEE Transactions on Evolutionary Computation</em>, 2006, 10(3): 281-295. <a href="https://doi.org/10.1109/tevc.2005.857610">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J106</strong> Nikolaus Hansen, Sibylle D. Müller, Petros Koumoutsakos. Reducing the Time Complexity of the Derandomized Evolution Strategy with Covariance Matrix Adaptation (CMA-ES). <em>Evolutionary Computation</em>, 2003, 11(1): 1-18. <a href="https://doi.org/10.1162/106365603321828970">DOI</a>。证据范围：题录与作者官方算法材料核对。</p>
+</li>
+<li>
+<p><strong>J107</strong> Nikolaus Hansen, Andreas Ostermeier. Completely Derandomized Self-Adaptation in Evolution Strategies. <em>Evolutionary Computation</em>, 2001, 9(2): 159-195. <a href="https://doi.org/10.1162/106365601750190398">DOI</a>。证据范围：题录与作者官方方法说明。</p>
+</li>
+<li>
+<p><strong>J108</strong> Yong Wang, Zixing Cai, Qingfu Zhang. Differential Evolution With Composite Trial Vector Generation Strategies and Control Parameters. <em>IEEE Transactions on Evolutionary Computation</em>, 2011, 15(1): 55-66. <a href="https://doi.org/10.1109/tevc.2010.2087271">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J109</strong> Michael Hellwig, Hans-Georg Beyer. Benchmarking evolutionary algorithms for single objective real-valued constrained optimization – A critical review. <em>Swarm and Evolutionary Computation</em>, 2019, 44(): 927-944. <a href="https://doi.org/10.1016/j.swevo.2018.10.002">DOI</a>。证据范围：出版摘要与研究范围选读。</p>
+</li>
+<li>
+<p><strong>J110</strong> Rainer Storn, Kenneth Price. Differential Evolution – A Simple and Efficient Heuristic for global Optimization over Continuous Spaces. <em>Journal of Global Optimization</em>, 1997, 11(4): 341-359. <a href="https://doi.org/10.1023/a:1008202821328">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J111</strong> Swagatam Das, Sankha Subhra Mullick, P.N. Suganthan. Recent advances in differential evolution – An updated survey. <em>Swarm and Evolutionary Computation</em>, 2016, 27(): 1-30. <a href="https://doi.org/10.1016/j.swevo.2016.01.004">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J112</strong> Swagatam Das, Ponnuthurai Nagaratnam Suganthan. Differential Evolution: A Survey of the State-of-the-Art. <em>IEEE Transactions on Evolutionary Computation</em>, 2011, 15(1): 4-31. <a href="https://doi.org/10.1109/tevc.2010.2059031">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J113</strong> Kalyanmoy Deb. An efficient constraint handling method for genetic algorithms. <em>Computer Methods in Applied Mechanics and Engineering</em>, 2000, 186(2-4): 311-338. <a href="https://doi.org/10.1016/s0045-7825(99)00389-8">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J114</strong> Hans-Georg Beyer, Hans-Paul Schwefel. Evolution strategies – A comprehensive introduction. <em>Natural Computing</em>, 2002, 1(1): 3-52. <a href="https://doi.org/10.1023/a:1015059928466">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J115</strong> R. Mendes, J. Kennedy, J. Neves. The Fully Informed Particle Swarm: Simpler, Maybe Better. <em>IEEE Transactions on Evolutionary Computation</em>, 2004, 8(3): 204-210. <a href="https://doi.org/10.1109/tevc.2004.826074">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J116</strong> F. Herrera, M. Lozano, J.L. Verdegay. Tackling Real-Coded Genetic Algorithms: Operators and Tools for Behavioural Analysis. <em>Artificial Intelligence Review</em>, 1998, 12(4): 265-319. <a href="https://doi.org/10.1023/a:1006504901164">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J117</strong> Jingqiao Zhang, A.C. Sanderson. JADE: Adaptive Differential Evolution With Optional External Archive. <em>IEEE Transactions on Evolutionary Computation</em>, 2009, 13(5): 945-958. <a href="https://doi.org/10.1109/tevc.2009.2014613">DOI</a>。证据范围：原始摘要、题录与方法结构核对。</p>
+</li>
+<li>
+<p><strong>J118</strong> Janez Brest, Sao Greiner, Borko Boskovic, Marjan Mernik, Viljem Zumer. Self-Adapting Control Parameters in Differential Evolution: A Comparative Study on Numerical Benchmark Problems. <em>IEEE Transactions on Evolutionary Computation</em>, 2006, 10(6): 646-657. <a href="https://doi.org/10.1109/tevc.2006.872133">DOI</a>。证据范围：大学公开原文方法段落与题录。</p>
+</li>
+<li>
+<p><strong>J119</strong> Kaiwen Li, Rui Wang, Tao Zhang, Hisao Ishibuchi. Evolutionary Many-Objective Optimization: A Comparative Study of the State-of-the-Art. <em>IEEE Access</em>, 2018, 6(): 26194-26214. <a href="https://doi.org/10.1109/access.2018.2832181">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J120</strong> Qingfu Zhang, Hui Li. MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition. <em>IEEE Transactions on Evolutionary Computation</em>, 2007, 11(6): 712-731. <a href="https://doi.org/10.1109/tevc.2007.892759">DOI</a>。证据范围：题录与分解框架核对。</p>
+</li>
+<li>
+<p><strong>J121</strong> N. Srinivas, Kalyanmoy Deb. Muiltiobjective Optimization Using Nondominated Sorting in Genetic Algorithms. <em>Evolutionary Computation</em>, 1994, 2(3): 221-248. <a href="https://doi.org/10.1162/evco.1994.2.3.221">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J122</strong> K. Deb, A. Pratap, S. Agarwal, T. Meyarivan. A fast and elitist multiobjective genetic algorithm: NSGA-II. <em>IEEE Transactions on Evolutionary Computation</em>, 2002, 6(2): 182-197. <a href="https://doi.org/10.1109/4235.996017">DOI</a>。证据范围：题录与原始方法核对。</p>
+</li>
+<li>
+<p><strong>J123</strong> Kalyanmoy Deb, Himanshu Jain. An Evolutionary Many-Objective Optimization Algorithm Using Reference-Point-Based Nondominated Sorting Approach, Part I: Solving Problems With Box Constraints. <em>IEEE Transactions on Evolutionary Computation</em>, 2014, 18(4): 577-601. <a href="https://doi.org/10.1109/tevc.2013.2281535">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J124</strong> M. Clerc, J. Kennedy. The particle swarm - explosion, stability, and convergence in a multidimensional complex space. <em>IEEE Transactions on Evolutionary Computation</em>, 2002, 6(1): 58-73. <a href="https://doi.org/10.1109/4235.985692">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J125</strong> Dongshu Wang, Dapei Tan, Lei Liu. Particle swarm optimization algorithm: an overview. <em>Soft Computing</em>, 2017, 22(2): 387-408. <a href="https://doi.org/10.1007/s00500-016-2474-6">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J126</strong> A.K. Qin, V.L. Huang, P.N. Suganthan. Differential Evolution Algorithm With Strategy Adaptation for Global Numerical Optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 2009, 13(2): 398-417. <a href="https://doi.org/10.1109/tevc.2008.927706">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J127</strong> Adam P. Piotrowski, Agnieszka E. Piotrowska, Jaroslaw J. Napiorkowski. Experimental survey of L-SHADE and SHADE-based adaptive differential evolution algorithms. <em>Swarm and Evolutionary Computation</em>, 2026, 101(): 102286. <a href="https://doi.org/10.1016/j.swevo.2026.102286">DOI</a>。证据范围：出版摘要与比较范围选读。</p>
+</li>
+<li>
+<p><strong>J128</strong> Nicola Beume, Boris Naujoks, Michael Emmerich. SMS-EMOA: Multiobjective selection based on dominated hypervolume. <em>European Journal of Operational Research</em>, 2007, 181(3): 1653-1669. <a href="https://doi.org/10.1016/j.ejor.2006.08.008">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J129</strong> E. Zitzler, L. Thiele. Multiobjective evolutionary algorithms: a comparative case study and the strength Pareto approach. <em>IEEE Transactions on Evolutionary Computation</em>, 1999, 3(4): 257-271. <a href="https://doi.org/10.1109/4235.797969">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+<li>
+<p><strong>J130</strong> Fred Glover. Tabu Search—Part I. <em>ORSA Journal on Computing</em>, 1989, 1(3): 190-206. <a href="https://doi.org/10.1287/ijoc.1.3.190">DOI</a>。证据范围：出版社题录与参考文献编码；未声称全文精读。</p>
+</li>
+</ul>
+<h2 id="130">独立补充资料（不计入130篇期刊）</h2>
+<ul>
+<li>
+<p><strong>cec-shade</strong> <a href="https://ryojitanabe.github.io/tf-cec2013-shade.pdf">Success-history based parameter adaptation for Differential Evolution</a>。会议题录；关键方法和作者公开版本选读；不计为期刊论文。</p>
+</li>
+<li>
+<p><strong>cec-lshade</strong> <a href="https://ryojitanabe.github.io/pdf/tf-cec2014.pdf">Improving the search performance of SHADE using linear population size reduction</a>。会议题录；关键方法和作者公开版本选读；不计为期刊论文。</p>
+</li>
+<li>
+<p><strong>cec-jso</strong> <a href="https://ieeexplore.ieee.org/document/7969456/">Single objective real-parameter optimization: Algorithm jSO</a>。会议题录；关键方法和作者公开版本选读；不计为期刊论文。</p>
+</li>
+<li>
+<p><strong>cec-inertia</strong> <a href="https://doi.org/10.1109/ICEC.1998.699146">A modified particle swarm optimizer</a>。会议题录；关键方法和作者公开版本选读；不计为期刊论文。</p>
+</li>
+<li>
+<p><strong>spea2-report</strong> <a href="https://sop.tik.ee.ethz.ch/publicationListFiles/zlt2001a.pdf">SPEA2: Improving the Strength Pareto Evolutionary Algorithm</a>。原始报告方法与算法段落选读；不计为期刊论文。</p>
+</li>
+<li>
+<p><strong>cec2017-official</strong> <a href="https://sites.google.com/view/suganthan-p-n/cec-benchmark/cec17-special-session">CEC 2017 Special Session and Competition: official benchmark and results</a>。组织者公开基准与结果页面；不计为期刊论文。</p>
+</li>
+<li>
+<p><strong>shade-author-versions</strong> <a href="https://ryojitanabe.github.io/publication">SHADE / L-SHADE author versions, corrected implementations and competition links</a>。作者公开版本及修正说明；不计为期刊论文。</p>
+</li>
+<li>
+<p><strong>cma-author-guide</strong> <a href="https://cma-es.github.io/">The CMA Evolution Strategy: official method guide and source implementations</a>。官方方法说明与公式核对；不计为期刊论文。</p>
+</li>
+</ul></article></body></html>

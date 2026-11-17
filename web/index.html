@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="hex-runtime" content="server" />
+    <title>HEX · Research Games</title>
+    <link rel="icon" href="/web/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/web/styles.css" />
+    <script type="module" src="/web/app.js"></script>
+  </head>
+  <body data-screen="home">
+    <header class="topbar">
+      <a class="brand" href="/"
+        >⬡ <span>HEX<small>RESEARCH GAMES</small></span></a
+      >
+      <nav aria-label="Main navigation">
+        <button class="active" data-tab="problems">Problems</button
+        ><button data-tab="methods">
+          Methods <span class="method-total">28</span></button
+        ><button data-tab="experiments">Experiments</button
+        ><button data-tab="api">API</button>
+      </nav>
+      <a
+        class="evidence-link"
+        href="/docs/evolutionary-baselines-20261115/index.html"
+        target="_blank"
+        >Evidence library ↗</a
+      >
+    </header>
+    <main>
+      <section id="tab-problems" class="tab active">
+        <section id="home" class="exhibition">
+          <div class="hero">
+            <div>
+              <span class="eyebrow">PLANNING · SIMULATION · EVOLUTION</span>
+              <h1><em>HEX</em><br />Research</h1>
+              <p>
+                Plan a city. Command a squad.<br />Compare ideas through games.
+              </p>
+              <div class="hero-actions">
+                <button id="open-workspace" class="primary">
+                  Open workspace →</button
+                ><button data-tab="methods" class="ghost">
+                  Explore methods
+                </button>
+              </div>
+            </div>
+            <aside class="hero-panel">
+              <span class="eyebrow">YOUR RESEARCH PLAYGROUND</span>
+              <div><b>02</b><span>Problem spaces</span></div>
+              <div><b>11</b><span>Reproducible scenarios</span></div>
+              <div>
+                <b class="method-total">28</b><span>Registered methods</span>
+              </div>
+              <a
+                href="/docs/evolutionary-baselines-20261115/index.html"
+                target="_blank"
+                ><b id="paper-total">100+</b> journal references ↗</a
+              >
+            </aside>
+          </div>
+          <div id="problem-cards" class="problem-cards"></div>
+          <div class="home-note">
+            <span>PROBLEMS × METHODS</span>
+            <p>
+              From native heuristics to evolutionary and Pareto search. Every
+              method declares its requirements; every problem owns its rules.
+            </p>
+            <a href="/docs/design-reference-library-20261115/index.html">
+              Design reference library ↗
+            </a>
+          </div>
+        </section>
+        <section id="workspace">
+          <div class="workspace-toolbar">
+            <button id="back-problems" class="subtle">← Problems</button
+            ><label>Scenario<select id="scenario"></select></label
+            ><label
+              >Seed<input
+                id="seed"
+                type="number"
+                min="0"
+                max="9999999"
+                value="26" /></label
+            ><button id="reset">Reset</button>
+            <details class="settings">
+              <summary>Episode settings</summary>
+              <div id="settings"></div>
+              <p>Changes apply on reset.</p>
+            </details>
+          </div>
+          <div class="workbench">
+            <section class="arena-panel">
+              <div class="arena-heading">
+                <div>
+                  <h2 id="arena-title"></h2>
+                  <p id="arena-description"></p>
+                </div>
+                <span id="episode-status" class="badge">READY</span>
+              </div>
+              <div id="metrics" class="metric-strip"></div>
+              <div id="problem-controls" class="problem-controls"></div>
+              <div id="arena" class="arena"></div>
+              <p id="interaction-help" class="interaction-help"></p>
+              <div class="transport">
+                <button id="play" class="primary">Start</button
+                ><button id="step">Step</button
+                ><label
+                  >Speed<select id="speed">
+                    <option value="1">1×</option>
+                    <option value="2">2×</option>
+                    <option value="4">4×</option>
+                  </select></label
+                ><span id="clock">0</span
+                ><button id="export-replay" class="subtle">
+                  Export replay
+                </button>
+              </div>
+            </section>
+            <aside class="method-panel">
+              <span class="eyebrow">METHOD</span>
+              <h2>Choose an approach</h2>
+              <label>Selected method<select id="method"></select></label>
+              <div id="method-tags" class="tags"></div>
+              <p id="method-description"></p>
+              <div class="parameter-grid">
+                <label
+                  >Evaluation budget<input
+                    id="budget"
+                    type="number"
+                    min="1"
+                    max="4096"
+                    value="128" /></label
+                ><label
+                  >Population · 0 = auto<input
+                    id="population-size"
+                    type="number"
+                    min="0"
+                    max="128"
+                    value="0"
+                /></label>
+              </div>
+              <button id="autopilot" class="primary">Use selected method</button
+              ><button id="manual" class="subtle">Manual control</button>
+              <div id="control-status" class="control-status">
+                Manual control
+              </div>
+              <details class="method-information">
+                <summary>Encoding, parameters & sources</summary>
+                <p id="search-meaning"></p>
+                <p id="implementation-note"></p>
+                <div id="method-sources"></div>
+                <p>
+                  Budgets include initialization. Native strategies use the
+                  budget as their iteration limit. Interactive defaults differ
+                  from published CEC experimental settings.
+                </p>
+              </details>
+              <details
+                id="search-details"
+                class="method-information"
+                hidden
+              ></details>
+              <button data-tab="experiments" class="link-button">
+                Compare methods →
+              </button>
+            </aside>
+          </div>
+        </section>
+      </section>
+      <section id="tab-methods" class="tab">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">METHOD LIBRARY</span>
+            <h1>Find an approach.</h1>
+            <p>
+              Filter by objective, category, family and variant, then check the
+              problem’s encoding.
+            </p>
+          </div>
+          <a
+            class="button-link"
+            href="/docs/evolutionary-baselines-20261115/index.html"
+            target="_blank"
+            >Journal evidence ↗</a
+          >
+        </div>
+        <div class="library-filters">
+          <label
+            >Objective<select id="filter-objective">
+              <option value="">All objectives</option>
+              <option value="single">Single-objective</option>
+              <option value="multi">Multiobjective</option>
+              <option value="control">Online control</option>
+            </select></label
+          ><label>Category<select id="filter-category"></select></label
+          ><label>Family<select id="filter-family"></select></label
+          ><label>Variant<select id="filter-variant"></select></label
+          ><label>Problem scope<select id="filter-scope"></select></label
+          ><label
+            >Search<input
+              id="filter-query"
+              placeholder="Name, family or mechanism" /></label
+          ><label class="check-label"
+            ><input id="filter-compatible" type="checkbox" checked />Compatible
+            only</label
+          ><button id="clear-filters" class="subtle">Clear filters</button
+          ><span id="method-count"></span>
+        </div>
+        <div id="method-library" class="method-library"></div>
+        <details class="compatibility-panel">
+          <summary>All-method compatibility matrix</summary>
+          <div id="compatibility" class="table-scroll"></div>
+        </details>
+      </section>
+      <section id="tab-experiments" class="tab">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">EXPERIMENTS</span>
+            <h1>Compare under the same conditions.</h1>
+            <p id="experiment-context"></p>
+          </div>
+          <div class="button-row">
+            <button id="import-report">Import report</button
+            ><input
+              id="report-file"
+              type="file"
+              accept="application/json,.json"
+              hidden
+            /><button id="export-json" disabled>Export JSON</button
+            ><button id="export-csv" disabled>Export CSV</button>
+          </div>
+        </div>
+        <div class="experiment-layout">
+          <section class="panel">
+            <h2>Experiment setup</h2>
+            <label
+              >Map seeds<input
+                id="seeds"
+                value="26, 27, 28"
+                placeholder="26, 27, 28" /></label
+            ><label
+              >Baseline preset<select id="experiment-preset">
+                <option value="reference">Quick reference</option>
+                <option value="classic">Canonical single-objective</option>
+                <option value="adaptive">
+                  Adaptive differential evolution
+                </option>
+                <option value="pareto">Pareto methods</option>
+                <option value="all-compatible">All compatible methods</option>
+              </select></label
+            >
+            <p class="muted">
+              Same seeds, episode settings and evaluation cap. Large selections
+              run in bounded batches.
+            </p>
+            <h3>Scenarios</h3>
+            <div id="experiment-scenarios"></div>
+            <h3>Methods</h3>
+            <div id="experiment-methods"></div>
+            <p id="experiment-size" class="muted"></p>
+            <div class="button-row">
+              <button id="run-experiment" class="primary">Run comparison</button
+              ><button id="cancel-experiment" disabled>Cancel</button>
+            </div>
+          </section>
+          <section class="panel results">
+            <div class="results-heading">
+              <h2>Results</h2>
+              <span id="run-state" class="badge">NO RUN YET</span>
+            </div>
+            <progress id="progress" max="1" value="0"></progress>
+            <p id="run-message" class="muted">
+              Choose a baseline preset and start a comparison.
+            </p>
+            <div id="summary"></div>
+            <div id="results"></div>
+            <h3>Recorded runs</h3>
+            <div id="history"></div>
+          </section>
+        </div>
+      </section>
+      <section id="tab-api" class="tab">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">API & EXTENSIONS</span>
+            <h1>A common way in.</h1>
+            <p>
+              Discover problem capabilities, filter methods, send actions and
+              run reproducible experiments.
+            </p>
+          </div>
+        </div>
+        <p id="hosted-api-note" class="panel" hidden>
+          This site runs simulations and comparisons in your browser.
+          To use the HTTP endpoints below, clone the
+          <a href="https://github.com/BaiChunhui-9803/hex-research-platform">project repository</a>
+          and run <code>npm start</code> on your computer.
+        </p>
+        <div class="api-grid">
+          <section class="panel">
+            <h2>Environment API</h2>
+            <pre>
+GET    /api/problems
+GET    /api/methods?problemId=metro&amp;family=Differential%20evolution
+POST   /api/sessions
+GET    /api/sessions/{id}/observe
+POST   /api/sessions/{id}/actions
+POST   /api/sessions/{id}/step
+POST   /api/sessions/{id}/controller
+GET    /api/sessions/{id}/replay
+DELETE /api/sessions/{id}</pre
+            >
+          </section>
+          <section class="panel">
+            <h2>Experiment API</h2>
+            <pre>
+POST   /api/jobs
+GET    /api/jobs/{id}
+DELETE /api/jobs/{id}
+GET    /api/jobs/{id}/json
+GET    /api/jobs/{id}/csv
+GET    /api/runs
+POST   /api/replays/verify</pre
+            >
+            <p>
+              Browser and HTTP sessions are independent environments using the
+              same rules and adapter contracts.
+            </p>
+          </section>
+        </div>
+        <section class="panel">
+          <h2>Run shared methods on another problem</h2>
+          <pre id="api-example"></pre>
+          <p>
+            <a href="/docs/api.md" target="_blank">API reference</a> ·
+            <a href="/docs/extensions.md" target="_blank">Extension guide</a> ·
+            <a href="/docs/contracts.d.ts" target="_blank">Typed contracts</a> ·
+            <a
+              href="/docs/evolutionary-baselines-20261115/index.html"
+              target="_blank"
+              >Algorithm evidence and adaptations</a
+            >
+          </p>
+        </section>
+      </section>
+      <p id="notice" class="notice" role="status" aria-live="polite">
+        Preparing workspace…
+      </p>
+    </main>
+    <footer>
+      HEX / RESEARCH GAMES
+      <span>Problems · Methods · Reproducible experiments</span>
+    </footer>
+  </body>
+</html>

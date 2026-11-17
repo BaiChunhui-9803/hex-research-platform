@@ -1,0 +1,7175 @@
+{
+  "version": "hex-research/v1",
+  "createdAt": "2026-11-14T19:39:11.316Z",
+  "request": {
+    "problemId": "skirmish",
+    "scenarioIds": [
+      "contact",
+      "mixed",
+      "crossfire",
+      "pass",
+      "triad",
+      "asymmetric"
+    ],
+    "methodIds": [
+      "constructive",
+      "random-search",
+      "hill-climb",
+      "annealing"
+    ],
+    "seeds": [
+      26,
+      27,
+      28
+    ],
+    "config": {},
+    "evaluations": 8
+  },
+  "metricSchema": [
+    {
+      "id": "win",
+      "name": "Win",
+      "direction": "max",
+      "unit": "ratio"
+    },
+    {
+      "id": "hpMargin",
+      "name": "HP margin",
+      "direction": "max",
+      "unit": "HP"
+    },
+    {
+      "id": "hpRatio",
+      "name": "Surviving HP",
+      "direction": "max",
+      "unit": "ratio"
+    },
+    {
+      "id": "time",
+      "name": "Duration",
+      "direction": "context",
+      "unit": "s"
+    },
+    {
+      "id": "kills",
+      "name": "Kills",
+      "direction": "max",
+      "unit": "units"
+    },
+    {
+      "id": "orders",
+      "name": "Commands",
+      "direction": "min",
+      "unit": "orders"
+    }
+  ],
+  "results": [
+    {
+      "id": "contact:26:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 26,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": true,
+        "phase": "finished",
+        "winner": null,
+        "time": 13.8,
+        "survivors": 0,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": 0,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 11,
+        "orders": 13,
+        "win": 0,
+        "score": 0
+      },
+      "evaluations": 1,
+      "elapsedMs": 11,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 138,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": true,
+          "phase": "finished",
+          "winner": null,
+          "time": 13.8,
+          "survivors": 0,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": 0,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 11,
+          "orders": 13,
+          "win": 0,
+          "score": 0
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:26:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 26,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 11.4,
+        "survivors": 1,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 43,
+        "hpRatio": 0.215,
+        "hpMargin": 43,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 17,
+        "orders": 26,
+        "win": 1,
+        "score": 1043
+      },
+      "evaluations": 8,
+      "elapsedMs": 48,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 114,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 11.4,
+          "survivors": 1,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 43,
+          "hpRatio": 0.215,
+          "hpMargin": 43,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 17,
+          "orders": 26,
+          "win": 1,
+          "score": 1043
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 1.6459815717767923,
+              "healthWeight": 0.08002081229351461,
+              "threatWeight": 0.06458918182179332,
+              "retreatHp": 0.2099463873077184
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:26:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 26,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": true,
+        "phase": "finished",
+        "winner": null,
+        "time": 13.8,
+        "survivors": 0,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": 0,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 11,
+        "orders": 13,
+        "win": 0,
+        "score": 0
+      },
+      "evaluations": 8,
+      "elapsedMs": 24,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 138,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": true,
+          "phase": "finished",
+          "winner": null,
+          "time": 13.8,
+          "survivors": 0,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": 0,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 11,
+          "orders": 13,
+          "win": 0,
+          "score": 0
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:26:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 26,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": true,
+        "phase": "finished",
+        "winner": null,
+        "time": 13.8,
+        "survivors": 0,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": 0,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 11,
+        "orders": 13,
+        "win": 0,
+        "score": 0
+      },
+      "evaluations": 7,
+      "elapsedMs": 24,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 138,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": true,
+          "phase": "finished",
+          "winner": null,
+          "time": 13.8,
+          "survivors": 0,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": 0,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 11,
+          "orders": 13,
+          "win": 0,
+          "score": 0
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:27:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 27,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": true,
+        "phase": "finished",
+        "winner": null,
+        "time": 13.8,
+        "survivors": 0,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": 0,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 11,
+        "orders": 13,
+        "win": 0,
+        "score": 0
+      },
+      "evaluations": 1,
+      "elapsedMs": 6,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 138,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": true,
+          "phase": "finished",
+          "winner": null,
+          "time": 13.8,
+          "survivors": 0,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": 0,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 11,
+          "orders": 13,
+          "win": 0,
+          "score": 0
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:27:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 27,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 12.2,
+        "survivors": 2,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 37,
+        "hpRatio": 0.185,
+        "hpMargin": 37,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 19,
+        "orders": 31,
+        "win": 1,
+        "score": 1037
+      },
+      "evaluations": 8,
+      "elapsedMs": 43,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 122,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 12.2,
+          "survivors": 2,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 37,
+          "hpRatio": 0.185,
+          "hpMargin": 37,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 19,
+          "orders": 31,
+          "win": 1,
+          "score": 1037
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 1.8914565372280776,
+              "healthWeight": 0.08713901806622744,
+              "threatWeight": 0.38622159119695426,
+              "retreatHp": 0.3177400236949324
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:27:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 27,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 11.4,
+        "survivors": 1,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 43,
+        "hpRatio": 0.215,
+        "hpMargin": 43,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 17,
+        "orders": 26,
+        "win": 1,
+        "score": 1043
+      },
+      "evaluations": 7,
+      "elapsedMs": 26,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 114,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 11.4,
+          "survivors": 1,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 43,
+          "hpRatio": 0.215,
+          "hpMargin": 43,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 17,
+          "orders": 26,
+          "win": 1,
+          "score": 1043
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0,
+              "retreatHp": 0.18819862312171606
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:27:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 27,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 11.4,
+        "survivors": 1,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 43,
+        "hpRatio": 0.215,
+        "hpMargin": 43,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 17,
+        "orders": 26,
+        "win": 1,
+        "score": 1043
+      },
+      "evaluations": 8,
+      "elapsedMs": 29,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 114,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 11.4,
+          "survivors": 1,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 43,
+          "hpRatio": 0.215,
+          "hpMargin": 43,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 17,
+          "orders": 26,
+          "win": 1,
+          "score": 1043
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0,
+              "retreatHp": 0.18819862312171606
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:28:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 28,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": true,
+        "phase": "finished",
+        "winner": null,
+        "time": 13.8,
+        "survivors": 0,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": 0,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 11,
+        "orders": 13,
+        "win": 0,
+        "score": 0
+      },
+      "evaluations": 1,
+      "elapsedMs": 5,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 138,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": true,
+          "phase": "finished",
+          "winner": null,
+          "time": 13.8,
+          "survivors": 0,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": 0,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 11,
+          "orders": 13,
+          "win": 0,
+          "score": 0
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:28:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 28,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 13,
+        "survivors": 1,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 15,
+        "hpRatio": 0.075,
+        "hpMargin": 15,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 13,
+        "orders": 18,
+        "win": 1,
+        "score": 1015
+      },
+      "evaluations": 8,
+      "elapsedMs": 35,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 130,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 13,
+          "survivors": 1,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 15,
+          "hpRatio": 0.075,
+          "hpMargin": 15,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 13,
+          "orders": 18,
+          "win": 1,
+          "score": 1015
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 1.8388190115336327,
+              "healthWeight": 0.08906473610550165,
+              "threatWeight": 0.03286169832572341,
+              "retreatHp": 0.07966961497440934
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:28:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 28,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 13,
+        "survivors": 1,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 15,
+        "hpRatio": 0.075,
+        "hpMargin": 15,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 13,
+        "orders": 18,
+        "win": 1,
+        "score": 1015
+      },
+      "evaluations": 6,
+      "elapsedMs": 18,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 130,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 13,
+          "survivors": 1,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 15,
+          "hpRatio": 0.075,
+          "hpMargin": 15,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 13,
+          "orders": 18,
+          "win": 1,
+          "score": 1015
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 3.1292955051735043,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0.07217430280521511
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact:28:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "seed": 28,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "contact",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": true,
+        "phase": "finished",
+        "winner": null,
+        "time": 13.8,
+        "survivors": 0,
+        "initialUnits": 4,
+        "enemySurvivors": 0,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": 0,
+        "kills": 4,
+        "damageDealt": 200,
+        "distanceMoved": 11,
+        "orders": 13,
+        "win": 0,
+        "score": 0
+      },
+      "evaluations": 7,
+      "elapsedMs": 21,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "contact",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 138,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": true,
+          "phase": "finished",
+          "winner": null,
+          "time": 13.8,
+          "survivors": 0,
+          "initialUnits": 4,
+          "enemySurvivors": 0,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": 0,
+          "kills": 4,
+          "damageDealt": 200,
+          "distanceMoved": 11,
+          "orders": 13,
+          "win": 0,
+          "score": 0
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:26:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 26,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 11.8,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -195,
+        "kills": 3,
+        "damageDealt": 205,
+        "distanceMoved": 23,
+        "orders": 24,
+        "win": 0,
+        "score": -195
+      },
+      "evaluations": 1,
+      "elapsedMs": 14,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 118,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 11.8,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -195,
+          "kills": 3,
+          "damageDealt": 205,
+          "distanceMoved": 23,
+          "orders": 24,
+          "win": 0,
+          "score": -195
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:26:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 26,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 11.4,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 4,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -184.25,
+        "kills": 4,
+        "damageDealt": 215.75,
+        "distanceMoved": 22,
+        "orders": 28,
+        "win": 0,
+        "score": -184.25
+      },
+      "evaluations": 8,
+      "elapsedMs": 103,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 114,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 11.4,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 4,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -184.25,
+          "kills": 4,
+          "damageDealt": 215.75,
+          "distanceMoved": 22,
+          "orders": 28,
+          "win": 0,
+          "score": -184.25
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 1.6459815717767923,
+              "healthWeight": 0.08002081229351461,
+              "threatWeight": 0.06458918182179332,
+              "retreatHp": 0.2099463873077184
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:26:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 26,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 10.1,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -181.75,
+        "kills": 3,
+        "damageDealt": 218.25,
+        "distanceMoved": 22,
+        "orders": 28,
+        "win": 0,
+        "score": -181.75
+      },
+      "evaluations": 8,
+      "elapsedMs": 43,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 101,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 10.1,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -181.75,
+          "kills": 3,
+          "damageDealt": 218.25,
+          "distanceMoved": 22,
+          "orders": 28,
+          "win": 0,
+          "score": -181.75
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2.627790781385265,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:26:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 26,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 10.1,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -181.75,
+        "kills": 3,
+        "damageDealt": 218.25,
+        "distanceMoved": 22,
+        "orders": 28,
+        "win": 0,
+        "score": -181.75
+      },
+      "evaluations": 8,
+      "elapsedMs": 54,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 101,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 10.1,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -181.75,
+          "kills": 3,
+          "damageDealt": 218.25,
+          "distanceMoved": 22,
+          "orders": 28,
+          "win": 0,
+          "score": -181.75
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2.627790781385265,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:27:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 27,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 11.2,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -179,
+        "kills": 3,
+        "damageDealt": 221,
+        "distanceMoved": 24,
+        "orders": 25,
+        "win": 0,
+        "score": -179
+      },
+      "evaluations": 1,
+      "elapsedMs": 10,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 112,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 11.2,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -179,
+          "kills": 3,
+          "damageDealt": 221,
+          "distanceMoved": 24,
+          "orders": 25,
+          "win": 0,
+          "score": -179
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:27:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 27,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 11.2,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -179,
+        "kills": 3,
+        "damageDealt": 221,
+        "distanceMoved": 24,
+        "orders": 25,
+        "win": 0,
+        "score": -179
+      },
+      "evaluations": 8,
+      "elapsedMs": 83,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 112,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 11.2,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -179,
+          "kills": 3,
+          "damageDealt": 221,
+          "distanceMoved": 24,
+          "orders": 25,
+          "win": 0,
+          "score": -179
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:27:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 27,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 11.2,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -179,
+        "kills": 3,
+        "damageDealt": 221,
+        "distanceMoved": 24,
+        "orders": 25,
+        "win": 0,
+        "score": -179
+      },
+      "evaluations": 7,
+      "elapsedMs": 45,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 112,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 11.2,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -179,
+          "kills": 3,
+          "damageDealt": 221,
+          "distanceMoved": 24,
+          "orders": 25,
+          "win": 0,
+          "score": -179
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:27:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 27,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 11.2,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -179,
+        "kills": 3,
+        "damageDealt": 221,
+        "distanceMoved": 24,
+        "orders": 25,
+        "win": 0,
+        "score": -179
+      },
+      "evaluations": 8,
+      "elapsedMs": 55,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 112,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 11.2,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -179,
+          "kills": 3,
+          "damageDealt": 221,
+          "distanceMoved": 24,
+          "orders": 25,
+          "win": 0,
+          "score": -179
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:28:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 28,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 11.9,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -196.5,
+        "kills": 3,
+        "damageDealt": 203.5,
+        "distanceMoved": 23,
+        "orders": 26,
+        "win": 0,
+        "score": -196.5
+      },
+      "evaluations": 1,
+      "elapsedMs": 10,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 119,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 11.9,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -196.5,
+          "kills": 3,
+          "damageDealt": 203.5,
+          "distanceMoved": 23,
+          "orders": 26,
+          "win": 0,
+          "score": -196.5
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:28:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 28,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 12,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 4,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -159.75,
+        "kills": 4,
+        "damageDealt": 240.25,
+        "distanceMoved": 24,
+        "orders": 31,
+        "win": 0,
+        "score": -159.75
+      },
+      "evaluations": 8,
+      "elapsedMs": 89,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 120,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 12,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 4,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -159.75,
+          "kills": 4,
+          "damageDealt": 240.25,
+          "distanceMoved": 24,
+          "orders": 31,
+          "win": 0,
+          "score": -159.75
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 1.9345576863735914,
+              "healthWeight": 0.012800666224211455,
+              "threatWeight": 0.2964078338816762,
+              "retreatHp": 0.034026506775990124
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:28:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 28,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 10.3,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -183.25,
+        "kills": 3,
+        "damageDealt": 216.75,
+        "distanceMoved": 21,
+        "orders": 22,
+        "win": 0,
+        "score": -183.25
+      },
+      "evaluations": 6,
+      "elapsedMs": 32,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 103,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 10.3,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -183.25,
+          "kills": 3,
+          "damageDealt": 216.75,
+          "distanceMoved": 21,
+          "orders": 22,
+          "win": 0,
+          "score": -183.25
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 3.1442092403816058,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed:28:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "seed": 28,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "mixed",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 15.2,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -162.75,
+        "kills": 3,
+        "damageDealt": 237.25,
+        "distanceMoved": 53,
+        "orders": 51,
+        "win": 0,
+        "score": -162.75
+      },
+      "evaluations": 5,
+      "elapsedMs": 52,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "mixed",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 152,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 15.2,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -162.75,
+          "kills": 3,
+          "damageDealt": 237.25,
+          "distanceMoved": 53,
+          "orders": 51,
+          "win": 0,
+          "score": -162.75
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": true,
+              "distanceWeight": 3.008740538940765,
+              "healthWeight": 0.06,
+              "threatWeight": 0.04194356762804091,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:26:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 26,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 25.2,
+        "survivors": 0,
+        "initialUnits": 8,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -24,
+        "kills": 7,
+        "damageDealt": 452,
+        "distanceMoved": 59,
+        "orders": 40,
+        "win": 0,
+        "score": -24
+      },
+      "evaluations": 1,
+      "elapsedMs": 23,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 252,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 25.2,
+          "survivors": 0,
+          "initialUnits": 8,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -24,
+          "kills": 7,
+          "damageDealt": 452,
+          "distanceMoved": 59,
+          "orders": 40,
+          "win": 0,
+          "score": -24
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:26:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 26,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 27.2,
+        "survivors": 1,
+        "initialUnits": 8,
+        "enemySurvivors": 0,
+        "hp": 57.25,
+        "hpRatio": 0.12027310924369748,
+        "hpMargin": 57.25,
+        "kills": 8,
+        "damageDealt": 476,
+        "distanceMoved": 82,
+        "orders": 51,
+        "win": 1,
+        "score": 1057.25
+      },
+      "evaluations": 8,
+      "elapsedMs": 171,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 272,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 27.2,
+          "survivors": 1,
+          "initialUnits": 8,
+          "enemySurvivors": 0,
+          "hp": 57.25,
+          "hpRatio": 0.12027310924369748,
+          "hpMargin": 57.25,
+          "kills": 8,
+          "damageDealt": 476,
+          "distanceMoved": 82,
+          "orders": 51,
+          "win": 1,
+          "score": 1057.25
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 0.9057119432836771,
+              "healthWeight": 0.14564667409285903,
+              "threatWeight": 0.2652875770814717,
+              "retreatHp": 0.11547885462641716
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:26:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 26,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 25.2,
+        "survivors": 0,
+        "initialUnits": 8,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -24,
+        "kills": 7,
+        "damageDealt": 452,
+        "distanceMoved": 59,
+        "orders": 40,
+        "win": 0,
+        "score": -24
+      },
+      "evaluations": 8,
+      "elapsedMs": 92,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 252,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 25.2,
+          "survivors": 0,
+          "initialUnits": 8,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -24,
+          "kills": 7,
+          "damageDealt": 452,
+          "distanceMoved": 59,
+          "orders": 40,
+          "win": 0,
+          "score": -24
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:26:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 26,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 18.5,
+        "survivors": 3,
+        "initialUnits": 8,
+        "enemySurvivors": 0,
+        "hp": 119.25,
+        "hpRatio": 0.2505252100840336,
+        "hpMargin": 119.25,
+        "kills": 8,
+        "damageDealt": 476,
+        "distanceMoved": 75,
+        "orders": 62,
+        "win": 1,
+        "score": 1119.25
+      },
+      "evaluations": 8,
+      "elapsedMs": 117,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 185,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 18.5,
+          "survivors": 3,
+          "initialUnits": 8,
+          "enemySurvivors": 0,
+          "hp": 119.25,
+          "hpRatio": 0.2505252100840336,
+          "hpMargin": 119.25,
+          "kills": 8,
+          "damageDealt": 476,
+          "distanceMoved": 75,
+          "orders": 62,
+          "win": 1,
+          "score": 1119.25
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2.868355713789351,
+              "healthWeight": 0.0005108510376885533,
+              "threatWeight": 0.09462496702559292,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:27:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 27,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 21,
+        "survivors": 2,
+        "initialUnits": 8,
+        "enemySurvivors": 0,
+        "hp": 145.25,
+        "hpRatio": 0.30514705882352944,
+        "hpMargin": 145.25,
+        "kills": 8,
+        "damageDealt": 476,
+        "distanceMoved": 64,
+        "orders": 46,
+        "win": 1,
+        "score": 1145.25
+      },
+      "evaluations": 1,
+      "elapsedMs": 18,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 210,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 21,
+          "survivors": 2,
+          "initialUnits": 8,
+          "enemySurvivors": 0,
+          "hp": 145.25,
+          "hpRatio": 0.30514705882352944,
+          "hpMargin": 145.25,
+          "kills": 8,
+          "damageDealt": 476,
+          "distanceMoved": 64,
+          "orders": 46,
+          "win": 1,
+          "score": 1145.25
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:27:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 27,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 21,
+        "survivors": 2,
+        "initialUnits": 8,
+        "enemySurvivors": 0,
+        "hp": 145.25,
+        "hpRatio": 0.30514705882352944,
+        "hpMargin": 145.25,
+        "kills": 8,
+        "damageDealt": 476,
+        "distanceMoved": 64,
+        "orders": 46,
+        "win": 1,
+        "score": 1145.25
+      },
+      "evaluations": 8,
+      "elapsedMs": 170,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 210,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 21,
+          "survivors": 2,
+          "initialUnits": 8,
+          "enemySurvivors": 0,
+          "hp": 145.25,
+          "hpRatio": 0.30514705882352944,
+          "hpMargin": 145.25,
+          "kills": 8,
+          "damageDealt": 476,
+          "distanceMoved": 64,
+          "orders": 46,
+          "win": 1,
+          "score": 1145.25
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:27:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 27,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 15.9,
+        "survivors": 4,
+        "initialUnits": 8,
+        "enemySurvivors": 0,
+        "hp": 166,
+        "hpRatio": 0.3487394957983193,
+        "hpMargin": 166,
+        "kills": 8,
+        "damageDealt": 476,
+        "distanceMoved": 50,
+        "orders": 50,
+        "win": 1,
+        "score": 1166
+      },
+      "evaluations": 7,
+      "elapsedMs": 76,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 159,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 15.9,
+          "survivors": 4,
+          "initialUnits": 8,
+          "enemySurvivors": 0,
+          "hp": 166,
+          "hpRatio": 0.3487394957983193,
+          "hpMargin": 166,
+          "kills": 8,
+          "damageDealt": 476,
+          "distanceMoved": 50,
+          "orders": 50,
+          "win": 1,
+          "score": 1166
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0,
+              "retreatHp": 0.18819862312171606
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:27:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 27,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 15.9,
+        "survivors": 4,
+        "initialUnits": 8,
+        "enemySurvivors": 0,
+        "hp": 166,
+        "hpRatio": 0.3487394957983193,
+        "hpMargin": 166,
+        "kills": 8,
+        "damageDealt": 476,
+        "distanceMoved": 50,
+        "orders": 50,
+        "win": 1,
+        "score": 1166
+      },
+      "evaluations": 8,
+      "elapsedMs": 108,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 159,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 15.9,
+          "survivors": 4,
+          "initialUnits": 8,
+          "enemySurvivors": 0,
+          "hp": 166,
+          "hpRatio": 0.3487394957983193,
+          "hpMargin": 166,
+          "kills": 8,
+          "damageDealt": 476,
+          "distanceMoved": 50,
+          "orders": 50,
+          "win": 1,
+          "score": 1166
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0,
+              "retreatHp": 0.18819862312171606
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:28:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 28,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 21.7,
+        "survivors": 0,
+        "initialUnits": 8,
+        "enemySurvivors": 2,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -76,
+        "kills": 6,
+        "damageDealt": 400,
+        "distanceMoved": 66,
+        "orders": 42,
+        "win": 0,
+        "score": -76
+      },
+      "evaluations": 1,
+      "elapsedMs": 19,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 217,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 21.7,
+          "survivors": 0,
+          "initialUnits": 8,
+          "enemySurvivors": 2,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -76,
+          "kills": 6,
+          "damageDealt": 400,
+          "distanceMoved": 66,
+          "orders": 42,
+          "win": 0,
+          "score": -76
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:28:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 28,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 21.2,
+        "survivors": 3,
+        "initialUnits": 8,
+        "enemySurvivors": 0,
+        "hp": 165.25,
+        "hpRatio": 0.3471638655462185,
+        "hpMargin": 165.25,
+        "kills": 8,
+        "damageDealt": 476,
+        "distanceMoved": 96,
+        "orders": 67,
+        "win": 1,
+        "score": 1165.25
+      },
+      "evaluations": 8,
+      "elapsedMs": 142,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 212,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 21.2,
+          "survivors": 3,
+          "initialUnits": 8,
+          "enemySurvivors": 0,
+          "hp": 165.25,
+          "hpRatio": 0.3471638655462185,
+          "hpMargin": 165.25,
+          "kills": 8,
+          "damageDealt": 476,
+          "distanceMoved": 96,
+          "orders": 67,
+          "win": 1,
+          "score": 1165.25
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 1.8388190115336327,
+              "healthWeight": 0.08906473610550165,
+              "threatWeight": 0.03286169832572341,
+              "retreatHp": 0.07966961497440934
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:28:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 28,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 25.9,
+        "survivors": 0,
+        "initialUnits": 8,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -24,
+        "kills": 7,
+        "damageDealt": 452,
+        "distanceMoved": 60,
+        "orders": 54,
+        "win": 0,
+        "score": -24
+      },
+      "evaluations": 6,
+      "elapsedMs": 71,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 259,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 25.9,
+          "survivors": 0,
+          "initialUnits": 8,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -24,
+          "kills": 7,
+          "damageDealt": 452,
+          "distanceMoved": 60,
+          "orders": 54,
+          "win": 0,
+          "score": -24
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 1.9850862647918985,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0.07217430280521511
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "crossfire:28:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "seed": 28,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "crossfire",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 25.3,
+        "survivors": 0,
+        "initialUnits": 8,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -33,
+        "kills": 7,
+        "damageDealt": 443,
+        "distanceMoved": 59,
+        "orders": 52,
+        "win": 0,
+        "score": -33
+      },
+      "evaluations": 5,
+      "elapsedMs": 59,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "crossfire",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 253,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 25.3,
+          "survivors": 0,
+          "initialUnits": 8,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -33,
+          "kills": 7,
+          "damageDealt": 443,
+          "distanceMoved": 59,
+          "orders": 52,
+          "win": 0,
+          "score": -33
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:26:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 26,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 13.6,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 4,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -228,
+        "kills": 3,
+        "damageDealt": 160,
+        "distanceMoved": 41,
+        "orders": 21,
+        "win": 0,
+        "score": -228
+      },
+      "evaluations": 1,
+      "elapsedMs": 23,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 136,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 13.6,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 4,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -228,
+          "kills": 3,
+          "damageDealt": 160,
+          "distanceMoved": 41,
+          "orders": 21,
+          "win": 0,
+          "score": -228
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:26:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 26,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 18.1,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -84,
+        "kills": 4,
+        "damageDealt": 304,
+        "distanceMoved": 61,
+        "orders": 48,
+        "win": 0,
+        "score": -84
+      },
+      "evaluations": 8,
+      "elapsedMs": 139,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 181,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 18.1,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -84,
+          "kills": 4,
+          "damageDealt": 304,
+          "distanceMoved": 61,
+          "orders": 48,
+          "win": 0,
+          "score": -84
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": true,
+              "distanceWeight": 2.3004886922892185,
+              "healthWeight": 0.03187035536393523,
+              "threatWeight": 0.1723416713066399,
+              "retreatHp": 0.40277861924842
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:26:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 26,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 14.3,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 4,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -190,
+        "kills": 3,
+        "damageDealt": 198,
+        "distanceMoved": 26,
+        "orders": 25,
+        "win": 0,
+        "score": -190
+      },
+      "evaluations": 8,
+      "elapsedMs": 100,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 143,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 14.3,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 4,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -190,
+          "kills": 3,
+          "damageDealt": 198,
+          "distanceMoved": 26,
+          "orders": 25,
+          "win": 0,
+          "score": -190
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 1.7342768035037444,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:26:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 26,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 18.1,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -84,
+        "kills": 4,
+        "damageDealt": 304,
+        "distanceMoved": 61,
+        "orders": 48,
+        "win": 0,
+        "score": -84
+      },
+      "evaluations": 7,
+      "elapsedMs": 122,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 181,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 18.1,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -84,
+          "kills": 4,
+          "damageDealt": 304,
+          "distanceMoved": 61,
+          "orders": 48,
+          "win": 0,
+          "score": -84
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": true,
+              "distanceWeight": 2.709280793587677,
+              "healthWeight": 0.0005108510376885533,
+              "threatWeight": 0.09462496702559292,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:27:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 27,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 13.2,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 4,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -228,
+        "kills": 3,
+        "damageDealt": 160,
+        "distanceMoved": 29,
+        "orders": 18,
+        "win": 0,
+        "score": -228
+      },
+      "evaluations": 1,
+      "elapsedMs": 20,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 132,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 13.2,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 4,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -228,
+          "kills": 3,
+          "damageDealt": 160,
+          "distanceMoved": 29,
+          "orders": 18,
+          "win": 0,
+          "score": -228
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:27:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 27,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 21.2,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 2,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -75,
+        "kills": 5,
+        "damageDealt": 313,
+        "distanceMoved": 65,
+        "orders": 52,
+        "win": 0,
+        "score": -75
+      },
+      "evaluations": 8,
+      "elapsedMs": 183,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 212,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 21.2,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 2,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -75,
+          "kills": 5,
+          "damageDealt": 313,
+          "distanceMoved": 65,
+          "orders": 52,
+          "win": 0,
+          "score": -75
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": true,
+              "distanceWeight": 3.676336358487606,
+              "healthWeight": 0.17057569343596699,
+              "threatWeight": 0.30369564630091195,
+              "retreatHp": 0.4706732918042689
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:27:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 27,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 12.7,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -209,
+        "kills": 2,
+        "damageDealt": 179,
+        "distanceMoved": 24,
+        "orders": 21,
+        "win": 0,
+        "score": -209
+      },
+      "evaluations": 7,
+      "elapsedMs": 90,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 127,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 12.7,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -209,
+          "kills": 2,
+          "damageDealt": 179,
+          "distanceMoved": 24,
+          "orders": 21,
+          "win": 0,
+          "score": -209
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:27:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 27,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 13.2,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 4,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -228,
+        "kills": 3,
+        "damageDealt": 160,
+        "distanceMoved": 29,
+        "orders": 18,
+        "win": 0,
+        "score": -228
+      },
+      "evaluations": 7,
+      "elapsedMs": 79,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 132,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 13.2,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 4,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -228,
+          "kills": 3,
+          "damageDealt": 160,
+          "distanceMoved": 29,
+          "orders": 18,
+          "win": 0,
+          "score": -228
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:28:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 28,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 15.3,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 6,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -302,
+        "kills": 1,
+        "damageDealt": 86,
+        "distanceMoved": 49,
+        "orders": 18,
+        "win": 0,
+        "score": -302
+      },
+      "evaluations": 1,
+      "elapsedMs": 48,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 153,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 15.3,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 6,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -302,
+          "kills": 1,
+          "damageDealt": 86,
+          "distanceMoved": 49,
+          "orders": 18,
+          "win": 0,
+          "score": -302
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:28:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 28,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 14.2,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -226,
+        "kills": 2,
+        "damageDealt": 162,
+        "distanceMoved": 44,
+        "orders": 27,
+        "win": 0,
+        "score": -226
+      },
+      "evaluations": 8,
+      "elapsedMs": 138,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 142,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 14.2,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -226,
+          "kills": 2,
+          "damageDealt": 162,
+          "distanceMoved": 44,
+          "orders": 27,
+          "win": 0,
+          "score": -226
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": true,
+              "distanceWeight": 0.8117701848968863,
+              "healthWeight": 0.012739867391064764,
+              "threatWeight": 0.1683166270144284,
+              "retreatHp": 0.5580923098605126
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:28:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 28,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 13.9,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -210,
+        "kills": 2,
+        "damageDealt": 178,
+        "distanceMoved": 25,
+        "orders": 26,
+        "win": 0,
+        "score": -210
+      },
+      "evaluations": 6,
+      "elapsedMs": 116,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 139,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 13.9,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -210,
+          "kills": 2,
+          "damageDealt": 178,
+          "distanceMoved": 25,
+          "orders": 26,
+          "win": 0,
+          "score": -210
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 3.1442092403816058,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pass:28:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "seed": 28,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "pass",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 13.9,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 5,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -210,
+        "kills": 2,
+        "damageDealt": 178,
+        "distanceMoved": 25,
+        "orders": 26,
+        "win": 0,
+        "score": -210
+      },
+      "evaluations": 5,
+      "elapsedMs": 96,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "pass",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 139,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 13.9,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 5,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -210,
+          "kills": 2,
+          "damageDealt": 178,
+          "distanceMoved": 25,
+          "orders": 26,
+          "win": 0,
+          "score": -210
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 3.008740538940765,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:26:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 26,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 15.7,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -154,
+        "kills": 8,
+        "damageDealt": 340.86,
+        "distanceMoved": 26,
+        "orders": 50,
+        "win": 0,
+        "score": -154
+      },
+      "evaluations": 1,
+      "elapsedMs": 20,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 157,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 15.7,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -154,
+          "kills": 8,
+          "damageDealt": 340.86,
+          "distanceMoved": 26,
+          "orders": 50,
+          "win": 0,
+          "score": -154
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:26:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 26,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 26.1,
+        "survivors": 2,
+        "initialUnits": 6,
+        "enemySurvivors": 0,
+        "hp": 39,
+        "hpRatio": 0.1196319018404908,
+        "hpMargin": 39,
+        "kills": 5,
+        "damageDealt": 372,
+        "distanceMoved": 94,
+        "orders": 74,
+        "win": 1,
+        "score": 1039
+      },
+      "evaluations": 8,
+      "elapsedMs": 175,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 261,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 26.1,
+          "survivors": 2,
+          "initialUnits": 6,
+          "enemySurvivors": 0,
+          "hp": 39,
+          "hpRatio": 0.1196319018404908,
+          "hpMargin": 39,
+          "kills": 5,
+          "damageDealt": 372,
+          "distanceMoved": 94,
+          "orders": 74,
+          "win": 1,
+          "score": 1039
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": true,
+              "distanceWeight": 2.3004886922892185,
+              "healthWeight": 0.03187035536393523,
+              "threatWeight": 0.1723416713066399,
+              "retreatHp": 0.40277861924842
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:26:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 26,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 15.5,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -112,
+        "kills": 5,
+        "damageDealt": 386,
+        "distanceMoved": 25,
+        "orders": 48,
+        "win": 0,
+        "score": -112
+      },
+      "evaluations": 8,
+      "elapsedMs": 95,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 155,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 15.5,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -112,
+          "kills": 5,
+          "damageDealt": 386,
+          "distanceMoved": 25,
+          "orders": 48,
+          "win": 0,
+          "score": -112
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 3.344039537976496,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:26:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 26,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 15.5,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -112,
+        "kills": 5,
+        "damageDealt": 386,
+        "distanceMoved": 25,
+        "orders": 48,
+        "win": 0,
+        "score": -112
+      },
+      "evaluations": 8,
+      "elapsedMs": 87,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 155,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 15.5,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -112,
+          "kills": 5,
+          "damageDealt": 386,
+          "distanceMoved": 25,
+          "orders": 48,
+          "win": 0,
+          "score": -112
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 3.344039537976496,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:27:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 27,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 16.5,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -141,
+        "kills": 6,
+        "damageDealt": 355,
+        "distanceMoved": 24,
+        "orders": 41,
+        "win": 0,
+        "score": -141
+      },
+      "evaluations": 1,
+      "elapsedMs": 20,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 165,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 16.5,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -141,
+          "kills": 6,
+          "damageDealt": 355,
+          "distanceMoved": 24,
+          "orders": 41,
+          "win": 0,
+          "score": -141
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:27:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 27,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 20.8,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 2,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -69,
+        "kills": 4,
+        "damageDealt": 348,
+        "distanceMoved": 81,
+        "orders": 68,
+        "win": 0,
+        "score": -69
+      },
+      "evaluations": 8,
+      "elapsedMs": 185,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 208,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 20.8,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 2,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -69,
+          "kills": 4,
+          "damageDealt": 348,
+          "distanceMoved": 81,
+          "orders": 68,
+          "win": 0,
+          "score": -69
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": true,
+              "distanceWeight": 3.304184141615406,
+              "healthWeight": 0.09949901825748385,
+              "threatWeight": 0.0025026949122548105,
+              "retreatHp": 0.22746448796242474
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:27:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 27,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 18.2,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -114,
+        "kills": 6,
+        "damageDealt": 280,
+        "distanceMoved": 24,
+        "orders": 39,
+        "win": 0,
+        "score": -114
+      },
+      "evaluations": 7,
+      "elapsedMs": 83,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 182,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 18.2,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -114,
+          "kills": 6,
+          "damageDealt": 280,
+          "distanceMoved": 24,
+          "orders": 39,
+          "win": 0,
+          "score": -114
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0,
+              "retreatHp": 0.09948395913932472
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:27:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 27,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 20.2,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 2,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -90,
+        "kills": 6,
+        "damageDealt": 284,
+        "distanceMoved": 25,
+        "orders": 37,
+        "win": 0,
+        "score": -90
+      },
+      "evaluations": 8,
+      "elapsedMs": 96,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 202,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 20.2,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 2,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -90,
+          "kills": 6,
+          "damageDealt": 284,
+          "distanceMoved": 25,
+          "orders": 37,
+          "win": 0,
+          "score": -90
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.10336363773792982,
+              "threatWeight": 0,
+              "retreatHp": 0.1792184269800782
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:28:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 28,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "violet",
+        "time": 27,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -11,
+        "kills": 5,
+        "damageDealt": 349.75,
+        "distanceMoved": 31,
+        "orders": 52,
+        "win": 0,
+        "score": -11
+      },
+      "evaluations": 1,
+      "elapsedMs": 25,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 270,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "violet",
+          "time": 27,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -11,
+          "kills": 5,
+          "damageDealt": 349.75,
+          "distanceMoved": 31,
+          "orders": 52,
+          "win": 0,
+          "score": -11
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:28:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 28,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 23.7,
+        "survivors": 3,
+        "initialUnits": 6,
+        "enemySurvivors": 0,
+        "hp": 107,
+        "hpRatio": 0.3282208588957055,
+        "hpMargin": 107,
+        "kills": 6,
+        "damageDealt": 342.13,
+        "distanceMoved": 103,
+        "orders": 74,
+        "win": 1,
+        "score": 1107
+      },
+      "evaluations": 8,
+      "elapsedMs": 179,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 237,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 23.7,
+          "survivors": 3,
+          "initialUnits": 6,
+          "enemySurvivors": 0,
+          "hp": 107,
+          "hpRatio": 0.3282208588957055,
+          "hpMargin": 107,
+          "kills": 6,
+          "damageDealt": 342.13,
+          "distanceMoved": 103,
+          "orders": 74,
+          "win": 1,
+          "score": 1107
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": true,
+              "distanceWeight": 1.156788676045835,
+              "healthWeight": 0.12416629423387349,
+              "threatWeight": 0.16484226351603867,
+              "retreatHp": 0.22637978503480552
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:28:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 28,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "violet",
+        "time": 27,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -11,
+        "kills": 5,
+        "damageDealt": 349.75,
+        "distanceMoved": 31,
+        "orders": 52,
+        "win": 0,
+        "score": -11
+      },
+      "evaluations": 6,
+      "elapsedMs": 76,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 270,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "violet",
+          "time": 27,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -11,
+          "kills": 5,
+          "damageDealt": 349.75,
+          "distanceMoved": 31,
+          "orders": 52,
+          "win": 0,
+          "score": -11
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "triad:28:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "seed": 28,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "triad",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "violet",
+        "time": 27,
+        "survivors": 0,
+        "initialUnits": 6,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -11,
+        "kills": 5,
+        "damageDealt": 349.75,
+        "distanceMoved": 31,
+        "orders": 52,
+        "win": 0,
+        "score": -11
+      },
+      "evaluations": 7,
+      "elapsedMs": 80,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "triad",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 270,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "violet",
+          "time": 27,
+          "survivors": 0,
+          "initialUnits": 6,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -11,
+          "kills": 5,
+          "damageDealt": 349.75,
+          "distanceMoved": 31,
+          "orders": 52,
+          "win": 0,
+          "score": -11
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:26:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 26,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 26.1,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -42,
+        "kills": 3,
+        "damageDealt": 168,
+        "distanceMoved": 14,
+        "orders": 18,
+        "win": 0,
+        "score": -42
+      },
+      "evaluations": 1,
+      "elapsedMs": 26,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 261,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 26.1,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -42,
+          "kills": 3,
+          "damageDealt": 168,
+          "distanceMoved": 14,
+          "orders": 18,
+          "win": 0,
+          "score": -42
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:26:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 26,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 26.1,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -42,
+        "kills": 3,
+        "damageDealt": 168,
+        "distanceMoved": 14,
+        "orders": 18,
+        "win": 0,
+        "score": -42
+      },
+      "evaluations": 8,
+      "elapsedMs": 140,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 261,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 26.1,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -42,
+          "kills": 3,
+          "damageDealt": 168,
+          "distanceMoved": 14,
+          "orders": 18,
+          "win": 0,
+          "score": -42
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:26:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 26,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 26.1,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -42,
+        "kills": 3,
+        "damageDealt": 168,
+        "distanceMoved": 14,
+        "orders": 18,
+        "win": 0,
+        "score": -42
+      },
+      "evaluations": 8,
+      "elapsedMs": 103,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 261,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 26.1,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -42,
+          "kills": 3,
+          "damageDealt": 168,
+          "distanceMoved": 14,
+          "orders": 18,
+          "win": 0,
+          "score": -42
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:26:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 26,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 26,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 26.1,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -42,
+        "kills": 3,
+        "damageDealt": 168,
+        "distanceMoved": 14,
+        "orders": 18,
+        "win": 0,
+        "score": -42
+      },
+      "evaluations": 7,
+      "elapsedMs": 100,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 26,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 261,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 26.1,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -42,
+          "kills": 3,
+          "damageDealt": 168,
+          "distanceMoved": 14,
+          "orders": 18,
+          "win": 0,
+          "score": -42
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:27:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 27,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 19.5,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 3,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -159,
+        "kills": 3,
+        "damageDealt": 150,
+        "distanceMoved": 16,
+        "orders": 19,
+        "win": 0,
+        "score": -159
+      },
+      "evaluations": 1,
+      "elapsedMs": 26,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 195,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 19.5,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 3,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -159,
+          "kills": 3,
+          "damageDealt": 150,
+          "distanceMoved": 16,
+          "orders": 19,
+          "win": 0,
+          "score": -159
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:27:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 27,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": true,
+        "draw": false,
+        "phase": "finished",
+        "winner": "blue",
+        "time": 30.3,
+        "survivors": 1,
+        "initialUnits": 5,
+        "enemySurvivors": 0,
+        "hp": 3,
+        "hpRatio": 0.010869565217391304,
+        "hpMargin": 3,
+        "kills": 6,
+        "damageDealt": 412,
+        "distanceMoved": 59,
+        "orders": 59,
+        "win": 1,
+        "score": 1003
+      },
+      "evaluations": 8,
+      "elapsedMs": 168,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 303,
+        "finalMetrics": {
+          "team": "blue",
+          "won": true,
+          "draw": false,
+          "phase": "finished",
+          "winner": "blue",
+          "time": 30.3,
+          "survivors": 1,
+          "initialUnits": 5,
+          "enemySurvivors": 0,
+          "hp": 3,
+          "hpRatio": 0.010869565217391304,
+          "hpMargin": 3,
+          "kills": 6,
+          "damageDealt": 412,
+          "distanceMoved": 59,
+          "orders": 59,
+          "win": 1,
+          "score": 1003
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 3.892708523198962,
+              "healthWeight": 0.0957237161230296,
+              "threatWeight": 0.23834640262648465,
+              "retreatHp": 0.4858441617339849
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:27:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 27,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 22.1,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 2,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -96.75,
+        "kills": 2,
+        "damageDealt": 158,
+        "distanceMoved": 13,
+        "orders": 21,
+        "win": 0,
+        "score": -96.75
+      },
+      "evaluations": 7,
+      "elapsedMs": 96,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 221,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 22.1,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 2,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -96.75,
+          "kills": 2,
+          "damageDealt": 158,
+          "distanceMoved": 13,
+          "orders": 21,
+          "win": 0,
+          "score": -96.75
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0,
+              "retreatHp": 0.18819862312171606
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:27:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 27,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 27,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 25.7,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 2,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -78,
+        "kills": 3,
+        "damageDealt": 150,
+        "distanceMoved": 15,
+        "orders": 21,
+        "win": 0,
+        "score": -78
+      },
+      "evaluations": 8,
+      "elapsedMs": 109,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 27,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 257,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 25.7,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 2,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -78,
+          "kills": 3,
+          "damageDealt": 150,
+          "distanceMoved": 15,
+          "orders": 21,
+          "win": 0,
+          "score": -78
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": false,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.10336363773792982,
+              "threatWeight": 0,
+              "retreatHp": 0.18819862312171606
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:28:constructive",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 28,
+      "methodId": "constructive",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 30.7,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -4,
+        "kills": 3,
+        "damageDealt": 150,
+        "distanceMoved": 15,
+        "orders": 17,
+        "win": 0,
+        "score": -4
+      },
+      "evaluations": 1,
+      "elapsedMs": 27,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "constructive",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 307,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 30.7,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -4,
+          "kills": 3,
+          "damageDealt": 150,
+          "distanceMoved": 15,
+          "orders": 17,
+          "win": 0,
+          "score": -4
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:28:random-search",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 28,
+      "methodId": "random-search",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 30.7,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -4,
+        "kills": 3,
+        "damageDealt": 150,
+        "distanceMoved": 15,
+        "orders": 17,
+        "win": 0,
+        "score": -4
+      },
+      "evaluations": 8,
+      "elapsedMs": 138,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "random-search",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 307,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 30.7,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -4,
+          "kills": 3,
+          "damageDealt": 150,
+          "distanceMoved": 15,
+          "orders": 17,
+          "win": 0,
+          "score": -4
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:28:hill-climb",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 28,
+      "methodId": "hill-climb",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 30.7,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -4,
+        "kills": 3,
+        "damageDealt": 150,
+        "distanceMoved": 15,
+        "orders": 17,
+        "win": 0,
+        "score": -4
+      },
+      "evaluations": 6,
+      "elapsedMs": 86,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "hill-climb",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 307,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 30.7,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -4,
+          "kills": 3,
+          "damageDealt": 150,
+          "distanceMoved": 15,
+          "orders": 17,
+          "win": 0,
+          "score": -4
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "asymmetric:28:annealing",
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "seed": 28,
+      "methodId": "annealing",
+      "config": {
+        "scenarioId": "asymmetric",
+        "seed": 28,
+        "horizon": 90,
+        "team": "blue",
+        "opponent": "focus"
+      },
+      "metrics": {
+        "team": "blue",
+        "won": false,
+        "draw": false,
+        "phase": "finished",
+        "winner": "orange",
+        "time": 30.7,
+        "survivors": 0,
+        "initialUnits": 5,
+        "enemySurvivors": 1,
+        "hp": 0,
+        "hpRatio": 0,
+        "hpMargin": -4,
+        "kills": 3,
+        "damageDealt": 150,
+        "distanceMoved": 15,
+        "orders": 17,
+        "win": 0,
+        "score": -4
+      },
+      "evaluations": 7,
+      "elapsedMs": 96,
+      "replay": {
+        "version": "hex-research/v1",
+        "problemId": "skirmish",
+        "config": {
+          "scenarioId": "asymmetric",
+          "seed": 28,
+          "horizon": 90,
+          "team": "blue",
+          "opponent": "focus"
+        },
+        "methodId": "annealing",
+        "options": {
+          "evaluations": 8
+        },
+        "finalStep": 307,
+        "finalMetrics": {
+          "team": "blue",
+          "won": false,
+          "draw": false,
+          "phase": "finished",
+          "winner": "orange",
+          "time": 30.7,
+          "survivors": 0,
+          "initialUnits": 5,
+          "enemySurvivors": 1,
+          "hp": 0,
+          "hpRatio": 0,
+          "hpMargin": -4,
+          "kills": 3,
+          "damageDealt": 150,
+          "distanceMoved": 15,
+          "orders": 17,
+          "win": 0,
+          "score": -4
+        },
+        "actions": [
+          {
+            "step": 0,
+            "kind": "solution",
+            "value": {
+              "focus": true,
+              "kite": false,
+              "distanceWeight": 2,
+              "healthWeight": 0.06,
+              "threatWeight": 0.05,
+              "retreatHp": 0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "summary": [
+    {
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "methodId": "constructive",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 13.800000000000002,
+          "sd": 2.175583928816829e-15,
+          "n": 3
+        },
+        "kills": {
+          "mean": 4,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 13,
+          "sd": 0,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "methodId": "random-search",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 1,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 31.666666666666668,
+          "sd": 14.742229591663987,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.15833333333333335,
+          "sd": 0.07371114795831994,
+          "n": 3
+        },
+        "time": {
+          "mean": 12.200000000000001,
+          "sd": 0.7999999999999998,
+          "n": 3
+        },
+        "kills": {
+          "mean": 4,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 25,
+          "sd": 6.557438524302,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "methodId": "hill-climb",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0.6666666666666666,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 19.333333333333332,
+          "sd": 21.82506204649447,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.09666666666666666,
+          "sd": 0.10912531023247235,
+          "n": 3
+        },
+        "time": {
+          "mean": 12.733333333333334,
+          "sd": 1.2220201853215575,
+          "n": 3
+        },
+        "kills": {
+          "mean": 4,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 19,
+          "sd": 6.557438524302,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "contact",
+      "methodId": "annealing",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0.3333333333333333,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 14.333333333333334,
+          "sd": 24.826061575153908,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.07166666666666667,
+          "sd": 0.12413030787576954,
+          "n": 3
+        },
+        "time": {
+          "mean": 13,
+          "sd": 1.385640646055102,
+          "n": 3
+        },
+        "kills": {
+          "mean": 4,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 17.333333333333332,
+          "sd": 7.505553499465135,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "methodId": "constructive",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -190.16666666666666,
+          "sd": 9.699656351300975,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 11.633333333333333,
+          "sd": 0.37859388972001895,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 25,
+          "sd": 1,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "methodId": "random-search",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -174.33333333333334,
+          "sd": 12.899450892705989,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 11.533333333333333,
+          "sd": 0.41633319989322676,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3.6666666666666665,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "orders": {
+          "mean": 28,
+          "sd": 3,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "methodId": "hill-climb",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -181.33333333333334,
+          "sd": 2.155419526062927,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 10.533333333333333,
+          "sd": 0.5859465277082311,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 25,
+          "sd": 3,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "mixed",
+      "methodId": "annealing",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -174.5,
+          "sd": 10.268276388956425,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 12.166666666666666,
+          "sd": 2.6839026311200884,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 34.666666666666664,
+          "sd": 14.224392195567912,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "methodId": "constructive",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0.3333333333333333,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 15.083333333333334,
+          "sd": 115.68716797179077,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.10171568627450982,
+          "sd": 0.17617673655418728,
+          "n": 3
+        },
+        "time": {
+          "mean": 22.633333333333336,
+          "sd": 2.2501851775650223,
+          "n": 3
+        },
+        "kills": {
+          "mean": 7,
+          "sd": 1,
+          "n": 3
+        },
+        "orders": {
+          "mean": 42.666666666666664,
+          "sd": 3.0550504633038935,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "methodId": "random-search",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 1,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 122.58333333333333,
+          "sd": 57.45723047044065,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.2575280112044818,
+          "sd": 0.12070846737487531,
+          "n": 3
+        },
+        "time": {
+          "mean": 23.133333333333336,
+          "sd": 3.5232560697930166,
+          "n": 3
+        },
+        "kills": {
+          "mean": 8,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 54.666666666666664,
+          "sd": 10.96965511460289,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "methodId": "hill-climb",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0.3333333333333333,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 39.333333333333336,
+          "sd": 109.6965511460289,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.11624649859943977,
+          "sd": 0.201344841776214,
+          "n": 3
+        },
+        "time": {
+          "mean": 22.333333333333332,
+          "sd": 5.5824128594482625,
+          "n": 3
+        },
+        "kills": {
+          "mean": 7.333333333333333,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "orders": {
+          "mean": 48,
+          "sd": 7.211102550927978,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "crossfire",
+      "methodId": "annealing",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0.6666666666666666,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 84.08333333333333,
+          "sd": 104.05657515665857,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.1997549019607843,
+          "sd": 0.17982777072135922,
+          "n": 3
+        },
+        "time": {
+          "mean": 19.900000000000002,
+          "sd": 4.853864439804639,
+          "n": 3
+        },
+        "kills": {
+          "mean": 7.666666666666667,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "orders": {
+          "mean": 54.666666666666664,
+          "sd": 6.429100507328637,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "methodId": "constructive",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -252.66666666666666,
+          "sd": 42.72391992003231,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 14.033333333333331,
+          "sd": 1.1150485789118494,
+          "n": 3
+        },
+        "kills": {
+          "mean": 2.3333333333333335,
+          "sd": 1.1547005383792515,
+          "n": 3
+        },
+        "orders": {
+          "mean": 19,
+          "sd": 1.7320508075688772,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "methodId": "random-search",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -128.33333333333334,
+          "sd": 84.7014364301653,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 17.833333333333332,
+          "sd": 3.5076107727815717,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3.6666666666666665,
+          "sd": 1.5275252316519465,
+          "n": 3
+        },
+        "orders": {
+          "mean": 42.333333333333336,
+          "sd": 13.428824718989123,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "methodId": "hill-climb",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -203,
+          "sd": 11.269427669584644,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 13.633333333333333,
+          "sd": 0.8326663997864538,
+          "n": 3
+        },
+        "kills": {
+          "mean": 2.3333333333333335,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "orders": {
+          "mean": 24,
+          "sd": 2.6457513110645907,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "pass",
+      "methodId": "annealing",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -174,
+          "sd": 78.46018098373213,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 15.066666666666668,
+          "sd": 2.6501572280401287,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3,
+          "sd": 1,
+          "n": 3
+        },
+        "orders": {
+          "mean": 30.666666666666668,
+          "sd": 15.534906930308058,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "methodId": "constructive",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -102,
+          "sd": 79.07591289387686,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 19.733333333333334,
+          "sd": 6.305817419917369,
+          "n": 3
+        },
+        "kills": {
+          "mean": 6.333333333333333,
+          "sd": 1.5275252316519465,
+          "n": 3
+        },
+        "orders": {
+          "mean": 47.666666666666664,
+          "sd": 5.8594652770823155,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "methodId": "random-search",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0.6666666666666666,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": 25.666666666666668,
+          "sd": 88.75434261676064,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.1492842535787321,
+          "sd": 0.16610743368755337,
+          "n": 3
+        },
+        "time": {
+          "mean": 23.533333333333335,
+          "sd": 2.65392790658174,
+          "n": 3
+        },
+        "kills": {
+          "mean": 5,
+          "sd": 1,
+          "n": 3
+        },
+        "orders": {
+          "mean": 72,
+          "sd": 3.4641016151377544,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "methodId": "hill-climb",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -79,
+          "sd": 58.89821729050889,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 20.233333333333334,
+          "sd": 6.013595707505896,
+          "n": 3
+        },
+        "kills": {
+          "mean": 5.333333333333333,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "orders": {
+          "mean": 46.333333333333336,
+          "sd": 6.658328118479393,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "triad",
+      "methodId": "annealing",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -71,
+          "sd": 53.113086899558006,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 20.900000000000002,
+          "sd": 5.781868210189506,
+          "n": 3
+        },
+        "kills": {
+          "mean": 5.333333333333333,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "orders": {
+          "mean": 45.666666666666664,
+          "sd": 7.767453465154029,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "methodId": "constructive",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -68.33333333333333,
+          "sd": 80.78572481158619,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 25.433333333333334,
+          "sd": 5.629683235612225,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 18,
+          "sd": 1,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "methodId": "random-search",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0.3333333333333333,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -14.333333333333334,
+          "sd": 24.214320831552005,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0.0036231884057971015,
+          "sd": 0.006275546404235062,
+          "n": 3
+        },
+        "time": {
+          "mean": 29.033333333333335,
+          "sd": 2.548201980482185,
+          "n": 3
+        },
+        "kills": {
+          "mean": 4,
+          "sd": 1.7320508075688772,
+          "n": 3
+        },
+        "orders": {
+          "mean": 31.333333333333332,
+          "sd": 23.96525262402492,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "methodId": "hill-climb",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -47.583333333333336,
+          "sd": 46.626396315106035,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 26.3,
+          "sd": 4.3034869582700015,
+          "n": 3
+        },
+        "kills": {
+          "mean": 2.6666666666666665,
+          "sd": 0.5773502691896258,
+          "n": 3
+        },
+        "orders": {
+          "mean": 18.666666666666668,
+          "sd": 2.081665999466133,
+          "n": 3
+        }
+      }
+    },
+    {
+      "problemId": "skirmish",
+      "scenarioId": "asymmetric",
+      "methodId": "annealing",
+      "n": 3,
+      "metrics": {
+        "win": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "hpMargin": {
+          "mean": -41.333333333333336,
+          "sd": 37.00450423034111,
+          "n": 3
+        },
+        "hpRatio": {
+          "mean": 0,
+          "sd": 0,
+          "n": 3
+        },
+        "time": {
+          "mean": 27.5,
+          "sd": 2.77848879788996,
+          "n": 3
+        },
+        "kills": {
+          "mean": 3,
+          "sd": 0,
+          "n": 3
+        },
+        "orders": {
+          "mean": 18.666666666666668,
+          "sd": 2.081665999466133,
+          "n": 3
+        }
+      }
+    }
+  ],
+  "elapsedMs": 5343
+}

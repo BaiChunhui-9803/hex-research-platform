@@ -1,0 +1,14 @@
+{
+  "episodes": 756,
+  "verifiedReplays": 756,
+  "methods": 28,
+  "scenarios": 11,
+  "seeds": [
+    26,
+    27,
+    28
+  ],
+  "evaluations": 32,
+  "codeHash": "20bc55cf687b96ded43ff1966443ef2f8bbfa208e7c1ac77aad2c19c7feb198e",
+  "scope": "Integration check, not a CEC benchmark reproduction or human difficulty calibration"
+}

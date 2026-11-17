@@ -1,0 +1,230 @@
+{
+  "annealing-original": {
+    "id": "J101",
+    "doi": "10.1126/science.220.4598.671",
+    "title": "Optimization by Simulated Annealing",
+    "url": "https://doi.org/10.1126/science.220.4598.671"
+  },
+  "benchmark-critical": {
+    "id": "J102",
+    "doi": "10.1038/s42256-022-00579-0",
+    "title": "A critical problem in benchmarking and analysis of evolutionary computation methods",
+    "url": "https://doi.org/10.1038/s42256-022-00579-0"
+  },
+  "benchmark-guidelines": {
+    "id": "J103",
+    "doi": "10.1016/j.swevo.2021.100973",
+    "title": "A prescription of methodological guidelines for comparing bio-inspired optimization algorithms",
+    "url": "https://doi.org/10.1016/j.swevo.2021.100973"
+  },
+  "benchmark-practice": {
+    "id": "J104",
+    "doi": "10.1007/s11081-017-9366-1",
+    "title": "Best practices for comparing optimization algorithms",
+    "url": "https://doi.org/10.1007/s11081-017-9366-1"
+  },
+  "clpso": {
+    "id": "J105",
+    "doi": "10.1109/tevc.2005.857610",
+    "title": "Comprehensive learning particle swarm optimizer for global optimization of multimodal functions",
+    "url": "https://doi.org/10.1109/tevc.2005.857610"
+  },
+  "cmaes-2003": {
+    "id": "J106",
+    "doi": "10.1162/106365603321828970",
+    "title": "Reducing the Time Complexity of the Derandomized Evolution Strategy with Covariance Matrix Adaptation (CMA-ES)",
+    "url": "https://doi.org/10.1162/106365603321828970"
+  },
+  "cmaes": {
+    "id": "J107",
+    "doi": "10.1162/106365601750190398",
+    "title": "Completely Derandomized Self-Adaptation in Evolution Strategies",
+    "url": "https://doi.org/10.1162/106365601750190398"
+  },
+  "code": {
+    "id": "J108",
+    "doi": "10.1109/tevc.2010.2087271",
+    "title": "Differential Evolution With Composite Trial Vector Generation Strategies and Control Parameters",
+    "url": "https://doi.org/10.1109/tevc.2010.2087271"
+  },
+  "constraint-review": {
+    "id": "J109",
+    "doi": "10.1016/j.swevo.2018.10.002",
+    "title": "Benchmarking evolutionary algorithms for single objective real-valued constrained optimization – A critical review",
+    "url": "https://doi.org/10.1016/j.swevo.2018.10.002"
+  },
+  "de-original": {
+    "id": "J110",
+    "doi": "10.1023/a:1008202821328",
+    "title": "Differential Evolution – A Simple and Efficient Heuristic for global Optimization over Continuous Spaces",
+    "url": "https://doi.org/10.1023/a:1008202821328"
+  },
+  "de-review": {
+    "id": "J111",
+    "doi": "10.1016/j.swevo.2016.01.004",
+    "title": "Recent advances in differential evolution – An updated survey",
+    "url": "https://doi.org/10.1016/j.swevo.2016.01.004"
+  },
+  "de-survey": {
+    "id": "J112",
+    "doi": "10.1109/tevc.2010.2059031",
+    "title": "Differential Evolution: A Survey of the State-of-the-Art",
+    "url": "https://doi.org/10.1109/tevc.2010.2059031"
+  },
+  "deb-constraints": {
+    "id": "J113",
+    "doi": "10.1016/s0045-7825(99)00389-8",
+    "title": "An efficient constraint handling method for genetic algorithms",
+    "url": "https://doi.org/10.1016/s0045-7825(99)00389-8"
+  },
+  "es-overview": {
+    "id": "J114",
+    "doi": "10.1023/a:1015059928466",
+    "title": "Evolution strategies – A comprehensive introduction",
+    "url": "https://doi.org/10.1023/a:1015059928466"
+  },
+  "fipso": {
+    "id": "J115",
+    "doi": "10.1109/tevc.2004.826074",
+    "title": "The Fully Informed Particle Swarm: Simpler, Maybe Better",
+    "url": "https://doi.org/10.1109/tevc.2004.826074"
+  },
+  "ga-operators": {
+    "id": "J116",
+    "doi": "10.1023/a:1006504901164",
+    "title": "Tackling Real-Coded Genetic Algorithms: Operators and Tools for Behavioural Analysis",
+    "url": "https://doi.org/10.1023/a:1006504901164"
+  },
+  "jade": {
+    "id": "J117",
+    "doi": "10.1109/tevc.2009.2014613",
+    "title": "JADE: Adaptive Differential Evolution With Optional External Archive",
+    "url": "https://doi.org/10.1109/tevc.2009.2014613"
+  },
+  "jde": {
+    "id": "J118",
+    "doi": "10.1109/tevc.2006.872133",
+    "title": "Self-Adapting Control Parameters in Differential Evolution: A Comparative Study on Numerical Benchmark Problems",
+    "url": "https://doi.org/10.1109/tevc.2006.872133"
+  },
+  "manyobjective-survey": {
+    "id": "J119",
+    "doi": "10.1109/access.2018.2832181",
+    "title": "Evolutionary Many-Objective Optimization: A Comparative Study of the State-of-the-Art",
+    "url": "https://doi.org/10.1109/access.2018.2832181"
+  },
+  "moead": {
+    "id": "J120",
+    "doi": "10.1109/tevc.2007.892759",
+    "title": "MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition",
+    "url": "https://doi.org/10.1109/tevc.2007.892759"
+  },
+  "nsga-original": {
+    "id": "J121",
+    "doi": "10.1162/evco.1994.2.3.221",
+    "title": "Muiltiobjective Optimization Using Nondominated Sorting in Genetic Algorithms",
+    "url": "https://doi.org/10.1162/evco.1994.2.3.221"
+  },
+  "nsga2": {
+    "id": "J122",
+    "doi": "10.1109/4235.996017",
+    "title": "A fast and elitist multiobjective genetic algorithm: NSGA-II",
+    "url": "https://doi.org/10.1109/4235.996017"
+  },
+  "nsga3": {
+    "id": "J123",
+    "doi": "10.1109/tevc.2013.2281535",
+    "title": "An Evolutionary Many-Objective Optimization Algorithm Using Reference-Point-Based Nondominated Sorting Approach, Part I: Solving Problems With Box Constraints",
+    "url": "https://doi.org/10.1109/tevc.2013.2281535"
+  },
+  "pso-constriction": {
+    "id": "J124",
+    "doi": "10.1109/4235.985692",
+    "title": "The particle swarm - explosion, stability, and convergence in a multidimensional complex space",
+    "url": "https://doi.org/10.1109/4235.985692"
+  },
+  "pso-survey": {
+    "id": "J125",
+    "doi": "10.1007/s00500-016-2474-6",
+    "title": "Particle swarm optimization algorithm: an overview",
+    "url": "https://doi.org/10.1007/s00500-016-2474-6"
+  },
+  "sade": {
+    "id": "J126",
+    "doi": "10.1109/tevc.2008.927706",
+    "title": "Differential Evolution Algorithm With Strategy Adaptation for Global Numerical Optimization",
+    "url": "https://doi.org/10.1109/tevc.2008.927706"
+  },
+  "shade-survey": {
+    "id": "J127",
+    "doi": "10.1016/j.swevo.2026.102286",
+    "title": "Experimental survey of L-SHADE and SHADE-based adaptive differential evolution algorithms",
+    "url": "https://doi.org/10.1016/j.swevo.2026.102286"
+  },
+  "sms-emoa": {
+    "id": "J128",
+    "doi": "10.1016/j.ejor.2006.08.008",
+    "title": "SMS-EMOA: Multiobjective selection based on dominated hypervolume",
+    "url": "https://doi.org/10.1016/j.ejor.2006.08.008"
+  },
+  "spea": {
+    "id": "J129",
+    "doi": "10.1109/4235.797969",
+    "title": "Multiobjective evolutionary algorithms: a comparative case study and the strength Pareto approach",
+    "url": "https://doi.org/10.1109/4235.797969"
+  },
+  "tabu-original": {
+    "id": "J130",
+    "doi": "10.1287/ijoc.1.3.190",
+    "title": "Tabu Search—Part I",
+    "url": "https://doi.org/10.1287/ijoc.1.3.190"
+  },
+  "cec-shade": {
+    "title": "Success-history based parameter adaptation for Differential Evolution",
+    "url": "https://ryojitanabe.github.io/tf-cec2013-shade.pdf",
+    "type": "proceedings-article",
+    "doi": "10.1109/cec.2013.6557555"
+  },
+  "cec-lshade": {
+    "title": "Improving the search performance of SHADE using linear population size reduction",
+    "url": "https://ryojitanabe.github.io/pdf/tf-cec2014.pdf",
+    "type": "proceedings-article",
+    "doi": "10.1109/cec.2014.6900380"
+  },
+  "cec-jso": {
+    "title": "Single objective real-parameter optimization: Algorithm jSO",
+    "url": "https://ieeexplore.ieee.org/document/7969456/",
+    "type": "proceedings-article",
+    "doi": "10.1109/cec.2017.7969456"
+  },
+  "cec-inertia": {
+    "title": "A modified particle swarm optimizer",
+    "url": "https://doi.org/10.1109/ICEC.1998.699146",
+    "type": "proceedings-article",
+    "doi": "10.1109/icec.1998.699146"
+  },
+  "spea2-report": {
+    "title": "SPEA2: Improving the Strength Pareto Evolutionary Algorithm",
+    "url": "https://sop.tik.ee.ethz.ch/publicationListFiles/zlt2001a.pdf",
+    "type": "technical-or-official",
+    "doi": null
+  },
+  "cec2017-official": {
+    "title": "CEC 2017 Special Session and Competition: official benchmark and results",
+    "url": "https://sites.google.com/view/suganthan-p-n/cec-benchmark/cec17-special-session",
+    "type": "technical-or-official",
+    "doi": null
+  },
+  "shade-author-versions": {
+    "title": "SHADE / L-SHADE author versions, corrected implementations and competition links",
+    "url": "https://ryojitanabe.github.io/publication",
+    "type": "technical-or-official",
+    "doi": null
+  },
+  "cma-author-guide": {
+    "title": "The CMA Evolution Strategy: official method guide and source implementations",
+    "url": "https://cma-es.github.io/",
+    "type": "technical-or-official",
+    "doi": null
+  }
+}

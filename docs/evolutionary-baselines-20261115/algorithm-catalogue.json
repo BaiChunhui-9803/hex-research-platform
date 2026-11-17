@@ -1,0 +1,814 @@
+[
+  {
+    "id": "constructive",
+    "name": "Constructive baseline",
+    "description": "Use the constructive starting solution supplied by the problem adapter.",
+    "protocol": "optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      }
+    ],
+    "category": "Reference",
+    "family": "Constructive",
+    "variant": "Reference",
+    "objective": "single",
+    "referenceKeys": [
+      "benchmark-practice"
+    ],
+    "implementationNotes": "Native candidate encoding; problem-defined construction, neighborhood and deployment score.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "random-search",
+    "name": "Random search",
+    "description": "Sample independent candidates, retaining the best valid solution.",
+    "protocol": "optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      }
+    ],
+    "category": "Reference",
+    "family": "Independent sampling",
+    "variant": "Reference",
+    "objective": "single",
+    "referenceKeys": [
+      "benchmark-practice"
+    ],
+    "implementationNotes": "Native candidate encoding; problem-defined construction, neighborhood and deployment score.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "hill-climb",
+    "name": "Hill climbing",
+    "description": "Improve a solution through the problem-defined neighborhood.",
+    "protocol": "optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      }
+    ],
+    "category": "Trajectory search",
+    "family": "Local search",
+    "variant": "Reference",
+    "objective": "single",
+    "referenceKeys": [
+      "benchmark-practice"
+    ],
+    "implementationNotes": "Native candidate encoding; problem-defined construction, neighborhood and deployment score.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "annealing",
+    "name": "Simulated annealing",
+    "description": "Accept some temporary decreases while retaining the best solution.",
+    "protocol": "optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      }
+    ],
+    "category": "Trajectory search",
+    "family": "Local search",
+    "variant": "Temperature",
+    "objective": "single",
+    "referenceKeys": [
+      "annealing-original"
+    ],
+    "implementationNotes": "Native candidate encoding; problem-defined construction, neighborhood and deployment score.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "multistart",
+    "name": "Multistart hill climbing",
+    "description": "Restart local improvement from independently sampled candidates.",
+    "protocol": "optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [],
+    "category": "Trajectory search",
+    "family": "Local search",
+    "variant": "Restart",
+    "objective": "single",
+    "referenceKeys": [
+      "benchmark-practice"
+    ],
+    "implementationNotes": "Uses the problem-defined native neighborhood and deployment score.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "tabu",
+    "name": "Tabu search",
+    "description": "Explore sampled moves with short-term memory and best-score aspiration.",
+    "protocol": "optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [],
+    "category": "Trajectory search",
+    "family": "Local search",
+    "variant": "Memory",
+    "objective": "single",
+    "referenceKeys": [
+      "tabu-original"
+    ],
+    "implementationNotes": "Uses the problem-defined native neighborhood and deployment score.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "ga",
+    "name": "Real-coded GA",
+    "description": "Tournament selection, bounded SBX crossover, polynomial mutation and elitist survival.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Genetic algorithms",
+    "variant": "Fixed parameters",
+    "objective": "single",
+    "referenceKeys": [
+      "ga-operators"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "es-oneplusone",
+    "name": "(1+1)-ES",
+    "description": "Gaussian mutations with step-size adaptation using a one-fifth success window.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Evolution strategies",
+    "variant": "Success rule",
+    "objective": "single",
+    "referenceKeys": [
+      "cmaes"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "de-rand",
+    "name": "DE/rand/1/bin",
+    "description": "Classical differential mutation with random base and binomial crossover.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Differential evolution",
+    "variant": "Fixed parameters",
+    "objective": "single",
+    "referenceKeys": [
+      "de-original"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "de-best",
+    "name": "DE/best/1/bin",
+    "description": "Differential mutation around the current best vector.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Differential evolution",
+    "variant": "Fixed parameters",
+    "objective": "single",
+    "referenceKeys": [
+      "de-original"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "jde",
+    "name": "jDE",
+    "description": "Self-adapt the scale factor and crossover rate on each retained individual.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Differential evolution",
+    "variant": "Self-adaptive",
+    "objective": "single",
+    "referenceKeys": [
+      "jde"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "jade",
+    "name": "JADE",
+    "description": "Current-to-pbest mutation, an external archive and success-driven parameter means.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Differential evolution",
+    "variant": "Adaptive means",
+    "objective": "single",
+    "referenceKeys": [
+      "jade"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "shade",
+    "name": "SHADE",
+    "description": "Adapt differential-evolution parameters using a success-history memory.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Differential evolution",
+    "variant": "Success history",
+    "objective": "single",
+    "referenceKeys": [
+      "cec-shade"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "lshade",
+    "name": "L-SHADE",
+    "description": "Success-history adaptation combined with linear population reduction.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Differential evolution",
+    "variant": "Success history + reduction",
+    "objective": "single",
+    "referenceKeys": [
+      "cec-lshade"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "pso-inertia",
+    "name": "PSO · inertia",
+    "description": "Global-best particle swarm with linearly decreasing inertia.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Swarm intelligence",
+    "family": "Particle swarm",
+    "variant": "Inertia",
+    "objective": "single",
+    "referenceKeys": [
+      "pso-survey"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "pso-constriction",
+    "name": "PSO · constriction",
+    "description": "Global-best swarm using the Clerc-Kennedy constriction coefficient.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Swarm intelligence",
+    "family": "Particle swarm",
+    "variant": "Constriction",
+    "objective": "single",
+    "referenceKeys": [
+      "pso-constriction"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "cmaes",
+    "name": "CMA-ES",
+    "description": "Adapt a full covariance matrix and global step size with positive recombination weights.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding"
+    ],
+    "category": "Evolutionary",
+    "family": "Evolution strategies",
+    "variant": "Covariance adaptation",
+    "objective": "single",
+    "referenceKeys": [
+      "cmaes",
+      "cmaes-2003"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "nsga2",
+    "name": "NSGA-II",
+    "description": "Elitist nondominated sorting with crowding distance.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding",
+      "pareto-objectives"
+    ],
+    "category": "Multiobjective",
+    "family": "Pareto ranking",
+    "variant": "Nondominated sorting",
+    "objective": "multi",
+    "referenceKeys": [
+      "nsga2"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "spea2",
+    "name": "SPEA2",
+    "description": "Strength fitness, neighbor density and distance-based archive truncation.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding",
+      "pareto-objectives"
+    ],
+    "category": "Multiobjective",
+    "family": "Pareto ranking",
+    "variant": "Strength + density",
+    "objective": "multi",
+    "referenceKeys": [
+      "spea2-report"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "moead",
+    "name": "MOEA/D",
+    "description": "Tchebycheff decomposition with local mating and bounded replacement.",
+    "protocol": "vector-optimization/v1",
+    "mode": "search",
+    "parameters": [
+      {
+        "key": "evaluations",
+        "type": "integer",
+        "default": 128,
+        "min": 1,
+        "max": 4096
+      },
+      {
+        "key": "populationSize",
+        "type": "integer",
+        "default": 0,
+        "min": 0,
+        "max": 128
+      }
+    ],
+    "requires": [
+      "unit-box-encoding",
+      "pareto-objectives"
+    ],
+    "category": "Multiobjective",
+    "family": "Decomposition",
+    "variant": "Tchebycheff",
+    "objective": "multi",
+    "referenceKeys": [
+      "moead"
+    ],
+    "implementationNotes": "Bounded core implementation on the problem-provided normalized encoding. Default populations are adapted to the interactive budget; this is not an official CEC competition submission.",
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "metro.fixed",
+    "name": "Keep initial network",
+    "description": "Build the common initial network and never edit it. A zero-edit reference.",
+    "protocol": "metro-policy/v1",
+    "mode": "policy",
+    "requires": [
+      "dynamic-stations"
+    ],
+    "category": "Online strategies",
+    "family": "Transit control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "metro.growth-greedy",
+    "name": "Greedy extensions",
+    "description": "When stations open, insert unconnected stops with the smallest extra route length.",
+    "protocol": "metro-policy/v1",
+    "mode": "policy",
+    "requires": [
+      "dynamic-stations"
+    ],
+    "category": "Online strategies",
+    "family": "Transit control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "metro.replan",
+    "name": "Rebuild and search",
+    "description": "Rebuild from a greedy plan every 30 minutes or when stations open, then search using a short demand forecast.",
+    "protocol": "metro-policy/v1",
+    "mode": "policy",
+    "requires": [
+      "dynamic-stations"
+    ],
+    "category": "Online strategies",
+    "family": "Transit control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "metro.repair",
+    "name": "Budgeted local repair",
+    "description": "Keep the current plan as a warm start. Test small repairs, with at most 12 edit units per decision.",
+    "protocol": "metro-policy/v1",
+    "mode": "policy",
+    "requires": [
+      "dynamic-stations"
+    ],
+    "category": "Online strategies",
+    "family": "Transit control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": true,
+    "reasons": []
+  },
+  {
+    "id": "squad.rush",
+    "name": "Attack-move",
+    "description": "Advance toward the nearest enemy and let each unit acquire targets locally.",
+    "protocol": "squad-policy/v1",
+    "mode": "policy",
+    "category": "Online strategies",
+    "family": "Squad control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": false,
+    "reasons": [
+      "Requires squad-policy/v1; this problem exposes optimization/v1, vector-optimization/v1, metro-policy/v1"
+    ]
+  },
+  {
+    "id": "squad.focus",
+    "name": "Focus fire",
+    "description": "Concentrate the squad on one target, balancing distance, health and threat.",
+    "protocol": "squad-policy/v1",
+    "mode": "policy",
+    "category": "Online strategies",
+    "family": "Squad control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": false,
+    "reasons": [
+      "Requires squad-policy/v1; this problem exposes optimization/v1, vector-optimization/v1, metro-policy/v1"
+    ]
+  },
+  {
+    "id": "squad.kite",
+    "name": "Kite & focus",
+    "description": "Focus fire, then use weapon cooldown windows to create distance with ranged units.",
+    "protocol": "squad-policy/v1",
+    "mode": "policy",
+    "category": "Online strategies",
+    "family": "Squad control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": false,
+    "reasons": [
+      "Requires squad-policy/v1; this problem exposes optimization/v1, vector-optimization/v1, metro-policy/v1"
+    ]
+  },
+  {
+    "id": "squad.random",
+    "name": "Random orders",
+    "description": "A deliberately simple reference: alternate random nearby movement and enemy targeting.",
+    "protocol": "squad-policy/v1",
+    "mode": "policy",
+    "category": "Online strategies",
+    "family": "Squad control",
+    "variant": "Domain heuristic",
+    "objective": "control",
+    "referenceKeys": [],
+    "compatible": false,
+    "reasons": [
+      "Requires squad-policy/v1; this problem exposes optimization/v1, vector-optimization/v1, metro-policy/v1"
+    ]
+  }
+]

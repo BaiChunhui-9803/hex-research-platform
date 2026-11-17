@@ -1,0 +1,19 @@
+{
+  "status": "建议方案与独立原型；正式平台主题尚未选定",
+  "fontRoles": {
+    "body": "Inter, Microsoft YaHei, system-ui, sans-serif",
+    "data": "JetBrains Mono, monospace",
+    "display": "Noto Serif JP, Georgia, serif",
+    "displayScope": "仅入口展示标题；当前本地Noto字体为HEX Research Games子集"
+  },
+  "spacing": [4, 8, 12, 16, 24, 32, 48, 64],
+  "typeScale": {"body": [14,16], "control": [13,14], "label": [11,12], "workspaceTitle": [18,24], "display": [48,96], "data": [16,22]},
+  "layouts": {
+    "exhibition": {"role":"平台入口与问题发现", "references":["cog2027","pychess","2048"], "maxContentWidth":1200},
+    "paper": {"role":"日常操作与研究工作区", "references":["excalidraw","lichess","sandspiel"], "inspectorWidth":280},
+    "canvas": {"role":"聚焦操作与演示", "references":["tldraw","svgomg","mapgen4"], "methodControls":"底部紧凑停靠组"},
+    "experiments": {"role":"方法比较与证据检查", "references":["elevatorsaga","monkeytype","squoosh"], "dataPresentation":"表格、等宽数字、按需详情"}
+  },
+  "separation": ["页面主题与地图语义色分开", "页面布局与问题规则分开", "字体角色与具体组件分开", "样式切换不重置仿真"],
+  "prototypes": ["prototypes/index.html?layout=cog","prototypes/index.html?layout=paper","prototypes/index.html?layout=canvas"]
+}

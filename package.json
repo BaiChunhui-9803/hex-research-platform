@@ -1,0 +1,17 @@
+{
+  "name": "hex-research-platform",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "A problem-and-method research platform for metro planning and squad decisions.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test",
+    "build:pages": "node scripts/build-pages.js",
+    "benchmark": "node scripts/benchmark.js",
+    "benchmark:evolutionary": "node scripts/benchmark-evolutionary.js",
+    "analyze:evolutionary": "python scripts/analyze-evolutionary.py"
+  }
+}

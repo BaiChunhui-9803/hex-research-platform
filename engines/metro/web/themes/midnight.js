@@ -1,0 +1,23 @@
+export default {
+  id: "midnight",
+  name: "Midnight Dispatch",
+  tokens: {
+    bg: "#141e24",
+    paper: "#1c2b31",
+    ink: "#ecf2df",
+    muted: "#90a49d",
+    line: "#34484b",
+    panel: "#112126",
+    panelSoft: "#20353b",
+    accent: "#d8e8a2",
+    accentInk: "#172a28",
+    grid: "#2c4043",
+    district: "#425953",
+    station: "#213438",
+    train: "#e9f3df",
+    danger: "#f18f76",
+    shadow: "rgba(0,0,0,.18)",
+  },
+  routes: { A: "#65cdb5", B: "#f29573", C: "#a79ce3" },
+  font: '"Bahnschrift", "DIN Alternate", "Arial Narrow", "Microsoft YaHei", sans-serif',
+};

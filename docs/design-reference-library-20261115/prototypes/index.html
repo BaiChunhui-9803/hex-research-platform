@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HEX · Layout studies</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="main.js"></script>
+  </head>
+  <body data-layout="paper" data-screen="workspace">
+    <div class="study-bar">
+      <a href="../index.html">← Reference library</a
+      ><label
+        >Layout
+        <select id="layout">
+          <option value="cog">01 · Conference / exhibition</option>
+          <option value="paper">02 · Paper workspace</option>
+          <option value="canvas">03 · Canvas focus</option>
+        </select></label
+      ><span>Original layout studies · live game adapters</span>
+    </div>
+    <header class="header">
+      <a class="brand" href="#"
+        ><i>⬡</i><span>HEX<small>RESEARCH GAMES</small></span></a
+      >
+      <nav>
+        <button id="nav-problems">Problems</button
+        ><button id="nav-workspace">Workspace</button
+        ><a href="../../../" target="_blank">Full platform ↗</a>
+      </nav>
+      <button id="show-results" class="subtle">Recorded results</button>
+    </header>
+    <main>
+      <section class="home">
+        <div class="hero">
+          <div>
+            <span class="eyebrow">PLANNING · SIMULATION · DECISIONS</span>
+            <h1><em>HEX</em><br />Research</h1>
+            <p class="hero-copy">
+              Explore a world.<br />Find a better way through it.
+            </p>
+            <div class="hero-actions">
+              <button id="enter-workspace" class="primary">
+                Open workspace →</button
+              ><a href="../report.zh-CN.html">Read the design study</a>
+            </div>
+          </div>
+          <aside class="hero-panel">
+            <span class="eyebrow">YOUR RESEARCH PLAYGROUND</span>
+            <div class="hero-stat">
+              <strong>02</strong><span>Different problems</span>
+            </div>
+            <div class="hero-stat">
+              <strong>11</strong><span>Reproducible scenarios</span>
+            </div>
+            <div class="hero-stat">
+              <strong>12</strong><span>Registered methods</span>
+            </div>
+            <p>Same platform.<br />Room for your next idea.</p>
+          </aside>
+        </div>
+        <div class="home-games">
+          <button data-open="metro">
+            <svg viewBox="0 0 160 80" aria-hidden="true">
+              <path d="M15 55L48 55L78 25L145 25M42 10V55L70 70" />
+              <circle cx="48" cy="55" r="7" />
+              <rect x="72" y="19" width="12" height="12" /></svg
+            ><span class="eyebrow">HEXLINE</span>
+            <h2>Metro Network</h2>
+            <p>Connect a city. Keep it moving.</p>
+            <span>Explore 5 scenarios →</span></button
+          ><button data-open="skirmish">
+            <svg viewBox="0 0 160 80" aria-hidden="true">
+              <path
+                d="M30 20L50 8L70 20V44L50 56L30 44ZM95 33L115 21L135 33V57L115 69L95 57ZM70 32L95 45"
+              />
+              <circle cx="50" cy="32" r="5" />
+              <circle cx="115" cy="45" r="5" /></svg
+            ><span class="eyebrow">HEXFRONT</span>
+            <h2>Squad Tactics</h2>
+            <p>Read the field. Coordinate your squad.</p>
+            <span>Explore 6 scenarios →</span>
+          </button>
+        </div>
+      </section>
+      <section class="workspace">
+        <div class="workspace-heading">
+          <div class="breadcrumb">
+            <span>WORKSPACE</span
+            ><strong id="problem-name">Metro Network</strong>
+          </div>
+          <div class="selectors">
+            <label class="sr-only" for="problem">Problem</label
+            ><select id="problem"></select
+            ><label class="sr-only" for="scenario">Scenario</label
+            ><select id="scenario"></select
+            ><button id="reset" class="subtle">Reset</button>
+          </div>
+        </div>
+        <div class="workspace-grid">
+          <section class="game">
+            <div class="game-caption">
+              <div>
+                <span class="eyebrow" id="short-name">HEXLINE</span>
+                <h2 id="scenario-name">Lumen City</h2>
+              </div>
+              <span id="phase" class="phase">READY</span>
+            </div>
+            <div id="metrics" class="metrics"></div>
+            <div id="problem-controls" class="problem-controls"></div>
+            <div id="arena" class="arena"></div>
+            <p id="interaction-help"></p>
+            <div class="playback">
+              <button id="play" class="primary">Start</button
+              ><button id="step">Step</button><span id="clock">0 min</span
+              ><label
+                >Speed
+                <select id="speed">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>4</option>
+                </select></label
+              ><button id="export" class="subtle">Export replay</button>
+            </div>
+          </section>
+          <aside class="inspector">
+            <div class="inspector-title">
+              <span class="eyebrow">METHOD</span>
+              <h2>Choose an approach</h2>
+            </div>
+            <label>Shared optimizer<select id="method"></select></label>
+            <p id="method-description"></p>
+            <div class="settings-row">
+              <label
+                >Seed<input
+                  id="seed"
+                  type="number"
+                  value="26"
+                  min="0"
+                  max="9999999" /></label
+              ><label
+                >Budget<input
+                  id="budget"
+                  type="number"
+                  value="8"
+                  min="1"
+                  max="64"
+              /></label>
+            </div>
+            <button id="run-method" class="primary">Run method →</button
+            ><button id="manual" class="subtle">Manual control</button>
+            <details>
+              <summary>About this run</summary>
+              <p id="search-meaning"></p>
+              <p>
+                Seed changes apply on reset. Full experiment controls are
+                available in the main platform.
+              </p>
+            </details>
+            <div class="inspector-footer">
+              <span id="controller">Manual control</span
+              ><a href="../../../" target="_blank">Open full platform ↗</a>
+            </div>
+          </aside>
+        </div>
+        <section id="results" class="results" hidden>
+          <div>
+            <span class="eyebrow">RECORDED INTEGRATION EXPERIMENT</span>
+            <h2>Same scenario. Different methods.</h2>
+            <p>
+              Three seeds per method · candidate budget 8 · results read from
+              the platform’s actual integration run.
+            </p>
+          </div>
+          <div id="result-table"></div>
+        </section>
+      </section>
+      <p id="status" class="status" role="status" aria-live="polite">
+        Loading the workspace…
+      </p>
+    </main>
+    <footer>
+      <span>HEX / RESEARCH GAMES</span
+      ><span id="layout-caption"
+        >Paper workspace · clear type, quiet borders, one main canvas</span
+      >
+    </footer>
+  </body>
+</html>
