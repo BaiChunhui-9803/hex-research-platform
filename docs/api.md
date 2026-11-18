@@ -10,6 +10,7 @@
 | GET `/api/problems` | 问题、场景、配置字段、能力和指标 |
 | GET `/api/problems/{problemId}` | 单个问题元数据 |
 | GET `/api/methods?problemId=metro&scenarioId=growth` | 所有方法及`compatible/reasons` |
+| POST `/api/difficulty` | 评估场景的编码、结构规模、预算难度和融合交互。见[评估协议](difficulty.md) |
 
 ## 环境会话
 

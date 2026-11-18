@@ -19,6 +19,7 @@
         ><button data-tab="methods">
           Methods <span class="method-total">28</span></button
         ><button data-tab="experiments">Experiments</button
+        ><button data-tab="difficulty">Difficulty</button
         ><button data-tab="api">API</button>
       </nav>
       <a
@@ -166,6 +167,7 @@
               <button data-tab="experiments" class="link-button">
                 Compare methods →
               </button>
+              <button id="assess-workspace" data-tab="difficulty" class="link-button">Assess difficulty →</button>
             </aside>
           </div>
         </section>
@@ -282,6 +284,53 @@
           </section>
         </div>
       </section>
+      <section id="tab-difficulty" class="tab">
+        <div class="page-heading">
+          <div>
+            <h1>Problem difficulty</h1>
+            <p>Measure the encoded search space and compare searches under the same evaluation budget.</p>
+          </div>
+          <a class="button-link" href="/docs/difficulty.md" target="_blank">Assessment protocol ↗</a>
+        </div>
+        <div class="difficulty-layout">
+          <section class="panel difficulty-controls">
+            <h2>Assessment setup</h2>
+            <label>Problem<select id="difficulty-problem"></select></label>
+            <label>Scenario<select id="difficulty-scenario"></select></label>
+            <button id="difficulty-use-workspace" class="subtle">Use workspace setup</button>
+            <p id="difficulty-context" class="muted"></p>
+            <div id="difficulty-coupling" hidden>
+              <label>Coupling<select id="difficulty-profile"></select></label>
+              <label class="check-label"><input type="checkbox" id="difficulty-control" checked /> Compare with coupling off</label>
+            </div>
+            <label>Map seeds<input id="difficulty-seeds" value="26, 27, 28" /></label>
+            <label>Evaluations per probe<input id="difficulty-budget" type="number" min="8" max="64" value="24" /></label>
+            <label>Planning checkpoint<input id="difficulty-checkpoint" type="number" min="0" max="240" value="0" /></label>
+            <p id="difficulty-clock" class="muted"></p>
+            <details>
+              <summary>Target and reference grid</summary>
+              <label>Target share of sampled improvement (%)<input id="difficulty-target" type="number" min="50" max="95" value="80" /></label>
+              <label>Grid levels per continuous parameter<input id="difficulty-levels" type="number" min="2" max="20" value="5" /></label>
+            </details>
+            <div class="button-row">
+              <button id="difficulty-run" class="primary">Run assessment</button>
+              <button id="difficulty-cancel" disabled>Cancel</button>
+            </div>
+            <progress id="difficulty-progress" max="1" value="0"></progress>
+            <p id="difficulty-status" class="muted" role="status" aria-live="polite"></p>
+          </section>
+          <section class="panel difficulty-report">
+            <div class="results-heading">
+              <h2>Evidence</h2>
+              <div class="button-row">
+                <button id="difficulty-json" disabled>Export JSON</button>
+                <button id="difficulty-csv" disabled>Export CSV</button>
+              </div>
+            </div>
+            <div id="difficulty-output"><p class="muted">Choose a scenario and run an assessment.</p></div>
+          </section>
+        </div>
+      </section>
       <section id="tab-api" class="tab">
         <div class="page-heading">
           <div>
@@ -323,6 +372,7 @@ DELETE /api/jobs/{id}
 GET    /api/jobs/{id}/json
 GET    /api/jobs/{id}/csv
 GET    /api/runs
+POST   /api/difficulty
 POST   /api/replays/verify</pre
             >
             <p>
@@ -338,6 +388,7 @@ POST   /api/replays/verify</pre
             <a href="/docs/api.md" target="_blank">API reference</a> ·
             <a href="/docs/extensions.md" target="_blank">Extension guide</a> ·
             <a href="/docs/fusion.md" target="_blank">Fusion rules</a> ·
+            <a href="/docs/difficulty.md" target="_blank">Difficulty protocol</a> ·
             <a href="/docs/contracts.d.ts" target="_blank">Typed contracts</a> ·
             <a
               href="/docs/evolutionary-baselines-20261115/index.html"

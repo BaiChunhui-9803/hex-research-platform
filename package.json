@@ -1,6 +1,6 @@
 {
   "name": "hex-research-platform",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "A problem-and-method research platform for metro planning and squad decisions.",

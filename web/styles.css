@@ -848,6 +848,78 @@ body[data-screen="home"] #tab-problems.active ~ .notice {
   overflow: auto;
   margin-top: 16px;
 }
+.difficulty-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 285px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.difficulty-layout .panel {
+  min-width: 0;
+}
+.difficulty-controls label {
+  margin: 11px 0;
+}
+.difficulty-controls details {
+  margin: 14px 0;
+}
+.difficulty-controls progress {
+  display: block;
+  width: 100%;
+  margin: 12px 0 5px;
+}
+.difficulty-controls .assessment-error {
+  color: #a23d31;
+}
+.difficulty-report h3 {
+  margin: 22px 0 5px;
+}
+.assessment-scope {
+  margin: 8px 0 12px;
+  font-size: 13px;
+}
+.assessment-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.assessment-kpis div {
+  display: grid;
+  gap: 4px;
+  padding: 10px 11px;
+  background: #eef4eb;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.assessment-kpis span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.assessment-kpis strong {
+  font: 22px var(--font-data);
+}
+.difficulty-report td progress {
+  display: block;
+  width: 66px;
+  margin: 4px 0 0;
+}
+.difficulty-report details {
+  margin: 16px 0 0;
+}
+.difficulty-report pre {
+  max-width: 100%;
+  overflow: auto;
+}
+@media (max-width: 940px) {
+  .difficulty-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .assessment-kpis strong {
+    font-size: 17px;
+  }
+}
 table {
   width: 100%;
   border-collapse: collapse;

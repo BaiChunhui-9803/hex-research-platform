@@ -13,6 +13,7 @@ import {
   replaySession,
 } from "../core/session.js";
 import { validateExperiment, resultCSV } from "../core/experiment.js";
+import { validateDifficulty } from "../core/difficulty.js";
 import { integer } from "../core/random.js";
 import { filterMethods } from "../methods/taxonomy.js";
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
@@ -37,6 +38,7 @@ const MIME = {
 export function createServer({ persist = true } = {}) {
   const jobs = new Map(),
     sessions = new Map();
+  const assessments = new Set();
   const send = (res, status, data) => {
     res.writeHead(status, {
       "Content-Type": "application/json; charset=utf-8",
@@ -66,12 +68,37 @@ export function createServer({ persist = true } = {}) {
         return send(res, 200, {
           ok: true,
           version: PLATFORM_VERSION,
-          appVersion: "0.3.0",
+          appVersion: "0.4.0",
           problems: problemRegistry.list().length,
           methods: methodRegistry.list().length,
         });
       if (route === "/api/problems" && verb === "GET")
         return send(res, 200, problemRegistry.list().map(problemMetadata));
+      if (route === "/api/difficulty" && verb === "POST") {
+        const request = validateDifficulty(await body(req), problemRegistry);
+        if (res.destroyed) return;
+        if (assessments.size >= 2)
+          return send(res, 429, { error: "Two difficulty assessments are already running" });
+        const worker = new Worker(new URL("./difficulty-worker.js", import.meta.url), {
+          workerData: request,
+        });
+        assessments.add(worker);
+        const stop = () => {
+          if (assessments.delete(worker)) worker.terminate().catch(() => {});
+        };
+        const finish = (status, output) => {
+          if (!assessments.has(worker)) return;
+          stop();
+          if (!res.destroyed && !res.writableEnded) send(res, status, output);
+        };
+        res.once("close", stop);
+        worker.once("message", ({ report, error }) =>
+          finish(report ? 200 : 400, report ?? { error }),
+        );
+        worker.once("error", (error) => finish(500, { error: error.message }));
+        worker.once("exit", () => finish(500, { error: "Assessment worker exited early" }));
+        return;
+      }
       const problemRoute = route.match(/^\/api\/problems\/([a-z.-]+)$/);
       if (problemRoute && verb === "GET")
         return send(
@@ -369,6 +396,7 @@ export function createServer({ persist = true } = {}) {
   server.on("close", () => {
     for (const job of jobs.values())
       if (job.status === "running") job.worker.terminate();
+    for (const worker of assessments) worker.terminate().catch(() => {});
   });
   return server;
 }

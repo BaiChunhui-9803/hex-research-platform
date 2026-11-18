@@ -10,6 +10,7 @@ import {
 } from "./experiment-runner.js";
 import { evidenceURL, projectURL } from "./paths.js";
 import { renderSearchDetails } from "./search-details.js";
+import { mountDifficulty } from "./difficulty.js";
 applyTheme();
 const $ = (selector) => document.querySelector(selector);
 const browserOnly = $('meta[name="hex-runtime"]')?.content === "browser";
@@ -39,6 +40,7 @@ let methodLibrary,
 const problem = () => problems.find((p) => p.id === problemId);
 const scenario = () =>
   problem().scenarios.find((s) => s.id === $("#scenario").value);
+const difficulty = mountDifficulty(problems, () => ({ problemId, config: config() }), download);
 function notice(message, error = false) {
   $("#notice").textContent = message;
   $("#notice").classList.toggle("error", error);
@@ -72,6 +74,7 @@ function tab(name) {
   for (const b of document.querySelectorAll(".topbar [data-tab]"))
     b.classList.toggle("active", b.dataset.tab === name);
   if (name === "experiments") refreshHistory();
+  if (name === "difficulty") difficulty.show();
 }
 function openWorkspace() {
   document.body.dataset.screen = "workspace";
@@ -575,6 +578,7 @@ document.addEventListener("click", async (event) => {
   try {
     if (b.dataset.tab) {
       tab(b.dataset.tab);
+      if (b.id === "assess-workspace") difficulty.captureWorkspace();
       return;
     }
     if (b.dataset.problem) {
@@ -730,6 +734,7 @@ try {
   await selectProblem(requested?.id ?? "metro", requestedScenario && { scenarioId: requestedScenario.id });
   await reset();
   if (requested) openWorkspace();
+  if (params.get("tab") === "difficulty") tab("difficulty");
   fetch(projectURL("docs/evolutionary-baselines-20261115/catalogue.json"))
     .then((r) => (r.ok ? r.json() : null))
     .then((data) => {

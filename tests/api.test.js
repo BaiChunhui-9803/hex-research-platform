@@ -26,6 +26,15 @@ test("unified discovery, sessions, compatibility, jobs and cancellation", async 
     ["metro", "skirmish", "fusion"],
   );
   const joined = await api("/api/problems/fusion");
+  const evaluated = await api("/api/difficulty", {
+    problemId: "metro", scenarioId: "compact", seeds: [26], evaluations: 8,
+  });
+  assert.equal(evaluated.status, 200);
+  assert.equal(evaluated.data.version, "hex-difficulty/v1");
+  assert.deepEqual(evaluated.data.profiles[0].summary.dimensions, [18]);
+  assert.equal((await api("/api/difficulty", {
+    problemId: "fusion", seeds: [26, 26], evaluations: 8,
+  })).status, 400);
   assert.deepEqual(joined.data.sourceProblems, ["metro", "skirmish"]);
   assert.equal(joined.data.scenarios.length, 30);
   const compatible = await api("/api/methods?problemId=fusion&scenarioId=growth--triad&compatible=true");

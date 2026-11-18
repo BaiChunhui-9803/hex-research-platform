@@ -82,6 +82,7 @@ export function combineVectorTasks(
   return {
     protocol: "vector-optimization/v1",
     dimension,
+    blocks: blocks.map(({ key, start, end }) => ({ key, start, end })),
     encoding: blocks
       .map(({ key, task }) => `${key} (${task.dimension})`)
       .join(" + "),

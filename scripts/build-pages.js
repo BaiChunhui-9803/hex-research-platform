@@ -44,7 +44,7 @@ await writeFile(
 );
 await writeFile(path.join(dist, ".nojekyll"), "");
 
-for (const file of ["api.md", "extensions.md", "fusion.md", "contracts.d.ts"]) {
+for (const file of ["api.md", "extensions.md", "fusion.md", "difficulty.md", "contracts.d.ts"]) {
   await copy(`docs/${file}`);
 }
 for (const file of [
