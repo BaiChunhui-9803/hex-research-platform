@@ -1,6 +1,6 @@
 # HEX Research Platform：问题与方法统一研究平台
 
-0.4 版提供地铁网络规划、小队作战、问题融合器和难度评估器。网页保持英文，开发说明使用中文。
+0.5 版提供地铁网络规划、小队作战、问题融合器和带冻结参考及整局对照的难度评估器。网页保持英文，开发说明使用中文。
 
 [打开在线平台](https://baichunhui-9803.github.io/hex-research-platform/) · [个人主页](https://baichunhui-9803.github.io/)
 
@@ -36,7 +36,7 @@ python examples/python_client.py
 5. **Experiments**：选择场景、方法和种子，在同一条件下从头比较。后台Worker可以取消；完成后查看均值／标准差、逐局结果，下载JSON／CSV，点击Replay观看记录。
 6. 可以导出当前会话记录，并在Import report中载入记录或完整实验结果。回放为只读，Reset episode回到可操作环境。
 7. **API**：查看发现、控制和实验端点。HTTP和浏览器本地会话独立，但使用相同规则与适配层。
-8. **Difficulty**：评估原始或融合场景的编码、结构可行规模与固定预算内的达标率，也可给融合场景运行关闭联动的对照。[评估协议](docs/difficulty.md)
+8. **Difficulty**：评估原始或融合场景。匹配参考库时展示冻结目标的预算达标率和整局代理结果。自定义设置仍可运行短采样探针和融合开关对照。[评估协议](docs/difficulty.md)
 
 ## 问题与方法如何分离
 

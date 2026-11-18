@@ -68,7 +68,7 @@ export function createServer({ persist = true } = {}) {
         return send(res, 200, {
           ok: true,
           version: PLATFORM_VERSION,
-          appVersion: "0.4.0",
+          appVersion: "0.5.0",
           problems: problemRegistry.list().length,
           methods: methodRegistry.list().length,
         });

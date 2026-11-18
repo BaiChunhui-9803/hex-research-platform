@@ -409,6 +409,7 @@ export function assessDifficulty(input, problems, methods, hooks = {}) {
 }
 
 export function difficultyCSV(report) {
+  const includeFrozen = report.frozen?.status === "loaded";
   const rows = [
     [
       "problem",
@@ -435,12 +436,21 @@ export function difficultyCSV(report) {
       "reference_combinations",
       "neutral_local",
       "valid_local",
+      ...(includeFrozen ? [
+        "frozen_reference_id", "frozen_status", "frozen_best",
+        "frozen_target_50", "frozen_hit_at_50", "frozen_target_80", "frozen_hit_at_80",
+        "frozen_target_95", "frozen_hit_at_95",
+      ] : []),
     ],
   ];
   for (const profile of report.profiles)
     for (const row of profile.rows) {
       const probes = row.search?.probes ?? [null];
       const { metro, skirmish } = row.space.components;
+      const calibrated = includeFrozen
+        ? report.frozen.profiles.find((item) => item.label === profile.label)
+          ?.rows.find((item) => item.seed === row.seed)
+        : null;
       for (const probe of probes)
         rows.push([
           report.request.problemId,
@@ -467,6 +477,13 @@ export function difficultyCSV(report) {
           row.space.referenceCombinations,
           row.search?.local.neutralScore,
           row.search?.local.valid,
+          ...(includeFrozen ? [
+            report.frozen.id, calibrated?.status, calibrated?.best,
+            ...[50, 80, 95].flatMap((percent) => {
+              const target = calibrated?.targets.find((item) => item.percent === percent);
+              return [target?.score, target?.methods.find((item) => item.id === probe?.id)?.hitAt];
+            }),
+          ] : []),
         ]);
     }
   return (

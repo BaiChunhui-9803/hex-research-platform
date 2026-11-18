@@ -1,4 +1,5 @@
 import { difficultyCSV } from "../core/difficulty.js";
+import { benchmarkSettings } from "../core/frozen-difficulty.js";
 
 const labels = {
   selected: "Selected scenario",
@@ -8,6 +9,15 @@ const labels = {
   disruption: "Squad affects metro",
 };
 const methodLabels = { uniform: "Uniform random", ga: "Real-coded GA" };
+const agentLabels = {
+  constructive: "Constructive", annealing: "Simulated annealing",
+  "pso-inertia": "Inertia PSO", "hill-climb": "Hill climbing", "de-rand": "DE/rand/1/bin",
+};
+const referenceStatus = {
+  calibrated: "Target available", "no-reference": "Settings or seed outside catalog",
+  "no-reference-gain": "No improvement in archived reference",
+  "baseline-mismatch": "Initial score differs from archive", finished: "Episode finished",
+};
 const number = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 const escapeHTML = (text) =>
   String(text).replace(
@@ -43,10 +53,60 @@ function table(headers, rows) {
   return `<div class="table-scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
 }
 
+function renderFrozen(frozen, request) {
+  const heading = "<h3>Frozen-target search difficulty</h3>";
+  if (frozen?.status !== "loaded")
+    return heading + '<p class="muted">The reference catalog is currently unavailable.</p>';
+  const calibratedCount = frozen.profiles.flatMap(({ rows }) => rows)
+    .filter(({ status }) => status === "calibrated").length;
+  const probes = frozen.profiles.flatMap(({ label, curves }) =>
+    curves.filter(({ eligible }) => eligible).map((curve) => [
+      labels[label], `${curve.percent}%`, methodLabels[curve.method],
+      ...curve.points.map((point) => sampleRatio(point.reached, curve.eligible)),
+    ]),
+  );
+  const checkpoints = frozen.profiles[0].curves[0].points.map((point) => `≤ ${point.budget} evals`);
+  const seedRows = frozen.profiles.flatMap((profile) => profile.rows.map((row) => [
+    `${labels[profile.label]} / ${row.seed}`, referenceStatus[row.status],
+    fmt(row.baseline), fmt(row.best), ...[50, 80, 95].map((q) =>
+      fmt(row.targets.find(({ percent: target }) => target === q)?.score)),
+  ]));
+  const battleOnly = request.problemId === "skirmish";
+  const outcomes = frozen.profiles.flatMap(({ label, wholeEpisodes }) =>
+    wholeEpisodes.map((row) => [
+      labels[label], escapeHTML(agentLabels[row.method] ?? row.method),
+      row.budget, row.seeds.join(", "), row.episodes,
+      ...(battleOnly ? [sampleRatio(row.goals[0].reached, row.episodes)] :
+        row.goals.map((goal) => sampleRatio(goal.reached, row.episodes))),
+    ]),
+  );
+  const goalHeaders = battleOnly ? ["Win and ≥ 20% HP"] :
+    ["35% delivered", "50% delivered", "65% delivered"];
+  return `
+    ${heading}
+    <p class="muted">Catalog ${escapeHTML(frozen.id)} · ${calibratedCount} calibrated profile-seeds.
+    Targets use 50%, 80% and 95% of the improvement from the initial score to an independently archived reference. Rates count hits from this run.</p>
+    ${probes.length ? table(["Profile", "Target", "Probe", ...checkpoints], probes) :
+      '<p class="muted">No matched target. Try the benchmark setup and a catalog seed, or use the short-sample results below.</p>'}
+    <details><summary>Frozen scores and seed coverage</summary>
+      ${table(["Profile / seed", "Coverage", "Initial", "Reference", "50% target", "80% target", "95% target"], seedRows)}
+    </details>
+    <h3>Archived whole-episode outcomes</h3>
+    ${outcomes.length ? `
+      <p class="muted">Prior agent simulations for the matching scenario settings. The seeds shown here come from the archive. ${request.problemId === "fusion" ? "All three delivery gates also require a win with at least 20% health." : ""}</p>
+      ${table(["Profile", "Agent", "Evals per plan", "Archive seeds", "Episodes", ...goalHeaders], outcomes)}` :
+      '<p class="muted">Whole-episode outcomes are available for matching start-of-episode benchmark settings.</p>'}
+  `;
+}
+
 function renderReport(report, name) {
   const { request, profiles, interaction } = report;
   const selected = profiles[0].summary;
   const ga = selected.probes.find((item) => item.id === "ga");
+  const fixedGa = report.frozen?.profiles[0]?.curves.find((item) => item.percent === 80 && item.method === "ga");
+  const hasFrozen = fixedGa?.eligible > 0;
+  const misses = hasFrozen ? fixedGa.eligible - fixedGa.points.at(-1).reached : ga.eligible - ga.reached;
+  const denom = hasFrozen ? fixedGa.eligible : ga.eligible;
   const label = (entry) => labels[entry.label];
   const rate = (probe) =>
     probe.eligible
@@ -185,9 +245,10 @@ function renderReport(report, name) {
     <div class="assessment-kpis">
       <div><span>Encoded dimensions</span><strong>${selected.dimensions.join(" / ")}</strong></div>
       <div><span>Uniform candidates feasible</span><strong>${selected.uniformSamples ? percent(selected.uniformValid / selected.uniformSamples) : "—"}</strong></div>
-      <div><span>GA trials below target</span><strong>${percent(ga.missedShare)}</strong><span>${ga.eligible ? `${ga.eligible - ga.reached} of ${ga.eligible} eligible seeds` : "No calibrated target"}</span></div>
+      <div><span>${hasFrozen ? "GA misses · frozen 80% target" : "GA misses · short-sample target"}</span><strong>${percent(denom ? misses / denom : null)}</strong><span>${denom ? `${misses} of ${denom} eligible seeds` : "No target available"}</span></div>
     </div>
-    <h3>Search difficulty at this budget</h3>
+    ${renderFrozen(report.frozen, request)}
+    <h3>Exploratory short-sample probe</h3>
     <p class="muted">Target = initial score + ${request.targetPercent}% of the improvement found in an independent reference sample of ${request.evaluations} uniform and ${request.evaluations} local draws. Each seed and profile gets its own target.</p>
     ${searchTable}
     ${noTarget ? '<p class="muted">Seeds without sampled improvement have no target. They are excluded from hit and miss rates.</p>' : ""}
@@ -221,8 +282,8 @@ export function mountDifficulty(problems, getWorkspace, download) {
       current().id !== "fusion" || couplingSelect.value === "none";
   };
   function changeScope(scenarioId, config) {
-    preset = config;
     const problem = current();
+    preset = config ?? benchmarkSettings(problem.id);
     scenarioSelect.replaceChildren(
       ...problem.scenarios.map(({ id, name }) => new Option(name, id)),
     );
@@ -235,9 +296,9 @@ export function mountDifficulty(problems, getWorkspace, download) {
       problem.id === "skirmish"
         ? "0 starts at setup. 10 steps equal one second."
         : "0 starts at setup. One step equals one metro minute.";
-    $("context").textContent = preset
+    $("context").textContent = config
       ? "Using captured workspace settings."
-      : "Using scenario defaults.";
+      : "Using benchmark settings · 180 metro minutes / 60 squad seconds where applicable.";
     updateControl();
   }
   function useWorkspace(resetSeeds) {
@@ -339,6 +400,15 @@ export function mountDifficulty(problems, getWorkspace, download) {
   );
   couplingSelect.addEventListener("change", updateControl);
   $("use-workspace").addEventListener("click", () => useWorkspace(true));
+  $("use-benchmark").addEventListener("click", () => {
+    const mode = couplingSelect.value;
+    const checkpoint = $("checkpoint").value;
+    changeScope(scenarioSelect.value);
+    couplingSelect.value = mode;
+    $("checkpoint").value = checkpoint;
+    $("seeds").value = "26, 27, 28";
+    updateControl();
+  });
   $("run").addEventListener("click", run);
   $("cancel").addEventListener("click", () => {
     stop();
@@ -361,7 +431,9 @@ export function mountDifficulty(problems, getWorkspace, download) {
     show() {
       if (initialized) return;
       initialized = true;
-      useWorkspace(false);
+      const { problemId, config } = getWorkspace();
+      problemSelect.value = problemId;
+      changeScope(config.scenarioId);
     },
     captureWorkspace() {
       useWorkspace(true);
