@@ -1,6 +1,7 @@
 import { stationNames } from "./catalogs/names.en.js";
 import { random, shuffle } from "./rng.js";
 import { distance } from "./hex.js";
+import { requiresSimpleTrack, traceTrackLine } from "./track-geometry.js";
 export const SHAPES = ["circle", "triangle", "square"];
 export const LINE_IDS = ["A", "B", "C"];
 export const SCENARIOS = [
@@ -175,7 +176,8 @@ export function scenarioAt(scenario, time = 0) {
     stations: scenario.stations.filter((s) => (s.opensAt ?? 0) <= time),
   };
 }
-export function starterPlan(scenario = null) {
+export function starterPlan(scenario = createScenario()) {
+  scenario ??= createScenario();
   const plan = {
     lines: [
       { id: "A", stops: ["s0", "s5", "s6", "s7", "s3"] },
@@ -183,10 +185,22 @@ export function starterPlan(scenario = null) {
       { id: "C", stops: ["s1", "s2", "s6", "s10", "s11"] },
     ],
   };
-  if (scenario) {
-    const active = new Set(scenarioAt(scenario, 0).stations.map((s) => s.id));
-    for (const line of plan.lines)
-      line.stops = line.stops.filter((id) => active.has(id));
+  const active = new Map(scenarioAt(scenario, 0).stations.map((s) => [s.id, s]));
+  let remaining = scenario.resources.trackBudget;
+  for (const line of plan.lines) {
+    line.stops = line.stops.filter((id) => active.has(id));
+    if (!requiresSimpleTrack(scenario)) continue;
+    const stops = [];
+    let length = 0;
+    for (const id of line.stops) {
+      if (stops.length >= scenario.resources.maxStopsPerLine) break;
+      const draft = traceTrackLine(scenario, [...stops, id].map((stop) => active.get(stop)));
+      if (draft.issue || draft.length > remaining) continue;
+      stops.push(id);
+      length = draft.length;
+    }
+    remaining -= length;
+    line.stops = stops;
   }
   return plan;
 }

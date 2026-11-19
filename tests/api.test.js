@@ -32,7 +32,8 @@ test("unified discovery, sessions, compatibility, jobs and cancellation", async 
   assert.equal(evaluated.status, 200);
   assert.equal(evaluated.data.version, "hex-difficulty/v1");
   assert.deepEqual(evaluated.data.profiles[0].summary.dimensions, [18]);
-  assert.equal(evaluated.data.frozen.profiles[0].rows[0].status, "calibrated");
+  assert.equal(evaluated.data.frozen.profiles[0].rows[0].status, "no-reference");
+  assert.equal(evaluated.data.profiles[0].rows[0].space.components.metro.trackTopology, "simple");
   assert.equal((await api("/api/difficulty", {
     problemId: "fusion", seeds: [26, 26], evaluations: 8,
   })).status, 400);

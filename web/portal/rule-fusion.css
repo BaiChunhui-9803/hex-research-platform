@@ -1,0 +1,54 @@
+.rule-panel { margin-bottom: 14px; }
+.rule-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.rule-feature-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.rule-feature-tabs button[aria-pressed="true"] { border-color: var(--accent); background: #edf4eb; color: var(--accent); }
+.rule-options button { align-self: end; }
+#rule-feature-matrix table { table-layout: fixed; min-width: 880px; }
+#rule-feature-matrix th:first-child { width: 19%; }
+#rule-feature-matrix td { text-align: left; vertical-align: top; white-space: normal; }
+.rule-element, .rule-candidate-name { display: grid; gap: 3px; }
+.rule-element small, .rule-candidate-name small { color: var(--muted); }
+.rule-cell { display: grid; gap: 6px; }
+.rule-cell summary { color: var(--ink); font-size: 12px; }
+.rule-cell code { color: var(--accent); overflow-wrap: anywhere; }
+.rule-cell pre { padding: 6px; margin-top: 4px; font-size: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.rule-findings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.rule-finding, .rule-selection {
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  background: #f6f8f5;
+  border-radius: 5px;
+}
+.rule-finding > div:first-child { display: flex; gap: 9px; justify-content: space-between; align-items: center; }
+.rule-finding h3, .rule-selection h3 { margin: 0 0 4px; }
+.rule-evidence { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.rule-evidence button { padding: 3px 6px; color: var(--accent); font: 10px var(--font-data); }
+.rule-selection .button-row, #rule-candidates > p { margin-top: 8px; }
+.fusion-draft-status {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  margin: 3px 0;
+}
+.fusion-draft-status[hidden], .fusion-draft-form[hidden] { display: none; }
+.fusion-component .problem-controls[hidden] { display: none; }
+.fusion-draft-form { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fusion-draft-form select { max-width: min(100%, 430px); }
+.fusion-draft-form button, .fusion-draft-form select { padding: 5px 8px; }
+@media (max-width: 650px) {
+  .rule-findings { grid-template-columns: minmax(0, 1fr); }
+  .topbar nav { overflow-x: auto; justify-content: flex-start; }
+}

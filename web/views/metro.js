@@ -1,17 +1,18 @@
 import { MapRenderer } from "../../engines/metro/web/renderer.js";
 import theme from "../../engines/metro/web/themes/midnight.js";
-export function mount({ host, controls, onAction, onPause, notice, help = document.querySelector("#interaction-help") }) {
+export function mount({ host, controls, onAction, onPause, notice, help = document.querySelector("#interaction-help"), readOnly = false }) {
   host.className = "arena metro-view";
   host.innerHTML = '<svg viewBox="0 0 1100 700" aria-label="Metro map"></svg>';
-  controls.innerHTML =
+  controls.innerHTML = readOnly ? '<button data-edit="fit">Fit map</button>' :
     '<button data-line="A">Line A</button><button data-line="B">Line B</button><button data-line="C">Line C</button><button data-edit="clear">Clear line</button><button data-edit="undo">Undo</button><button data-edit="fit">Fit</button><span>Circle · Triangle · Square</span>';
-  if (help) help.textContent =
-    "Choose a line, select an endpoint, then another station. Drag a stop to replace it. Stations shared by lines allow transfers.";
+  if (help) help.textContent = readOnly
+    ? "Station markers show passenger destinations. Numbers on trains show onboard passengers."
+    : "Choose a line, select an endpoint, then another station. Drag a stop to replace it. Stations shared by lines allow transfers.";
   const svg = host.querySelector("svg"),
     renderer = new MapRenderer(svg),
     abort = new AbortController(),
     signal = abort.signal;
-  let state,
+  let state, replay = readOnly,
     selected = "A",
     anchor = null,
     down = null,
@@ -56,6 +57,8 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
     async (event) => {
       const button = event.target.closest("button");
       if (!button || !state) return;
+      if (button.dataset.edit === "fit") renderer.fit();
+      if (replay) return;
       if (button.dataset.line) {
         selected = button.dataset.line;
         anchor = null;
@@ -66,7 +69,6 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
         plan.lines.find((l) => l.id === selected).stops = [];
         apply(plan);
       }
-      if (button.dataset.edit === "fit") renderer.fit();
       if (button.dataset.edit === "undo" && history.length) {
         try {
           await onAction({ type: "set-plan", plan: history.at(-1) });
@@ -81,6 +83,7 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
   svg.addEventListener(
     "pointerdown",
     (e) => {
+      if (replay) return;
       const n = e.target.closest("[data-station]");
       if (n) down = { id: n.dataset.station, x: e.clientX, y: e.clientY };
     },
@@ -89,7 +92,7 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
   svg.addEventListener(
     "pointerup",
     (e) => {
-      if (!down || !state) return;
+      if (!down || !state || replay) return;
       const start = down;
       down = null;
       const n = document
@@ -122,6 +125,7 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
   svg.addEventListener(
     "keydown",
     (e) => {
+      if (replay) return;
       if (e.key === "Enter" || e.key === " ") {
         const n = e.target.closest("[data-station]");
         if (n) {
@@ -143,6 +147,7 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
   return {
     update(view) {
       state = view.renderState;
+      replay = readOnly || view.replay;
       if (!renderer.state) {
         renderer.mount(state, theme);
         select();
@@ -150,6 +155,10 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
         renderer.state = state;
         renderer.drawNetwork();
         renderer.updateStations();
+      }
+      if (readOnly) for (const station of svg.querySelectorAll("[data-station]")) {
+        station.removeAttribute("role");
+        station.removeAttribute("tabindex");
       }
     },
     render() {

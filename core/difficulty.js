@@ -100,15 +100,23 @@ function sampledScoreLevels(values) {
   return levels;
 }
 
-function profile(problem, config, request, ga, cache, check) {
+export function prepareDifficultyEnvironment(problem, config, checkpoint, check = () => {}) {
   const env = problem.create(config);
-  if (request.checkpoint > 0) {
-    env.acceptSolution(env.createSearchTask().initial(random(config.seed)));
-    while (env.tick() < request.checkpoint && !env.done()) {
+  if (checkpoint > 0) {
+    const rng = random(config.seed);
+    if (config.ruleMode !== "features") env.acceptSolution(env.createSearchTask().initial(rng));
+    while (env.tick() < checkpoint && !env.done()) {
       check();
+      if (config.ruleMode === "features" && env.decisionDue("search", null))
+        env.acceptSolution(env.createSearchTask().initial(rng));
       env.advance();
     }
   }
+  return env;
+}
+
+function profile(problem, config, request, ga, cache, check) {
+  const env = prepareDifficultyEnvironment(problem, config, request.checkpoint, check);
   const space = difficultySpace(problem, env, request.gridLevels, cache, check);
   const row = {
     seed: config.seed,
@@ -116,12 +124,13 @@ function profile(problem, config, request, ga, cache, check) {
     space,
     search: null,
   };
-  const task = env.done() ? null : env.createVectorTask();
+  const task = env.done() || (config.ruleMode === "features" && !env.decisionDue("search", null))
+    ? null : env.createVectorTask();
   space.dimensions =
     task?.dimension ??
-    (space.components.metro
+    (config.ruleMode === "features" ? null : (space.components.metro
       ? space.components.metro.lines * space.components.metro.activeStations
-      : 0) + (space.components.skirmish ? 6 : 0);
+      : 0) + (space.components.skirmish ? 6 : 0));
   if (!task) return { row, task, gridCandidates: [] };
   const { evaluations: budget, targetPercent } = request;
   const evaluate = (vector) => {
@@ -310,7 +319,7 @@ function summarizeProfile(label, rows, budget) {
       inspected: rows.length,
       searched: searched.length,
       eligible: eligible.length,
-      dimensions: [...new Set(rows.map(({ space }) => space.dimensions))].sort(
+      dimensions: [...new Set(rows.map(({ space }) => space.dimensions).filter(Number.isFinite))].sort(
         (a, b) => a - b,
       ),
       uniformValid: valid,
@@ -431,9 +440,12 @@ export function difficultyCSV(report) {
       "rail_stations",
       "rail_track_cap",
       "ordered_rail_plans",
+      "rail_count_kind",
+      "rail_topology",
       "squad_traversable_tiles",
       "grid_levels",
       "reference_combinations",
+      "reference_count_kind",
       "neutral_local",
       "valid_local",
       ...(includeFrozen ? [
@@ -472,9 +484,12 @@ export function difficultyCSV(report) {
           metro?.activeStations,
           metro?.trackBudget,
           metro?.orderedPlans,
+          metro?.countKind,
+          metro?.trackTopology,
           skirmish ? skirmish.terrainCells - skirmish.blockedCells : null,
           row.space.gridLevels,
           row.space.referenceCombinations,
+          row.space.referenceKind,
           row.search?.local.neutralScore,
           row.search?.local.valid,
           ...(includeFrozen ? [

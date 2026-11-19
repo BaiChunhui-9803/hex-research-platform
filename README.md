@@ -20,23 +20,24 @@ npm start
 npm test
 npm run build:pages            # 生成 GitHub Pages 静态站点
 npm run benchmark               # 保留原4方法、132局兼容验证
+npm run benchmark:topology      # 单线轨道约束、配对基准和融合规则试跑
 npm run benchmark:evolutionary  # 28方法适用组合、11场景、3种子 = 756局
 npm run verify:fusion          # 融合规则对照、20种共享方法与回放
 npm run analyze:evolutionary    # 逐场景差值、描述性汇总
+node scripts/build-portal-archive.js  # 刷新门户归档，需同级 hex-skirmish-lab 的验证目录
 node scripts/benchmark.js 26     # 单种子整合验证
 python examples/python_client.py
 ```
 
 ## 怎么使用
 
-1. **Problems**：切换 Metro Network、Squad Tactics 或 Problem Fusion，选择地图、种子与 Episode settings 后应用。
-2. 可以手动运行、暂停和步进，也可以选择方法并点击Use selected method，再开始运行。
-3. 地铁：选线路和端点后续接；拖动停站替换；支持清空和撤销。战斗：点击／框选己方，右键敌人集火或地面移动，支持多选、攻击移动、原地防守、缩放和平移。
-4. **Methods**：查看 28 种方法，按目标、类别、家族、变体级联筛选。20 种共享搜索方法可用于三个问题。四个地铁策略适用于动态地铁，四个小队策略适用于独立的小队问题。界面和 API 均检查兼容性。
-5. **Experiments**：选择场景、方法和种子，在同一条件下从头比较。后台Worker可以取消；完成后查看均值／标准差、逐局结果，下载JSON／CSV，点击Replay观看记录。
-6. 可以导出当前会话记录，并在Import report中载入记录或完整实验结果。回放为只读，Reset episode回到可操作环境。
-7. **API**：查看发现、控制和实验端点。HTTP和浏览器本地会话独立，但使用相同规则与适配层。
-8. **Difficulty**：评估原始或融合场景。匹配参考库时展示冻结目标的预算达标率和整局代理结果。自定义设置仍可运行短采样探针和融合开关对照。[评估协议](docs/difficulty.md)
+1. **Problem analysis**（`?tab=analysis`）比较原始问题、同地图的关闭耦合对照和开启耦合的版本。可以查看搜索维度、轨道预算、编码计数、整局配对结果，也可以运行定预算探针。[评估协议](docs/difficulty.md)
+2. **Algorithm comparison**（`?tab=comparison`）选择问题和证据来源，在同一运行条件下用共同种子比较方法。小队验证归档可按观察阵营、对手、策略和种子筛选。
+3. **Trajectory replay**（`?tab=trajectory`）选择问题、方法和种子，加载匹配记录或在浏览器生成新轨迹。具备播放、逐步、拖动和事件定位。有匹配记录时，可以在同一时刻切换耦合开关。
+4. **Play workbench** 可以手动控制，也可以选择方法并启动。在地铁中选线路和端点后续接，可拖动停站替换。在小队中点击或框选己方，再右键选择目标或地面。
+5. 首页还提供方法库、批量实验、进阶难度探针和 API。批量实验支持导入与导出报告，实验结果中的 Replay 直接进入轨迹模块。
+
+门户模块在 `web/portal/`，稳定查询参数由首页统一处理。预置归档在 `web/archive/`，常规 Pages 构建直接使用已生成的数据。归档构建脚本可选择 `--reuse-paired` 复用配置完全匹配的融合旧记录。
 
 ## 问题与方法如何分离
 

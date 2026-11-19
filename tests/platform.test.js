@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { PlatformSession, replaySession } from "../core/session.js";
+import { createReplayCursor, PlatformSession, replaySession } from "../core/session.js";
 import { problemRegistry } from "../problems/index.js";
 import { methodRegistry } from "../methods/index.js";
 import { compatibility, createRegistry } from "../core/registry.js";
@@ -128,6 +128,22 @@ test("manual edits at a paused final replay position are retained", () => {
     replaySession(problem, session.replay()).environment.renderState().plan,
     plan,
   );
+});
+test("a replay cursor applies final-tick commands once and supports rewinding", () => {
+  const problem = problemRegistry.get("metro");
+  const session = new PlatformSession(problem, { scenarioId: "growth" });
+  session.advance(6);
+  const plan = session.environment.currentPlan();
+  const changed = structuredClone(plan);
+  changed.lines[0].stops = [];
+  session.apply({ type: "set-plan", plan: changed });
+  const cursor = createReplayCursor(problem, session.replay());
+  assert.deepEqual(cursor.seek(5).environment.currentPlan(), plan);
+  const end = cursor.seek(6);
+  assert.deepEqual(end.environment.currentPlan(), changed);
+  assert.deepEqual(cursor.seek(6).environment.metrics(), session.environment.metrics());
+  assert.deepEqual(cursor.seek(0).environment.currentPlan(), plan);
+  assert.deepEqual(cursor.seek(6).environment.metrics(), session.environment.metrics());
 });
 test("native squad controller preserves the existing engine outcomes", () => {
   const problem = problemRegistry.get("skirmish");

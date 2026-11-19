@@ -9,6 +9,7 @@ const design = "docs/design-reference-library-20261115";
 const recorded = "experiments/2026-11-15-evolutionary-baselines";
 const integration = "experiments/integration-20261115";
 const fusionValidation = "experiments/fusion-validation";
+const topologyStudy = "experiments/simple-track-fusion";
 
 const existing = await lstat(dist).catch((error) => {
   if (error.code !== "ENOENT") throw error;
@@ -88,6 +89,7 @@ for (const problemId of ["metro", "skirmish"]) {
 for (const file of ["summary.md", "rules.csv", "methods.csv", "methods.json", "verification.json"]) {
   await copy(`${fusionValidation}/${file}`);
 }
+for (const file of ["summary.zh-CN.md", "measurements.json"]) await copy(`${topologyStudy}/${file}`);
 const fusionReportUrl = `${fusionValidation}/methods.json`;
 const fusionReport = JSON.parse(await readFile(path.join(root, fusionReportUrl), "utf8"));
 runs.push({

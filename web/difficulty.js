@@ -37,12 +37,13 @@ const percent = (value) =>
 const sampleRatio = (count, total) =>
   total ? `${count}/${total} · ${percent(count / total)}` : "—";
 
-function countLabel(value) {
+function countLabel(value, kind) {
   if (!value) return "—";
   const recorded = BigInt(value).toLocaleString("en-US");
+  const bound = kind === "upper-bound" ? "≤ " : "";
   return value.length <= 12
-    ? recorded
-    : `<span title="${recorded}">${value[0]}.${value.slice(1, 4)} × 10<sup>${value.length - 1}</sup></span>`;
+    ? bound + recorded
+    : `<span title="${recorded}">${bound}${value[0]}.${value.slice(1, 4)} × 10<sup>${value.length - 1}</sup></span>`;
 }
 
 function table(headers, rows) {
@@ -171,11 +172,11 @@ function renderReport(report, name) {
           metro
             ? `${metro.activeStations} / ${metro.trackBudget}${metro.remainingEditBudget === null ? "" : ` · ${metro.remainingEditBudget} edits left`}`
             : "—",
-          countLabel(metro?.orderedPlans),
+          countLabel(metro?.orderedPlans, metro?.countKind),
           skirmish
             ? `${skirmish.terrainCells - skirmish.blockedCells}/${skirmish.terrainCells}${skirmish.done ? " · finished" : ""}`
             : "—",
-          countLabel(row.space.referenceCombinations),
+          countLabel(row.space.referenceCombinations, row.space.referenceKind),
         ];
       }),
     ),
@@ -258,7 +259,7 @@ function renderReport(report, name) {
     ${sampleTable}
     <p class="muted">Signature and score counts are added across seeds. Local moves perturb 1–3 vector coordinates around the initial candidate.</p>
     ${structureTable}
-    <p class="muted">Rail counts include track and stop constraints before the remaining edit budget. The squad reference uses two switches and ${request.gridLevels} levels for each of four continuous parameters.</p>
+    <p class="muted">Rail counts account for the active line topology and track budget before the remaining edit budget. A ≤ symbol marks an upper bound. The squad reference uses two switches and ${request.gridLevels} levels for each of four continuous parameters.</p>
     ${coupling}
     <details><summary>Per-seed scores and settings</summary>${seedsTable}<pre>${escapeHTML(JSON.stringify(request.config, null, 2))}</pre></details>`;
 }

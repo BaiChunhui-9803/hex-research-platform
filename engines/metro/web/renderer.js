@@ -1,6 +1,7 @@
 import { SHAPE_LABELS } from "../shared/catalogs/names.en.js";
-import { cells, hexPoint, findPath } from "../shared/hex.js";
+import { cells, hexPoint } from "../shared/hex.js";
 import { compilePlan } from "../shared/network.js";
+import { scenarioAt } from "../shared/scenarios.js";
 import { escapeHTML } from "./icons.js";
 const SIZE = 34;
 const point = (cell) => {
@@ -134,14 +135,16 @@ export class MapRenderer {
     const layer = this.svg.querySelector("#hover-track");
     layer.innerHTML = "";
     if (!this.anchor || !id || id === this.anchor) return;
-    const from = this.state.stations[this.anchor],
-      to = this.state.stations[id];
-    const route = findPath(
-      this.state.scenario.map,
-      from,
-      to,
-      this.state.scenario.resources,
-    );
+    const plan = structuredClone(this.state.plan);
+    const line = plan.lines.find(({ id: key }) => key === this.selected);
+    if (!line || line.stops.includes(id)) return;
+    if (!line.stops.length) line.stops = [this.anchor, id];
+    else if (this.anchor === line.stops.at(-1)) line.stops.push(id);
+    else if (this.anchor === line.stops[0]) line.stops.unshift(id);
+    else return;
+    const compiled = compilePlan(scenarioAt(this.state.scenario, this.state.time), plan);
+    const route = compiled.valid ? compiled.paths[line.id].find(({ from, to }) =>
+      (from === this.anchor && to === id) || (to === this.anchor && from === id))?.cells : null;
     if (route)
       layer.innerHTML = `<polyline class="metro-line" points="${points(route)}" stroke="${this.theme.routes[this.selected]}" stroke-dasharray="4 8" opacity=".45"/>`;
   }

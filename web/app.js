@@ -11,6 +11,11 @@ import {
 import { evidenceURL, projectURL } from "./paths.js";
 import { renderSearchDetails } from "./search-details.js";
 import { mountDifficulty } from "./difficulty.js";
+import { mountAnalysis } from "./portal/analysis.js";
+import { mountComparison } from "./portal/comparison.js";
+import { mountTrajectory } from "./portal/trajectory.js";
+import { mountRuleFusion } from "./portal/rule-fusion.js";
+import { configForScope, fillOptions, normalizeScope, scopeFromConfig } from "./portal/data.js";
 applyTheme();
 const $ = (selector) => document.querySelector(selector);
 const browserOnly = $('meta[name="hex-runtime"]')?.content === "browser";
@@ -37,6 +42,10 @@ let problemId = "metro",
 let methodLibrary,
   experimentRunner,
   experimentBusy = false;
+let routeName = "home";
+let lastScope = normalizeScope();
+let lastMapSeed;
+let readyWorkspace = false;
 const problem = () => problems.find((p) => p.id === problemId);
 const scenario = () =>
   problem().scenarios.find((s) => s.id === $("#scenario").value);
@@ -67,18 +76,117 @@ function download(name, text, type = "application/json") {
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-function tab(name) {
+const navigation = { go, replace: replaceRoute };
+const portal = {
+  analysis: mountAnalysis($("#tab-analysis"), navigation),
+  comparison: mountComparison($("#tab-comparison"), navigation),
+  trajectory: mountTrajectory($("#tab-trajectory"), navigation, download),
+  "rule-fusion": mountRuleFusion($("#tab-rule-fusion"), navigation),
+};
+const pages = new Set(["home", "problems", "analysis", "rule-fusion", "comparison", "trajectory", "methods", "experiments", "difficulty", "api"]);
+
+function locationRoute() {
+  const { tab, ...params } = Object.fromEntries(new URLSearchParams(location.search));
+  const name = pages.has(tab) ? tab : params.problem ? "problems" : "home";
+  return { name, params };
+}
+
+function routeURL(name, params = {}) {
+  const url = new URL(projectURL());
+  if (name !== "home") url.searchParams.set("tab", name);
+  for (const [key, value] of Object.entries(params))
+    if (value !== undefined && value !== null && value !== "") url.searchParams.set(key, value);
+  return url;
+}
+
+function replaceRoute(name, params) {
+  if (name !== routeName) return;
+  if (portal[name]) lastScope = normalizeScope(params);
+  if (["analysis", "rule-fusion", "trajectory"].includes(name) && /^\d{1,7}$/.test(params.seed ?? ""))
+    lastMapSeed = params.seed;
+  history.replaceState(null, "", routeURL(name, params));
+  refreshNavigation();
+}
+
+function workspaceScope() {
+  const active = config();
+  return { ...scopeFromConfig(problemId, active), seed: active.seed };
+}
+
+function contextFor(name) {
+  if (portal[name] && routeName === "problems") return workspaceScope();
+  if (["analysis", "rule-fusion", "trajectory"].includes(name)) return { ...lastScope, seed: lastMapSeed };
+  if (name === "comparison") return lastScope;
+  if (name === "problems") return portal[routeName] ? { ...lastScope, seed: lastMapSeed } : {};
+  return {};
+}
+
+function refreshNavigation() {
+  for (const link of document.querySelectorAll("a[data-tab]")) {
+    if (!link.hasAttribute("data-route-overrides")) {
+      const original = new URL(link.href);
+      original.searchParams.delete("tab");
+      link.dataset.routeOverrides = original.search;
+    }
+    const explicit = Object.fromEntries(new URLSearchParams(link.dataset.routeOverrides));
+    const context = explicit.problem ? explicit : { ...contextFor(link.dataset.tab), ...explicit };
+    link.href = routeURL(link.dataset.tab, context);
+  }
+}
+
+function go(name, params = contextFor(name)) {
+  if (name === "trajectory" && params.seed == null && lastMapSeed != null)
+    params = { ...params, seed: lastMapSeed };
+  const url = routeURL(name, params);
+  if (location.href !== url.href) history.pushState(null, "", url);
+  return showRoute(name, params);
+}
+
+async function showRoute(name, params = {}) {
+  const previous = routeName;
+  portal[previous]?.hide();
+  routeName = name;
   if (name !== "problems") pause();
-  for (const node of document.querySelectorAll(".tab"))
-    node.classList.toggle("active", node.id === `tab-${name}`);
-  for (const b of document.querySelectorAll(".topbar [data-tab]"))
-    b.classList.toggle("active", b.dataset.tab === name);
+  for (const node of document.querySelectorAll(".tab")) {
+    const selected = node.id === `tab-${name}`;
+    node.classList.toggle("active", selected);
+    node.hidden = !selected;
+  }
+  for (const link of document.querySelectorAll(".topbar [data-tab]")) {
+    const selected = link.dataset.tab === name;
+    link.classList.toggle("active", selected);
+    if (selected) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+  $("#notice").hidden = name === "home" || Boolean(portal[name]);
+  document.title = name === "home" ? "HEX · Research Games"
+    : `${$(`#tab-${name} h1`)?.textContent ?? "Play"} · HEX`;
+  if (previous !== name) window.scrollTo(0, 0);
+  if (portal[name]) {
+    lastScope = normalizeScope(params);
+    portal[name].show(params);
+  }
   if (name === "experiments") refreshHistory();
   if (name === "difficulty") difficulty.show();
-}
-function openWorkspace() {
-  document.body.dataset.screen = "workspace";
-  tab("problems");
+  if (name !== "problems") {
+    refreshNavigation();
+    return;
+  }
+
+  const requested = problems.find(({ id }) => id === params.problem);
+  if (requested) {
+    const current = workspaceScope();
+    const scope = normalizeScope(params);
+    const selectedSeed = /^\d{1,7}$/.test(params.seed ?? "") ? Number(params.seed) : current.seed;
+    const profile = params.profile;
+    if (current.problem !== scope.problem || current.scenario !== scope.scenario ||
+        current.seed !== selectedSeed || (profile && current.profile !== profile) || current.setup !== scope.setup) {
+      selectProblem(scope.problem, profile || scope.setup ? configForScope(scope, selectedSeed) : { scenarioId: scope.scenario, seed: selectedSeed });
+      readyWorkspace = false;
+    }
+  }
+  refreshNavigation();
+  if (!readyWorkspace) await reset();
 }
 function config() {
   return {
@@ -148,8 +256,9 @@ function update(next) {
     notice("Episode finished. Export the replay or reset to play again.");
   }
 }
-async function reset(recording = null) {
+async function reset() {
   const generation = ++epoch;
+  readyWorkspace = false;
   pause();
   stepping = false;
   display?.dispose();
@@ -190,24 +299,16 @@ async function reset(recording = null) {
         : entry.resolve(e.data.payload);
     };
     worker.onerror = (e) => notice(e.message, true);
-    const next = await request(
-      recording ? "load-replay" : "init",
-      recording
-        ? { recording }
-        : {
-            problemId,
-            config: config(),
-            evaluations: Number($("#budget").value),
-            populationSize: Number($("#population-size").value),
-          },
-    );
+    const next = await request("init", {
+      problemId,
+      config: config(),
+      evaluations: Number($("#budget").value),
+      populationSize: Number($("#population-size").value),
+    });
     if (generation !== epoch) return;
     update(next);
-    notice(
-      recording
-        ? "Replay loaded. Start to watch the recorded decisions."
-        : "Ready. Take manual control or activate a method.",
-    );
+    readyWorkspace = true;
+    notice("Ready. Take manual control or activate a method.");
   } catch (error) {
     if (generation === epoch) notice(error.message, true);
   }
@@ -248,11 +349,10 @@ function fusionSelectors(p) {
     </select></label>`;
   }).join("");
 }
-async function selectProblem(id, configOverride) {
+function selectProblem(id, configOverride) {
   problemId = id;
   const p = problem();
-  for (const b of document.querySelectorAll("[data-problem]"))
-    b.classList.toggle("active", b.dataset.problem === id);
+  $("#workspace-problem").value = id;
   $("#scenario").innerHTML = p.scenarios
     .map(
       (s) =>
@@ -305,13 +405,13 @@ function library() {
     try {
       pause();
       if (problemId !== scope.problemId || scenario().id !== scope.scenarioId) {
-        await selectProblem(scope.problemId, {
+        selectProblem(scope.problemId, {
           scenarioId: scope.scenarioId,
           seed: Number($("#seed").value),
         });
         await reset();
       }
-      openWorkspace();
+      await go("problems", workspaceScope());
       $("#method").value = id;
       methodDescription();
       update(
@@ -503,10 +603,7 @@ async function step(steps) {
   }
 }
 function frame(now) {
-  if (
-    document.body.dataset.screen === "workspace" &&
-    $("#tab-problems").classList.contains("active")
-  )
+  if (routeName === "problems")
     display?.render();
   const interval =
     (problem()?.timeUnit === "s" ? 100 : 600) / Number($("#speed").value);
@@ -573,25 +670,23 @@ async function refreshHistory() {
   }
 }
 document.addEventListener("click", async (event) => {
-  const b = event.target.closest("button");
+  const b = event.target.closest("button, a[data-tab]");
   if (!b) return;
   try {
     if (b.dataset.tab) {
-      tab(b.dataset.tab);
+      if (b.tagName === "A") {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+        event.preventDefault();
+        const params = Object.fromEntries(new URL(b.href).searchParams);
+        delete params.tab;
+        await go(b.dataset.tab, params);
+      } else await go(b.dataset.tab);
       if (b.id === "assess-workspace") difficulty.captureWorkspace();
-      return;
-    }
-    if (b.dataset.problem) {
-      await selectProblem(b.dataset.problem);
-      await reset();
-      openWorkspace();
       return;
     }
     if (b.dataset.replay !== undefined) {
       const recording = report.results[Number(b.dataset.replay)].replay;
-      await selectProblem(recording.problemId, recording.config);
-      openWorkspace();
-      await reset(recording);
+      portal.trajectory.open(recording);
       return;
     }
     if (b.dataset.history) {
@@ -600,12 +695,10 @@ document.addEventListener("click", async (event) => {
       $("#run-state").textContent = "SAVED REPORT";
       return;
     }
-    if (b.id === "open-workspace") openWorkspace();
-    if (b.id === "back-problems") {
-      pause();
-      document.body.dataset.screen = "home";
+    if (b.id === "reset") {
+      replaceRoute("problems", workspaceScope());
+      await reset();
     }
-    if (b.id === "reset") await reset();
     if (b.id === "play") {
       if (!view || view.done) return;
       running = !running;
@@ -675,9 +768,7 @@ $("#report-file").addEventListener("change", async (event) => {
       Array.isArray(parsed.actions) &&
       problems.some((p) => p.id === parsed.problemId)
     ) {
-      await selectProblem(parsed.problemId, parsed.config);
-      tab("problems");
-      await reset(parsed);
+      portal.trajectory.open(parsed);
     } else throw new Error("Choose a platform comparison or replay file");
   } catch (error) {
     notice(error.message, true);
@@ -685,8 +776,14 @@ $("#report-file").addEventListener("change", async (event) => {
     event.target.value = "";
   }
 });
+$("#workspace-problem").addEventListener("change", () => {
+  selectProblem($("#workspace-problem").value);
+  replaceRoute("problems", workspaceScope());
+  reset();
+});
 $("#scenario").addEventListener("change", () => {
   settings();
+  replaceRoute("problems", workspaceScope());
   reset();
 });
 $("#fusion-sources").addEventListener("change", () => {
@@ -695,8 +792,12 @@ $("#fusion-sources").addEventListener("change", () => {
     selected.every((field) => item.components[field.dataset.sourceProblem] === field.value),
   );
   const previous = config();
+  for (const field of scenario().settings) {
+    if (String(previous[field.key]) === String(field.default)) delete previous[field.key];
+  }
   $("#scenario").value = pair.id;
   settings(previous);
+  replaceRoute("problems", workspaceScope());
   reset();
 });
 $("#method").addEventListener("change", methodDescription);
@@ -706,6 +807,7 @@ $("#seeds").addEventListener("input", experimentSize);
 $("#experiment-preset").addEventListener("change", experimentPreset);
 window.addEventListener("keydown", (event) => {
   if (
+    routeName === "problems" &&
     event.code === "Space" &&
     !event.defaultPrevented &&
     !event.repeat &&
@@ -717,24 +819,19 @@ window.addEventListener("keydown", (event) => {
     $("#play").click();
   }
 });
+window.addEventListener("popstate", () => {
+  const target = locationRoute();
+  showRoute(target.name, target.params);
+});
 try {
   $("#hosted-api-note").hidden = !browserOnly;
   $("#problem-total").textContent = problems.length;
   $("#scenario-total").textContent = problems.reduce((sum, p) => sum + p.scenarios.length, 0);
-  $("#problem-cards").innerHTML = problems
-    .map(
-      (p) =>
-        `<button data-problem="${p.id}" class="problem-choice"><small>${esc(p.shortName)}</small><strong>${esc(p.name)}</strong><small>${p.scenarios.length} ${p.sourceProblems ? "MAP PAIRS" : "SCENARIOS"}</small></button>`,
-    )
-    .join("");
+  fillOptions($("#workspace-problem"), problems.map(({ id, name }) => [id, name]), "metro");
   library();
-  const params = new URLSearchParams(location.search);
-  const requested = problems.find((item) => item.id === params.get("problem"));
-  const requestedScenario = requested?.scenarios.find((item) => item.id === params.get("scenario"));
-  await selectProblem(requested?.id ?? "metro", requestedScenario && { scenarioId: requestedScenario.id });
-  await reset();
-  if (requested) openWorkspace();
-  if (params.get("tab") === "difficulty") tab("difficulty");
+  selectProblem("metro");
+  const target = locationRoute();
+  await showRoute(target.name, target.params);
   fetch(projectURL("docs/evolutionary-baselines-20261115/catalogue.json"))
     .then((r) => (r.ok ? r.json() : null))
     .then((data) => {
@@ -744,5 +841,6 @@ try {
     .catch(() => {});
   requestAnimationFrame(frame);
 } catch (error) {
+  $("#notice").hidden = false;
   notice(error.message, true);
 }

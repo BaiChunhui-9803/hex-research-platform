@@ -16,6 +16,8 @@ import { UNIT_TYPES } from "../../engines/skirmish/shared/units.js";
 import { occupied } from "../../engines/skirmish/policies/helpers.js";
 import { integer, pick } from "../../core/random.js";
 import { controllerVectorTask } from "./vector.js";
+import { buildSquadScenario, squadDesignConfig, squadDesignFields } from "./scenario.js";
+import { squadFeatureTable } from "./features.js";
 
 const DEFAULT = {
   focus: true,
@@ -130,6 +132,9 @@ export const skirmish = {
     description: s.description,
     tag: s.tag,
   })),
+  featureTable(config) {
+    return squadFeatureTable(config, buildSquadScenario(config));
+  },
   metrics: [
     { id: "win", name: "Win", direction: "max", unit: "ratio" },
     { id: "hpMargin", name: "HP margin", direction: "max", unit: "HP" },
@@ -170,6 +175,7 @@ export const skirmish = {
         ),
         default: "blue",
       },
+      ...squadDesignFields(id),
     ];
   },
   capabilities(id) {
@@ -223,13 +229,13 @@ export const skirmish = {
       horizon: integer(input.horizon, 90, 10, 90, "Battle duration"),
       team,
       opponent,
+      ...squadDesignConfig(input, scenarioId),
     };
   },
   create(config, saved = null) {
     let state = saved?.state;
     if (!state) {
-      const scenario = createScenario(config.scenarioId, config.seed);
-      scenario.duration = config.horizon;
+      const scenario = buildSquadScenario(config);
       state = createBattle(scenario, {
         controllers: Object.fromEntries(
           scenario.teams.map((t) => [
@@ -249,6 +255,7 @@ export const skirmish = {
     return {
       observe: () => observe(state, config.team),
       metrics: () => measured(state, config.team),
+      recentEvents: () => state.events.values(),
       renderState: () => structuredClone(state),
       tick: () => state.tick,
       time: () => state.time,
@@ -276,10 +283,33 @@ export const skirmish = {
           solution: structuredClone(solution),
         });
       },
-      restoreHealth(points) {
+      livingCells() {
+        return state.units.filter((unit) => unit.hp > 0)
+          .map(({ q, r, team }) => ({ q, r, team }));
+      },
+      setFactionController(team, controller) {
+        if (!Object.hasOwn(state.controllers, team) ||
+            (controller !== "human" && !policyById(controller)))
+          throw new Error("Invalid faction controller");
+        state.controllers[team] = controller;
+      },
+      factionMetrics() {
+        return Object.fromEntries(state.scenario.teams.map(({ id }) => [id, battleMetrics(state, id)]));
+      },
+      recoveryNeeds(area) {
+        const byFaction = {};
+        if (state.phase === "finished") return byFaction;
+        for (const unit of state.units) {
+          if (unit.hp <= 0 || unit.hp >= unit.maxHp || distance(unit, area) > area.radius) continue;
+          byFaction[unit.team] = (byFaction[unit.team] ?? 0) + unit.maxHp - unit.hp;
+        }
+        return byFaction;
+      },
+      restoreHealth(points, area = null, faction = config.team) {
         if (state.phase === "finished" || points <= 0) return 0;
         const wounded = state.units
-          .filter((u) => u.team === config.team && u.hp > 0 && u.hp < u.maxHp)
+          .filter((u) => u.team === faction && u.hp > 0 && u.hp < u.maxHp &&
+            (!area || distance(u, area) <= area.radius))
           .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp || a.id.localeCompare(b.id));
         let remaining = points;
         for (const unit of wounded) {

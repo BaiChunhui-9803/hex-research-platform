@@ -1,6 +1,7 @@
-import { findPath } from "./hex.js";
 import { LINE_IDS, SHAPES } from "./scenarios.js";
 import { defaultMapRules, cellAt } from "./map-rules.js";
+import { traceTrackLine, trackCell } from "./track-geometry.js";
+
 export function compilePlan(scenario, plan, rules = defaultMapRules) {
   const errors = [],
     stationMap = Object.fromEntries(scenario.stations.map((s) => [s.id, s])),
@@ -42,27 +43,16 @@ export function compilePlan(scenario, plan, rules = defaultMapRules) {
       if (!rules.canBuildStation(cellAt(scenario.map, `${s.q},${s.r}`)))
         errors.push(`A station cannot be built at ${s.name}`);
     }
-    paths[line.id] = [];
-    for (let i = 0; i < line.stops.length - 1; i++) {
-      const from = line.stops[i],
-        to = line.stops[i + 1];
-      const route = findPath(
-        scenario.map,
-        stationMap[from],
-        stationMap[to],
-        scenario.resources,
-        rules,
-      );
-      if (!route) {
-        errors.push(
-          `No traversable route connects ${stationMap[from].name} and ${stationMap[to].name}`,
-        );
-        continue;
-      }
-      const length = route.length - 1,
-        duration = length * scenario.resources.minutesPerHex;
-      paths[line.id].push({ from, to, cells: route, length, duration });
-      trackUsed += length;
+    const { segments, length, issue } = traceTrackLine(scenario, line.stops.map((id) => stationMap[id]), rules);
+    paths[line.id] = segments;
+    trackUsed += length;
+    if (issue) {
+      const { from, to, conflict } = issue;
+      errors.push(conflict
+        ? `Line ${line.id} revisits hex ${trackCell(conflict)} between ${from.name} and ${to.name}. A line must follow a simple path.`
+        : `No traversable route connects ${from.name} and ${to.name}`);
+    }
+    for (const { from, to, duration } of segments) {
       graph[from].push({
         to,
         line: line.id,

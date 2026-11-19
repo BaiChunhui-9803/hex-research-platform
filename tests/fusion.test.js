@@ -117,8 +117,8 @@ test("the uncoupled control reproduces both constituent games and preserves thei
 });
 
 test("supply changes the battle and pressure changes railway service under matched settings", () => {
-  const control = result({ coupling: "none" }).environment.metrics();
-  const supplied = result({ coupling: "supply" }).environment.metrics();
+  const control = result({ seed: 27, coupling: "none" }).environment.metrics();
+  const supplied = result({ seed: 27, coupling: "supply" }).environment.metrics();
   assert.equal(supplied.heldMinutes, 0);
   assert.equal(supplied["metro.delivered"], control["metro.delivered"]);
   assert.ok(
@@ -139,7 +139,7 @@ test("supply changes the battle and pressure changes railway service under match
   assert.equal(disrupted["skirmish.hpMargin"], plain["skirmish.hpMargin"]);
   assert.equal(disrupted["metro.spawned"], plain["metro.spawned"]);
   assert.ok(disrupted["metro.delivered"] < plain["metro.delivered"]);
-  const twoWay = result({ scenarioId, coupling: "both" });
+  const twoWay = result({ scenarioId, seed: 27, coupling: "both" });
   const metrics = twoWay.environment.metrics();
   assert.ok(metrics.heldMinutes > 0 && metrics.supportUsed > 0);
   assert.equal(

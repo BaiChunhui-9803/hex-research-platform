@@ -1,6 +1,5 @@
 import {
   SCENARIOS,
-  createScenario,
   scenarioAt,
 } from "../../engines/metro/shared/scenarios.js";
 import {
@@ -17,6 +16,7 @@ import {
   OBJECTIVES,
 } from "../../engines/metro/shared/problem.js";
 import { compilePlan } from "../../engines/metro/shared/network.js";
+import { LEGACY_TRACKS, SIMPLE_TRACKS } from "../../engines/metro/shared/track-geometry.js";
 import { planChange } from "../../engines/metro/shared/edit-cost.js";
 import { greedyPlan } from "../../engines/metro/algorithms/greedy.js";
 import randomPlan from "../../engines/metro/algorithms/random.js";
@@ -27,6 +27,9 @@ import {
 } from "../../engines/metro/algorithms/adaptive.js";
 import { integer } from "../../core/random.js";
 import { routeVectorTask } from "./vector.js";
+import { stepLocal } from "./local-operations.js";
+import { buildMetroScenario, metroDesignConfig, metroDesignFields } from "./scenario.js";
+import { metroFeatureTable } from "./features.js";
 
 function forecastTransit(state, visible, seed) {
   const simulated = structuredClone(state);
@@ -61,6 +64,12 @@ export const metro = {
     description: s.subtitle,
     dynamic: Boolean(s.dynamic),
   })),
+  featureTable(config) {
+    return metroFeatureTable(config, buildMetroScenario(config));
+  },
+  restoreRecordingConfig(config) {
+    return { ...config, trackTopology: config.trackTopology ?? LEGACY_TRACKS };
+  },
   metrics: [
     { id: "score", name: "Service score", direction: "max", unit: "points" },
     {
@@ -84,8 +93,17 @@ export const metro = {
     { id: "editUnits", name: "Edit effort", direction: "min", unit: "units" },
     { id: "track", name: "Track used", direction: "min", unit: "hexes" },
   ],
-  settings() {
+  settings(id = this.defaultScenario) {
     return [
+      {
+        key: "trackTopology",
+        name: "Track topology",
+        choices: [
+          { value: SIMPLE_TRACKS, label: "Simple paths · current" },
+          { value: LEGACY_TRACKS, label: "Legacy routing · archived rules" },
+        ],
+        default: SIMPLE_TRACKS,
+      },
       {
         key: "horizon",
         name: "Episode duration (min)",
@@ -114,6 +132,7 @@ export const metro = {
         default: 60,
         feature: "dynamic-stations",
       },
+      ...metroDesignFields(id),
     ];
   },
   capabilities(id) {
@@ -177,16 +196,21 @@ export const metro = {
     const objective = input.objective ?? "balanced";
     if (!Object.hasOwn(OBJECTIVES, objective))
       throw new Error("Unknown metro objective");
+    const trackTopology = input.trackTopology ?? SIMPLE_TRACKS;
+    if (![SIMPLE_TRACKS, LEGACY_TRACKS].includes(trackTopology))
+      throw new Error("Unknown rail topology version");
     return {
       scenarioId,
       seed: integer(input.seed, 26, 0, 9999999, "Seed"),
       horizon,
       objective,
       editBudget: integer(input.editBudget, 60, 0, 300, "Edit budget"),
+      trackTopology,
+      ...metroDesignConfig(input, scenarioId),
     };
   },
   create(config, initialState = null) {
-    const scenario = initialState?.scenario ?? createScenario(config.scenarioId, config.seed);
+    const scenario = initialState?.scenario ?? buildMetroScenario(config);
     let state = initialState ?? createState(
       scenario,
       greedyPlan({ scenario: scenarioAt(scenario, 0) }),
@@ -275,6 +299,7 @@ export const metro = {
       time: () => state.time,
       done: () => state.finished,
       currentPlan: () => structuredClone(state.plan),
+      trackPaths: () => structuredClone(state.network.paths),
       delivered: () => state.delivered,
       fork({ forecast = false } = {}) {
         const useForecast =
@@ -321,6 +346,9 @@ export const metro = {
         } finally {
           if (holdTrains) state.trains = trains;
         }
+      },
+      advanceLocal(options) {
+        return stepLocal(state, options);
       },
     };
   },

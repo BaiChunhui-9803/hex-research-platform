@@ -12,6 +12,7 @@
     "build:pages": "node scripts/build-pages.js",
     "verify:fusion": "node scripts/verify-fusion.js",
     "benchmark": "node scripts/benchmark.js",
+    "benchmark:topology": "node scripts/benchmark-track-topology.js",
     "benchmark:evolutionary": "node scripts/benchmark-evolutionary.js",
     "analyze:evolutionary": "python scripts/analyze-evolutionary.py"
   }

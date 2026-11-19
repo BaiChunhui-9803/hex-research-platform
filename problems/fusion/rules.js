@@ -7,6 +7,9 @@ export const couplingProfiles = {
 export const SUPPORT_CAP = 60;
 const PRESSURE_MARGIN = 0.1;
 
+export const hasSupply = (config) => couplingProfiles[config.coupling].supply &&
+  config.supportPerPassenger !== 0 && config.supplyCap !== 0;
+
 export function underPressure(squad, team) {
   const { ownHp, ownMax, enemyHp, enemyMax, winner } = squad.health();
   if (squad.done() && winner !== null) return winner !== team;
@@ -31,8 +34,9 @@ export function newTimeline() {
 export function advanceJoint(parts, clock, config) {
   const { metro, skirmish } = parts;
   const profile = couplingProfiles[config.coupling];
+  const supply = hasSupply(config);
   const next = clock.cycle + 1;
-  const oldDelivered = profile.supply ? metro.delivered() : 0;
+  const oldDelivered = supply ? metro.delivered() : 0;
   const hold =
     !metro.done() &&
     profile.holds &&
@@ -46,7 +50,7 @@ export function advanceJoint(parts, clock, config) {
     (Math.max(0, next - config.prepMinutes) * duration) / battleWindow,
   );
   if (
-    profile.supply &&
+    supply &&
     !skirmish.done() &&
     skirmish.tick() < target &&
     clock.stock > 0
@@ -57,12 +61,12 @@ export function advanceJoint(parts, clock, config) {
   }
   while (!skirmish.done() && skirmish.tick() < target) skirmish.advance();
 
-  if (profile.supply && !skirmish.done()) {
+  if (supply && !skirmish.done()) {
     const earned =
       (metro.delivered() - oldDelivered) * config.supportPerPassenger;
     clock.supportProduced += earned;
     // New deliveries can only affect later battle ticks.
-    clock.stock = Math.min(SUPPORT_CAP, clock.stock + earned);
+    clock.stock = Math.min(config.supplyCap ?? SUPPORT_CAP, clock.stock + earned);
   }
   clock.cycle = next;
   clock.lastHold = hold;

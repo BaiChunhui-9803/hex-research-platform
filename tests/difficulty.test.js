@@ -33,6 +33,16 @@ test("ordered rail counts respect the total track cap across labeled lines", () 
   assert.equal(countRailPlans(scene), 27n);
 });
 
+test("rail counts exclude hidden repeated hexes under the simple-path rule", () => {
+  const scene = {
+    map: { qMin: 0, qMax: 2, rMin: 0, rMax: 0, diagonalLimit: 2, terrain: {} },
+    stations: [0, 1, 2].map((q) => ({ id: `s${q}`, q, r: 0 })),
+    resources: { trackBudget: 8, maxStopsPerLine: 3, maxLines: 1 },
+  };
+  assert.equal(countRailPlans(scene), 12n);
+  assert.equal(countRailPlans({ ...scene, trackTopology: "legacy" }), 16n);
+});
+
 test("reference calibration and interaction distinguish additive and coupled scores", () => {
   assert.equal(empiricalTarget(12, 12, 0.8), null);
   assert.equal(empiricalTarget(12, 22, 0.8), 20);
@@ -96,7 +106,7 @@ test("the squad reference grid separates continuous parameters from terminal sea
 test("fusion compares identical initial candidate grids and respects evaluation budgets", () => {
   const result = assess({
     problemId: "fusion",
-    scenarioId: "lumen--contact",
+    scenarioId: "compact--contact",
     seeds: [26, 27],
     evaluations: 12,
   });
@@ -113,7 +123,7 @@ test("fusion compares identical initial candidate grids and respects evaluation 
       (sample) => sample.uncoupled.maxDoubleDifference === 0,
     ),
   );
-  assert.deepEqual(both.summary.dimensions, [42]);
+  assert.deepEqual(both.summary.dimensions, [24]);
   assert.deepEqual(both.rows[0].space.components, off.rows[0].space.components);
   for (const profile of result.profiles)
     for (const row of profile.rows) {

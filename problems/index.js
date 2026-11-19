@@ -32,6 +32,7 @@ export function problemMetadata(problem) {
       ...s,
       capabilities: problem.capabilities(s.id),
       settings: problem.settings?.(s.id) ?? [],
+      ...(problem.featureTable ? { featureTable: problem.featureTable(problem.validateConfig({ scenarioId: s.id })) } : {}),
     })),
   };
 }

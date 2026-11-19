@@ -155,49 +155,57 @@ export class PlatformSession {
     };
   }
 }
-export function replaySession(problem, recording, until = recording.finalStep) {
+export function createReplayCursor(problem, recording) {
   if (
     recording.version !== PLATFORM_VERSION ||
     recording.problemId !== problem.id
   )
     throw new Error("Replay version or problem mismatch");
-  const session = new PlatformSession(problem, recording.config);
-  const stop = integer(
-    until,
-    recording.finalStep,
-    0,
-    recording.finalStep,
-    "Replay position",
-  );
+  const finalStep = integer(recording.finalStep, undefined, 0, Number.MAX_SAFE_INTEGER, "Replay length");
   const byStep = new Map();
   for (const entry of recording.actions) {
     if (
       !Number.isInteger(entry.step) ||
       entry.step < 0 ||
-      entry.step > recording.finalStep
+      entry.step > finalStep
     )
       throw new Error("Invalid replay action time");
     const entries = byStep.get(entry.step) ?? [];
     entries.push(entry);
     byStep.set(entry.step, entries);
   }
-  while (session.environment.tick() < stop && !session.environment.done()) {
-    for (const entry of byStep.get(session.environment.tick()) ?? []) {
+  const config = problem.restoreRecordingConfig?.(recording.config) ?? recording.config;
+  let session = new PlatformSession(problem, config);
+  let appliedEnd = false;
+  function applyEntries(step) {
+    for (const entry of byStep.get(step) ?? []) {
       if (entry.kind === "solution")
         session.environment.acceptSolution(entry.value);
       else if (entry.kind === "action") session.environment.apply(entry.value);
       else if (entry.kind === "control") session.environment.clearSolution();
       else throw new Error("Unknown replay event");
     }
-    session.environment.advance();
   }
-  if (stop === recording.finalStep)
-    for (const entry of byStep.get(stop) ?? []) {
-      if (entry.kind === "solution")
-        session.environment.acceptSolution(entry.value);
-      else if (entry.kind === "action") session.environment.apply(entry.value);
-      else if (entry.kind === "control") session.environment.clearSolution();
-      else throw new Error("Unknown replay event");
-    }
-  return session;
+  return {
+    seek(until = finalStep) {
+      const stop = integer(until, finalStep, 0, finalStep, "Replay position");
+      if (stop < session.environment.tick()) {
+        session = new PlatformSession(problem, config);
+        appliedEnd = false;
+      }
+      while (session.environment.tick() < stop && !session.environment.done()) {
+        applyEntries(session.environment.tick());
+        session.environment.advance();
+      }
+      if (stop === finalStep && !appliedEnd && session.environment.tick() === finalStep) {
+        applyEntries(finalStep);
+        appliedEnd = true;
+      }
+      return session;
+    },
+  };
+}
+
+export function replaySession(problem, recording, until = recording.finalStep) {
+  return createReplayCursor(problem, recording).seek(until);
 }

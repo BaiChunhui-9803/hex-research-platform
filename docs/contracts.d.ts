@@ -128,6 +128,21 @@ export interface Environment {
   createVectorTask?(maxChange?: number): VectorTask;
   acceptSolution(solution: Json): void;
 }
+export interface FeatureOperation {
+  id: string;
+  op: "add" | "remove" | "change" | "move" | "fixed";
+  actor: string;
+  phase: string;
+  condition?: string;
+  effect: string;
+  binding?: { kind: string; [key: string]: Json };
+}
+export interface FeatureTable {
+  id: string;
+  name: string;
+  scenarioId: string;
+  rows: { dimension: string; element: string; operations: FeatureOperation[] }[];
+}
 export interface Problem {
   id: string;
   name: string;
@@ -147,6 +162,7 @@ export interface Problem {
   }[];
   metrics: Metric[];
   capabilities(scenarioId: string): Capabilities;
+  featureTable?(config: ReturnType<Problem["validateConfig"]>): FeatureTable;
   settings?(scenarioId: string): object[];
   validateConfig(input: object): {
     scenarioId: string;
@@ -181,12 +197,20 @@ export interface FusionConfig {
   metroHorizon: 60 | 120 | 180 | 240;
   metroObjective: "service" | "balanced" | "effort";
   metroEditBudget: number;
+  metroTrackTopology: "simple" | "legacy";
   skirmishHorizon: number;
   skirmishOpponent: string;
   skirmishTeam: string;
+  ruleMode?: "features";
+  featureRuleVersion?: 1;
+  ruleCandidate?: "neutral" | "turns" | "zones" | "neutral-equal" | "turns-equal" | "zones-equal";
+  designGoal?: "agency" | "service";
 }
 export type FusionComponentAction = {
   type: "component";
   component: "metro" | "skirmish";
   action: Json;
 };
+export type PublicRailDraftAction =
+  | { type: "pass-turn"; team: string }
+  | { type: "place-track"; team: string; line: string; from: string; to: string; side: "new" | "start" | "end" };

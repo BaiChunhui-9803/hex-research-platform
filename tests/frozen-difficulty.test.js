@@ -48,6 +48,7 @@ test("frozen targets rescore actual probe traces and preserve missing seed cover
     {
       problemId: "metro",
       scenarioId: "compact",
+      config: { trackTopology: "legacy" },
       seeds: [26, 1000],
       evaluations: 12,
     },

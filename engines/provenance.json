@@ -1,6 +1,6 @@
 {
   "snapshotDate": "2026-11-15",
-  "note": "Original projects preserved. Engine snapshots retain existing simulation rules. Platform adapters live outside engines.",
+  "note": "Standalone and platform metro sources share the simple-track geometry update. Legacy rail routing remains available for historic benchmark replay. Other engine snapshots retain their recorded provenance.",
   "files": [
     {
       "file": "engines/metro/algorithms/adaptive-template.js",
@@ -70,7 +70,12 @@
     {
       "file": "engines/metro/shared/network.js",
       "source": "../hex-metro-lab/shared/network.js",
-      "sha256": "2c032e140c90bfd15b406b25b1af6a6f4f123cb52220e50bca5112cb845af572"
+      "sha256": "9a97ea75c8d34429f553b311ca75a9356228fe6426c0ae5cb209ace08c1a9077"
+    },
+    {
+      "file": "engines/metro/shared/track-geometry.js",
+      "source": "../hex-metro-lab/shared/track-geometry.js",
+      "sha256": "656f0d0e54f0a572533cc440986d8badac569962347d6292d47ec5523ab94e03"
     },
     {
       "file": "engines/metro/shared/problem.js",
@@ -85,7 +90,7 @@
     {
       "file": "engines/metro/shared/scenarios.js",
       "source": "../hex-metro-lab/shared/scenarios.js",
-      "sha256": "a538c849c635d0075ed2584434be877d8e8c42875d97de5614ae521403e99a57"
+      "sha256": "09efe485b7cc0ce11f836250411b25ac60e82c5264c6712f70195465bc9ec606"
     },
     {
       "file": "engines/metro/shared/simulation.js",
@@ -100,7 +105,7 @@
     {
       "file": "engines/metro/web/renderer.js",
       "source": "../hex-metro-lab/web/renderer.js",
-      "sha256": "483ad8968964ee725ca8ede66d22d96670af03ed571e115926aaa07ad03f3110"
+      "sha256": "14084b3a55b0eb8941e8734f752d32afbf69a6683b8899c0a1d6d8c02bb79d74"
     },
     {
       "file": "engines/metro/web/themes/midnight.js",

@@ -1,12 +1,13 @@
 import { BattlefieldRenderer } from "../../engines/skirmish/web/renderer.js";
-export function mount({ host, controls, onAction, onPause, notice, help = document.querySelector("#interaction-help") }) {
+export function mount({ host, controls, onAction, notice, help = document.querySelector("#interaction-help"), readOnly = false }) {
   host.className = "arena skirmish-view";
   host.innerHTML =
     '<canvas tabindex="0" aria-label="Squad battlefield"></canvas>';
-  controls.innerHTML =
-    '<button data-order="select">Select all</button><button data-order="attackMove" class="active">Attack-move [A]</button><button data-order="move">Move [M]</button><button data-order="hold">Hold [H]</button><button data-order="fit">Fit</button><span id="selection-status">No units selected</span>';
-  if (help) help.textContent =
-    "Click or drag to select your units. Shift adds to selection. Right-click an enemy to focus fire or the ground to move. Scroll to zoom; middle-drag to pan.";
+  controls.innerHTML = readOnly ? '<button data-order="fit">Fit map</button>' :
+    '<button data-order="select">Select all</button><button data-order="attackMove" class="active">Attack-move [A]</button><button data-order="move">Move [M]</button><button data-order="hold">Hold [H]</button><button data-order="fit">Fit</button><span data-selection-status>No units selected</span>';
+  if (help) help.textContent = readOnly
+    ? "Scroll to zoom. Middle-drag or Alt-drag to pan."
+    : "Click or drag to select your units. Shift adds to selection. Right-click an enemy to focus fire or the ground to move. Scroll to zoom; middle-drag to pan.";
   const canvas = host.querySelector("canvas"),
     renderer = new BattlefieldRenderer(canvas),
     abort = new AbortController(),
@@ -19,8 +20,8 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
     return { x: e.clientX - b.left, y: e.clientY - b.top };
   };
   function selected() {
-    controls.querySelector("#selection-status").textContent =
-      `${renderer.selection.size} units selected`;
+    const status = controls.querySelector("[data-selection-status]");
+    if (status) status.textContent = `${renderer.selection.size} units selected`;
   }
   async function send(order) {
     if (!renderer.selection.size) {
@@ -54,7 +55,7 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
     "click",
     (e) => {
       const b = e.target.closest("[data-order]");
-      if (b && view && !view.replay) choose(b.dataset.order);
+      if (b && view && (!view.replay || b.dataset.order === "fit")) choose(b.dataset.order);
     },
     { signal },
   );
@@ -62,7 +63,7 @@ export function mount({ host, controls, onAction, onPause, notice, help = docume
   canvas.addEventListener(
     "pointerdown",
     (e) => {
-      if (!view || view.replay) return;
+      if (!view || (view.replay && e.button !== 1 && !e.altKey)) return;
       canvas.focus();
       const p = point(e);
       if (e.button === 2) {

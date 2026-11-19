@@ -7,20 +7,21 @@
     <title>HEX · Research Games</title>
     <link rel="icon" href="/web/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/web/styles.css" />
+    <link rel="stylesheet" href="/web/portal/scenario-design.css" />
+    <link rel="stylesheet" href="/web/portal/rule-fusion.css" />
     <script type="module" src="/web/app.js"></script>
   </head>
-  <body data-screen="home">
+  <body>
     <header class="topbar">
-      <a class="brand" href="/"
+      <a class="brand" href="/" data-tab="home" aria-label="HEX home"
         >⬡ <span>HEX<small>RESEARCH GAMES</small></span></a
       >
       <nav aria-label="Main navigation">
-        <button class="active" data-tab="problems">Problems</button
-        ><button data-tab="methods">
-          Methods <span class="method-total">28</span></button
-        ><button data-tab="experiments">Experiments</button
-        ><button data-tab="difficulty">Difficulty</button
-        ><button data-tab="api">API</button>
+        <a href="/?tab=analysis" data-tab="analysis">Problem analysis</a>
+        <a href="/?tab=rule-fusion" data-tab="rule-fusion">Rule fusion</a>
+        <a href="/?tab=comparison" data-tab="comparison">Algorithms</a>
+        <a href="/?tab=trajectory" data-tab="trajectory">Replay</a>
+        <a href="/?tab=problems" data-tab="problems">Play</a>
       </nav>
       <a
         class="evidence-link"
@@ -30,25 +31,16 @@
       >
     </header>
     <main>
-      <section id="tab-problems" class="tab active">
+      <section id="tab-home" class="tab active">
         <section id="home" class="exhibition">
           <div class="hero">
             <div>
-              <span class="eyebrow">PLANNING · SIMULATION · EVOLUTION</span>
-              <h1><em>HEX</em><br />Research</h1>
+              <h1><em>HEX</em> Research Games</h1>
               <p>
-                Plan a city. Command a squad.<br />Compare ideas through games.
+                Plan a metro network, command a squad, or study what happens when the two problems share a map.
               </p>
-              <div class="hero-actions">
-                <button id="open-workspace" class="primary">
-                  Open workspace →</button
-                ><button data-tab="methods" class="ghost">
-                  Explore methods
-                </button>
-              </div>
             </div>
             <aside class="hero-panel">
-              <span class="eyebrow">YOUR RESEARCH PLAYGROUND</span>
               <div><b id="problem-total">3</b><span>Problem spaces</span></div>
               <div><b id="scenario-total">41</b><span>Reproducible scenarios</span></div>
               <div>
@@ -61,22 +53,219 @@
               >
             </aside>
           </div>
-          <div id="problem-cards" class="problem-cards"></div>
-          <div class="home-note">
-            <span>PROBLEMS × METHODS</span>
-            <p>
-              From native heuristics to evolutionary and Pareto search. Every
-              method declares its requirements; every problem owns its rules.
-            </p>
-            <a href="/docs/design-reference-library-20261115/index.html">
-              Design reference library ↗
+          <nav class="portal-home-links" aria-label="Research modules">
+            <a href="/?tab=analysis" data-tab="analysis">
+              <strong>Problem analysis</strong>
+              <span>Inspect map constraints, encoded search spaces and the effect of linking the two games.</span>
+              <span class="portal-card-action">Analyze a problem →</span>
             </a>
+            <a href="/?tab=comparison" data-tab="comparison">
+              <strong>Algorithm comparison</strong>
+              <span>Compare policies on the same scenarios, seeds, and evaluation budget.</span>
+              <span class="portal-card-action">Compare algorithms →</span>
+            </a>
+            <a href="/?tab=trajectory" data-tab="trajectory">
+              <strong>Trajectory replay</strong>
+              <span>Follow recorded decisions or generate a new seed in your browser.</span>
+              <span class="portal-card-action">Open a trajectory →</span>
+            </a>
+          </nav>
+        </section>
+        <div class="portal-utilities">
+          <a href="/?tab=problems" data-tab="problems">Play workbench</a>
+          <a href="/?tab=rule-fusion" data-tab="rule-fusion">Open the rule fusion lab</a>
+          <a href="/?tab=methods" data-tab="methods">Method library</a>
+          <a href="/?tab=experiments" data-tab="experiments">Run a batch experiment</a>
+          <a href="/?tab=difficulty" data-tab="difficulty">Advanced difficulty probes</a>
+          <a href="/?tab=comparison&amp;problem=skirmish&amp;source=legacy" data-tab="comparison">Squad validation archive</a>
+          <a href="/?tab=api" data-tab="api">API &amp; extensions</a>
+          <a href="/docs/design-reference-library-20261115/index.html">Design reference library</a>
+        </div>
+      </section>
+      <section id="tab-analysis" class="tab portal-module">
+        <div class="page-heading">
+          <div><h1>Problem analysis</h1><p>Inspect the search space before choosing an algorithm.</p></div>
+          <div class="button-row">
+            <a href="/?tab=rule-fusion" class="button-link" data-tab="rule-fusion">Inspect features and fuse rules</a>
+            <button id="analysis-next" class="primary">Compare algorithms →</button>
+          </div>
+        </div>
+        <div class="panel portal-controls portal-analysis-controls">
+          <div id="analysis-scope" class="portal-filters"></div>
+          <label class="portal-small">Map seed<input id="analysis-seed" type="number" min="0" max="9999999" required /></label>
+          <div class="analysis-settings">
+            <div class="analysis-context-row">
+              <p id="analysis-context" class="muted"></p>
+              <button id="analysis-fit" class="subtle" type="button" hidden>Fit rules to map</button>
+            </div>
+            <details id="analysis-tuning" class="portal-details">
+              <summary>Scenario settings</summary>
+              <div id="analysis-problem-settings"></div>
+              <button id="analysis-reset-settings" class="subtle" type="button">Restore scenario defaults</button>
+            </details>
+            <details class="portal-details">
+              <summary>Search measurement settings</summary>
+              <div class="portal-filters analysis-measure-settings" id="analysis-probe-settings">
+                <label><span id="analysis-checkpoint-label">Planning checkpoint</span><input id="analysis-checkpoint" type="number" min="0" max="240" required /></label>
+                <label id="analysis-grid-field">Squad grid levels<input id="analysis-grid-levels" type="number" min="2" max="20" required /></label>
+                <label>Evaluations per probe<input id="analysis-evaluations" type="number" min="8" max="64" required /></label>
+                <label>Target improvement (%)<input id="analysis-target" type="number" min="50" max="95" required /></label>
+              </div>
+            </details>
+          </div>
+        </div>
+        <section class="panel portal-content analysis-preview-panel" aria-labelledby="analysis-preview-title">
+          <h2 id="analysis-preview-title">Scenario preview</h2>
+          <div id="analysis-preview" aria-live="polite"></div>
+        </section>
+        <div class="portal-analysis-grid">
+          <section class="panel portal-content" aria-labelledby="analysis-space-title">
+            <h2 id="analysis-space-title">Search space</h2>
+            <div id="analysis-space"></div>
+          </section>
+          <section class="panel portal-content" aria-labelledby="analysis-measured-title">
+            <h2 id="analysis-measured-title">Measured difficulty</h2>
+            <div id="analysis-empirical"></div>
+            <p class="muted">The probes measure candidate feasibility and success under a fixed search budget. The resulting data describes these algorithms and conditions.</p>
+            <div class="button-row">
+              <button id="analysis-run" type="button">Run difficulty probes</button>
+              <button id="analysis-cancel" type="button" disabled>Cancel</button>
+            </div>
+            <p id="analysis-status" class="muted portal-status" role="status"></p>
+            <div id="analysis-probes"></div>
+          </section>
+        </div>
+      </section>
+      <section id="tab-rule-fusion" class="tab portal-module">
+        <div class="page-heading">
+          <div><h1>Rule fusion</h1><p>Inspect the input features, compile compatible rules and test the resulting games.</p></div>
+          <a class="button-link" href="/experiments/simple-track-fusion/summary.zh-CN.md" target="_blank">Track topology study ↗</a>
+        </div>
+        <div class="panel portal-controls">
+          <div id="rule-scope" class="portal-filters"></div>
+          <div class="portal-filters rule-options">
+            <label>Design goal<select id="rule-goal"></select></label>
+            <label class="portal-small">Map seed<input id="rule-seed" type="number" min="0" max="9999999" required /></label>
+            <button id="rule-compile" class="primary" type="button">Compile and test</button>
+            <button id="rule-cancel" type="button" hidden>Cancel</button>
+          </div>
+          <p id="rule-status" class="muted portal-status" role="status"></p>
+        </div>
+        <section class="panel portal-content rule-panel">
+          <div class="rule-panel-heading">
+            <div><h2>Base problem feature tables</h2><p class="muted">Open a cell to inspect its actor, phase, conditions and compiler binding.</p></div>
+            <div class="rule-feature-tabs" role="group" aria-label="Base problem">
+              <button type="button" data-feature-view="metro" aria-pressed="true">Metro features</button>
+              <button type="button" data-feature-view="skirmish" aria-pressed="false">Squad features</button>
+            </div>
+          </div>
+          <div id="rule-feature-matrix"></div>
+        </section>
+        <section class="panel portal-content rule-panel" aria-labelledby="rule-findings-title">
+          <h2 id="rule-findings-title">Rule inference</h2>
+          <div id="rule-findings" class="rule-findings"></div>
+        </section>
+        <section class="panel portal-content rule-panel" aria-labelledby="rule-candidates-title">
+          <h2 id="rule-candidates-title">Candidate simulations</h2>
+          <div id="rule-candidates"></div>
+        </section>
+      </section>
+      <section id="tab-comparison" class="tab portal-module">
+        <div class="page-heading">
+          <div><h1>Algorithm comparison</h1><p>Compare methods under the same run conditions.</p></div>
+          <button id="comparison-next" class="primary" hidden>Open trajectory module →</button>
+        </div>
+        <div class="panel portal-controls">
+          <div id="comparison-scope" class="portal-filters"></div>
+          <div id="comparison-filters" class="portal-filters" hidden>
+            <label>Evidence source<select id="comparison-source"></select></label>
+            <label>Observed faction<select id="comparison-team"></select></label>
+            <label>Opponent policy<select id="comparison-opponent"></select></label>
+            <label>Run conditions<select id="comparison-cohort"></select></label>
+            <label>Metric<select id="comparison-metric"></select></label>
+            <label>Seed filter<select id="comparison-seed"></select></label>
+          </div>
+          <details class="portal-details" hidden>
+            <summary>Methods</summary><div id="comparison-methods"></div>
+          </details>
+          <p id="comparison-status" class="muted portal-status" role="status"></p>
+        </div>
+        <section class="panel portal-content" id="comparison-output" aria-label="Matched algorithm results"></section>
+      </section>
+      <section id="tab-trajectory" class="tab portal-module">
+        <div class="page-heading">
+          <div><h1>Trajectory replay</h1><p>Choose a problem, method and seed to watch the episode.</p></div>
+          <button id="trajectory-comparison" class="subtle">← Algorithm comparison</button>
+        </div>
+        <div class="panel portal-controls" id="trajectory-filters">
+          <div id="trajectory-scope" class="portal-filters"></div>
+          <div class="portal-filters">
+            <label>Run conditions<select id="trajectory-cohort"></select></label>
+            <label>Algorithm / policy<select id="trajectory-method"></select></label>
+            <label>Archive seeds<select id="trajectory-archive-seeds"></select></label>
+            <label class="portal-small">Seed<input id="trajectory-seed" type="number" min="0" max="9999999" required /></label>
+            <label class="portal-small">Evaluations / plan<input id="trajectory-budget" type="number" min="1" max="64" required /></label>
+          </div>
+          <p id="trajectory-setup" class="muted"></p>
+          <div class="portal-run-row">
+            <div class="button-row">
+              <button id="trajectory-open" class="primary" hidden>Open replay</button>
+              <button id="trajectory-run" class="primary" hidden>Run seed in browser</button>
+              <button id="trajectory-cancel" hidden>Cancel</button>
+            </div>
+            <p id="trajectory-status" class="muted portal-status" role="status"></p>
+          </div>
+        </div>
+        <section id="trajectory-replay" hidden>
+          <div class="panel portal-content portal-player">
+            <div class="portal-player-heading">
+              <div><h2 id="trajectory-title"></h2><p class="muted" id="trajectory-outcome"></p></div>
+              <div class="button-row">
+                <span class="badge" id="trajectory-source"></span>
+                <button id="trajectory-matched" class="subtle" hidden></button>
+              </div>
+            </div>
+            <div class="portal-transport">
+              <button id="trajectory-play" class="primary">Play</button>
+              <button id="trajectory-previous" aria-label="Previous frame">←</button>
+              <button id="trajectory-next" aria-label="Next frame">→</button>
+              <label>Speed<select id="trajectory-speed">
+                  <option value="1">1×</option><option value="2">2×</option><option value="4">4×</option>
+              </select></label>
+              <span class="portal-clock"><strong id="trajectory-clock"></strong> <span id="trajectory-duration"></span></span>
+              <input id="trajectory-scrub" type="range" min="0" max="0" value="0" aria-label="Replay position" />
+              <button id="trajectory-export" class="subtle">Export recording</button>
+            </div>
+            <div class="metric-strip" id="trajectory-metrics"></div>
+            <div class="portal-stage">
+              <div class="portal-maps">
+                <div class="portal-map-tabs" id="trajectory-map-mode" role="group" aria-label="Map view" hidden>
+                  <button data-map-mode="shared" aria-pressed="true">Shared map</button>
+                  <button data-map-mode="components" aria-pressed="false">Metro &amp; squad</button>
+                </div>
+                <div class="problem-controls" id="trajectory-controls"></div>
+                <div id="trajectory-arena" class="arena"></div>
+                <p class="interaction-help" id="trajectory-help"></p>
+              </div>
+              <aside class="portal-timeline" aria-label="Metrics and events">
+                <section>
+                  <label>Timeline metric<select id="trajectory-metric"></select></label>
+                  <canvas id="trajectory-chart" width="760" height="175" role="img"></canvas>
+                </section>
+                <section>
+                  <h2>Recent events</h2>
+                  <div id="trajectory-events" class="portal-events"></div>
+                </section>
+              </aside>
+            </div>
           </div>
         </section>
+      </section>
+      <section id="tab-problems" class="tab">
         <section id="workspace">
           <div class="workspace-toolbar">
-            <button id="back-problems" class="subtle">← Problems</button
-            ><label id="scenario-field">Scenario<select id="scenario"></select></label>
+            <label>Problem<select id="workspace-problem"></select></label>
+            <label id="scenario-field">Scenario<select id="scenario"></select></label>
             <div id="fusion-sources" class="fusion-sources" hidden></div>
             <label
               >Seed<input
@@ -164,9 +353,8 @@
                 class="method-information"
                 hidden
               ></details>
-              <button data-tab="experiments" class="link-button">
-                Compare methods →
-              </button>
+              <button id="compare-workspace" data-tab="comparison" class="link-button">Compare methods →</button>
+              <button data-tab="experiments" class="link-button">Run a batch experiment →</button>
               <button id="assess-workspace" data-tab="difficulty" class="link-button">Assess difficulty →</button>
             </aside>
           </div>

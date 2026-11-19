@@ -16,7 +16,10 @@ export function scenarioKey(
   excludeSeed = false,
 ) {
   const settings = Object.entries(config)
-    .filter(([key]) => !excludeSeed || key !== "seed")
+    .filter(([key, value]) =>
+      (!excludeSeed || key !== "seed") && !(value === "legacy" &&
+        ((problemId === "metro" && key === "trackTopology") || (problemId === "fusion" && key === "metroTrackTopology"))),
+    )
     .sort(([a], [b]) => a.localeCompare(b));
   return JSON.stringify([problemId, checkpoint, settings]);
 }
